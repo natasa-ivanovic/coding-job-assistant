@@ -18,6 +18,11 @@ my profile
 		remote rad (boolean)
 		it oblasti interesovanja
 
+	potencijalno u novu sekciju:
+		prethodno uradjene predikcije za poziciju
+		prethodno uradjene predikcije za oglase
+		prethodno konkurisani oglasi - sa opcijom za review
+
 
 classrooom
 	ukoliko lista interview suggestiona nije prazna:
@@ -57,6 +62,21 @@ browse jobs
 
 
 browse companies
+	kartice sa kompanijama (sortirane nekako po broju oglasa koji odgovaraju njemu mozda?)
+		kada klikne na kompaniju redirect na stranicu kompanije
+		stranica ima:
+			opis, bio
+			reviews sa interjvua
+			utistci zaposljenih
+			spisak oglasa sa details koji kada klikne trigeruje (analiza za specifican posao)
+
+
+skupovi pravila
+	>trigeruju se pravila za pozicije na osnovu cv-ja<
+	>trigger pravila za oglase na osnovu pozicije i korisnika<
+	>trigger pravila za analizu za specifican oglas i saveti za taj oglas<
+	>pravila za CEP - ako neko radi za redom ili ne radi etc<
+	
 
 
 
@@ -65,3 +85,6 @@ browse companies
 		kada je radio xy dana, dati neki bedz ili nesto
 	isti fazon za kada nije radio nekoliko dana moze 
 		poslati neki guilt trip mejl sa nekom slatkom sovicom
+
+	ako neko napise review i taj review je odbijen i to se desi 3 puta, zabraniti korisniku da pise reviews 
+
