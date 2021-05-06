@@ -1,3 +1,29 @@
+skupovi pravila
+	DONE >trigeruju se pravila za pozicije na osnovu cv-ja<
+	DONE >trigger pravila za oglase na osnovu pozicije i korisnika<
+	DONE >trigger pravila za analizu za specifican oglas i saveti za taj oglas<
+	DONE >pravila za odredjivanje hot oglasa<
+	DONE >pravila za odredjivanje hot kompanije<
+	TODO >pravila za CEP - ako neko radi za redom ili ne radi etc<
+	
+	maybe
+		pravila za odredjivanje hot pozicije? proveriti gde ovo obecavamo i ako ubacimo i ako izbacimo
+
+		JEDNA IDEJA
+			- za koje pozicije mi fali jos *jedna* (ili vise) stvari
+
+		DRUGA IDEJA
+			- sta mi fali za odredjene 'hot' pozicije
+
+		>pravila za reviews< - not sure da li ima nesto ovde??
+			- mozda ako nema mnogo teksta ili nije dobio ponudu/posao svrstati u neku klasu npr:
+				DETAILED, BASIC
+
+
+
+
+
+
 my profile 
 	deo za username/pasword i osnovne licne informacije
 		ime
@@ -71,23 +97,6 @@ browse companies
 			spisak oglasa sa details koji kada klikne trigeruje (analiza za specifican posao)
 
 
-skupovi pravila
-	>trigeruju se pravila za pozicije na osnovu cv-ja<
-	>trigger pravila za oglase na osnovu pozicije i korisnika<
-	>trigger pravila za analizu za specifican oglas i saveti za taj oglas<
-	>pravila za odredjivanje hot pozicije/oglasa<
-	>pravila za odredjivanje hot kompanije<
-	>pravila za CEP - ako neko radi za redom ili ne radi etc<
-	>pravila za reviews<
-		- mozda ako nema mnogo teksta ili nije dobio ponudu/posao svrstati u neku klasu npr:
-			DETAILED, BASIC
-
-
-POTENCIJALNO
-	JEDNA IDEJA
-		- za koje pozicije mi fali jos *jedna* (ili vise) stvari
-	DRUGA IDEJA
-		- sta mi fali za odredjene 'hot' pozicije
 
 training advice -
 	explore how i can put my skills to work
