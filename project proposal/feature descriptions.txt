@@ -76,6 +76,9 @@ skupovi pravila
 	>trigger pravila za oglase na osnovu pozicije i korisnika<
 	>trigger pravila za analizu za specifican oglas i saveti za taj oglas<
 	>pravila za CEP - ako neko radi za redom ili ne radi etc<
+	>pravila za reviews<
+		- mozda ako nema mnogo teksta ili nije dobio ponudu/posao svrstati u neku klasu npr:
+			DETAILED, BASIC
 	
 
 
