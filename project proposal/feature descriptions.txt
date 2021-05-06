@@ -75,10 +75,26 @@ skupovi pravila
 	>trigeruju se pravila za pozicije na osnovu cv-ja<
 	>trigger pravila za oglase na osnovu pozicije i korisnika<
 	>trigger pravila za analizu za specifican oglas i saveti za taj oglas<
+	>pravila za odredjivanje hot pozicije/oglasa<
+	>pravila za odredjivanje hot kompanije<
 	>pravila za CEP - ako neko radi za redom ili ne radi etc<
 	>pravila za reviews<
 		- mozda ako nema mnogo teksta ili nije dobio ponudu/posao svrstati u neku klasu npr:
 			DETAILED, BASIC
+
+
+POTENCIJALNO
+	JEDNA IDEJA
+		- za koje pozicije mi fali jos *jedna* (ili vise) stvari
+	DRUGA IDEJA
+		- sta mi fali za odredjene 'hot' pozicije
+
+training advice -
+	explore how i can put my skills to work
+	see career change ideas
+	progress my career
+	see job growth trends
+	improve my resume
 	
 
 
