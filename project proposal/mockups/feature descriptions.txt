@@ -1,0 +1,90 @@
+my profile 
+	deo za username/pasword i osnovne licne informacije
+		ime
+		prezime
+		grad
+		broj telefona
+		mejl
+		sifra
+	ako zeli da popuni cv:
+		stepen obrazovanja (enum - high school, bachelors, masters, doctors, self_taught)
+		programski jezici (predefinisana lista sa enumom koliko zna - basic, good, very good, excellent, expert)
+		relevantne tehnologije (predefinisana lista sa enumom koliko zna - basic, good, very good, excellent, expert)
+		strani jezici (predefinisana lista sa enumom koliko zna - basic, good, very good, excellent, expert)
+		soft skills (predefinisana lista sa enumom koliko zna - basic, good, very good, excellent, expert)
+		radno iskustvo (koliko meseci i koji nivo seniornosti enum - junior, medior, senior)
+	dodatna polja vezana za cv:
+		ocekivanja za platu (raspon)
+		remote rad (boolean)
+		it oblasti interesovanja
+
+	potencijalno u novu sekciju:
+		prethodno uradjene predikcije za poziciju
+		prethodno uradjene predikcije za oglase
+		prethodno konkurisani oglasi - sa opcijom za review
+
+
+classrooom
+	ukoliko lista interview suggestiona nije prazna:
+		lista svih advice-ova koje je dobio do sad, tj svih interview suggestiona, i mozda dugme da se prikazu detalji i za sta je povezano (koji oglas)
+	else
+		prikazi alert kako nema trenutnih advice-ova i sugestuj da uradi formu za interjvuove
+	** potencijalna ideja **
+		kada odradi sugestije pozicija, stavi mu top 5 pozicija tu sa procentima i onda ponudi da trackuje svoje skillove i slicno (kad uradi neki intervju advice ili tutorijal ili sta god), i mozda neke badge-ove za progress kada popravi %
+
+
+browse positions
+	ogroman popout koji te pita da li hoces analizu da obavis i onda da preporuci
+	ako da:
+		prikazi sve podatke sto je uneo iz cv-a i ponudi da izmeni bilo sta i dopuni i onda klikne confirm >trigeruju se pravila za pozicije na osnovu cv-ja<
+			redirect na neku fensi stranicu koja ce biti rezultat (to ce biti dodato u neku listu prethodni rezultata na my profile as well)
+			- lista pozicija
+				za svaku poziciju staviti procenat poklapanja, kao i da ponudi dugmice da se browsuju poslovi za tu poziciju, da se followuje i prikazi neke basic info (koliko je popularna, avg plata etc)
+	else:
+		prikazi listu svih pozicija u nekoj tabelici i ponudi dugmice da se browsuju poslovi za tu poziciju, da se followuje i prikazi neke basic info (koliko je popularna, avg plata etc)
+
+
+browse jobs
+	if uradjena analiza pozicija
+		ponudi onako lepe kartice sa pozicijama ispod kojih pise % koliko si dobar za njih xd
+		kada klikne neku karticu, >trigger pravila za jobs na osnovu pozicije i korisnika<
+			redirect na stranicu sa poslovima koji su sortirani po xy kriterijumu (koji mozda on izabere, mozda neki fazon sa query ili prioritetom pravila - mozda query)
+			za svaki posao moze da izabere da ga prati, ili da se analizira koliko je dobar za taj specifican posao
+	elif search po poziciji
+		za svaki posao moze da izabere da ga prati, ili da se analizira koliko je dobar za taj specifican posao 
+	elif search po kompaniji
+		za svaki posao moze da izabere da ga prati, ili da se analizira koliko je dobar za taj specifican posao
+
+	when odabrana analiza za specifican posao:
+		> trigger pravila za analizu za specifican posao, tj koliko odgovara poslu + intervju advice <
+			redirect na neku stranicu
+
+
+
+browse companies
+	kartice sa kompanijama (sortirane nekako po broju oglasa koji odgovaraju njemu mozda?)
+		kada klikne na kompaniju redirect na stranicu kompanije
+		stranica ima:
+			opis, bio
+			reviews sa interjvua
+			utistci zaposljenih
+			spisak oglasa sa details koji kada klikne trigeruje (analiza za specifican posao)
+
+
+skupovi pravila
+	>trigeruju se pravila za pozicije na osnovu cv-ja<
+	>trigger pravila za oglase na osnovu pozicije i korisnika<
+	>trigger pravila za analizu za specifican oglas i saveti za taj oglas<
+	>pravila za CEP - ako neko radi za redom ili ne radi etc<
+	
+
+
+
+** COMPLEX EVENT PROCESSING **
+	pratiti koliko dana radio, dodavati eventove za svaki dan kad je radio
+		kada je radio xy dana, dati neki bedz ili nesto
+	isti fazon za kada nije radio nekoliko dana moze 
+		poslati neki guilt trip mejl sa nekom slatkom sovicom
+
+	ako neko napise review i taj review je odbijen i to se desi 3 puta, zabraniti korisniku da pise reviews 
+

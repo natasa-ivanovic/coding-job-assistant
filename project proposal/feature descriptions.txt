@@ -91,3 +91,36 @@ skupovi pravila
 
 	ako neko napise review i taj review je odbijen i to se desi 3 puta, zabraniti korisniku da pise reviews 
 
+
+
+------- mozda nesto korisno ovde jos uvek postoji
+Pravilo A1 – Na osnovu korisničkog inputa „Korisnik veoma dobro poznaje REST“ i „Korisnik dobro poznaje baze podataka“ generiše se činjenica O – „Korisnik ima potencijal za poziciju Web developera“.
+Pravilo B1 – Na osnovu činjenice O i korisničkog inputa „Korisnik vrlo dobro poznaje Javascript“ i „Korisnik vrlo dobro poznaje HTML/CSS“ generiše se činjenica P – „Korisnik ima potencijal za poziciju Frontend developera“.
+Pravilo C1 – Na osnovu činjenice P i korisničkog inputa „Korisnik nema radnog iskustva“ generiše se činjenica Q – „Korisnik ima potencijal za poziciju Junior Frontend Web Developera“.
+Pravilo B2 –  Na osnovu činjenice O i korisničkog inputa „Korisnik vrlo dobro poznaje SpringBoot“ i „Korisnik dobro poznaje Django“ generiše se činjenica R – „Korisnik ima potencijal za poziciju Backend developera“.
+Pravilo B3 – Na osnovu činjenice O i korisničkog inputa „Korisnik vrlo dobro poznaje SpringBoot“ i „Korisnik vrlo dobro poznaje Javascript“ generiše se činjenica S – „Korisnik ima potencijal za poziciju Full-Stack developera“.
+Pravila B1, B2 i B3 su međusobno isključiva – Ideja je da korisnik prilikom unosa poznavanja određenih jezika i tehnologija ujedno i proceni kvalitet tog znanja (Osnovno, Dobro, Vrlo dobro, Ekspertsko) – ova procena se potom prevodi u numeričku vrednost. U ovom konkretnom primeru za Full-Stack Developera bi bilo potrebno da korisnik ima podjednak nivo znanja iz jezika i tehnologija koje su relevantne za tu poziciju. Ukoliko bi se desilo da npr. stepen znanja backend tehnologija bude dosta jači u odnosu na znanje o frontend tehnologijama (npr. Vrlo dobro naspram Osnovno) tada bi se dala procena da korisnik treba da konkuriše za poziciju Backend developera.
+Primer kompleksnijeg pravila
+Oglasi će biti sortirani i predloženi na osnovu sledećih parametara koje bismo dobavili upotrebom query mehanizma:
+-	Stepen popularnosti kompanije (računaće se kao broj korisnika koji prati oglase ove kompanije)
+-	Stepen popularnosti pozicije (računaće se na osnovu broja korisnika koji prate oglase za ovu poziciju, koji mogu biti iz različitih kompanija)
+-	Broj pozitivnih ocena (korisnici  će moći da ostavljaju komentare i ocenjuju kompaniju)
+-	Težina intervjua (korisnici će moći da procenjuju koliko je intervju bio kompleksan)
+-	Prosečna plata u kompaniji za određenu poziciju (koja će se računati na osnovu zaposlenih korisnika koji su dobrovoljno dali te podatke)
+Korisniku će biti ponuđena opcija da odabere koji su mu parametri najznačajniji u potrazi za poslom – odabrani parametri će imati veću težinu prilikom evaluacije pravila.
+Deo sistema za predlaganje materijala za pripremu pred intervju
+Primer za forward-chaining
+Pravilo D1 – Na osnovu korisničkog inputa „Korisnik je zainteresovan za Web development“ i „Korisnik je zainteresovan za Angular“ generiše se činjenica T – „Korisniku su potrebni materijali koje se tiču frontend developmenta“.
+Pravilo E2 – Na osnovu činjenice T i korisničkog inputa „Stepen obrazovanja – samouk“ generiše se činjenica U – „Korisniku je potrebna osnovna literatura iz oblasti frontend developmenta i Angulara“.
+Pravilo F2 – Na osnovu činjenice U i korisničkog inputa „Nema radno iskustvo“ generiše se činjenica V – „Korisnik bi trebalo da radi na razvijanju svojih projekata za CV – npr. ToDo app“.
+Primer za međusobnu isključivost
+Pravilo D2 – Na osnovu korisničkog inputa „Korisnik je zainteresovan za Mobile development“ i „Korisnik je zainteresovan za Android development“ generiše se činjenica W – „Korisniku su potrebni materijali za Android mobile development“.
+Pravila D1 i D2 su međusobno isključiva – Korisniku koji ispunjava kriterijume za više poslovnih pozicija, predlagaće se oni materijali koji odgovaraju poziciji za koju postoji više oglasa, jer je tako veća šansa da će doći do zaposlenja. 
+Primer kompleksnijeg pravila
+Korisnik će odabirom nekog od ponuđenih oglasa dobiti povratnu informaciju o tome koliko je podoban za tu poziciju. Ideja je da se analizira njegov profil i poredi sa očekivanjima u sklopu oglasa. Na osnovu odudaranja očekivanih kvalifikacija i realnih kvalifikacija korisnika generisaće se saveti za „popunjavanje rupa u znanju“. Parametri koji su od značaja za ovu analizu i koje bismo dobavili upotrebom query mehanizma:
+-	Radno iskustvo (očekivano naspram korisničkog)
+-	Pozicija (pozicija nosi informaciju o zahtevanim tehnologijama i programskim jezicima koje će se porediti sa sveukupnim znanjem korisnika)
+-	Očekivanja od kompanije (soft skills, strani jezici i korigovanje predstave o plati)
+-	Plasman na rang listi aplikanata (stepen sveukupnog znanja se poredi među korisnicima koji prate određeni oglas, tako da svako od njih ima donekle predstavu o tome kakva i kolika je konkurencija za tu poziciju)
+
+
