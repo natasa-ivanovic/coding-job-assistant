@@ -1,3 +1,10 @@
+1.	Ukoliko je događaj kreiran u proteklih 24h i postoji događaj koji je kreiran pre njega
+	pratiti koliko dana radio, dodavati eventove za svaki dan kad je radio
+		kada je radio xy dana, dati neki bedz ili nesto
+	isti fazon za kada nije radio nekoliko dana moze 
+		poslati neki guilt trip mejl 
+
+
 skupovi pravila
 	DONE >trigeruju se pravila za pozicije na osnovu cv-ja<
 	DONE >trigger pravila za oglase na osnovu pozicije i korisnika<
