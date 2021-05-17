@@ -1,0 +1,14 @@
+//created on: Mar 27, 2017
+package com.app
+
+import ftn.sbnz.model.Test;
+
+rule "Combo discount"
+
+    when
+        $test: Test ( enableMe == false )
+    then
+        $test.setEnableMe(true);
+        System.out.println("Uspesno setovao enable me");
+        update($test);
+end
