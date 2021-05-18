@@ -3,6 +3,7 @@ package ftn.sbnz.model;
 public class Test {
 	private String test;
 	private boolean enableMe;
+	
 	public Test() {
 		this.enableMe = false;
 	}
