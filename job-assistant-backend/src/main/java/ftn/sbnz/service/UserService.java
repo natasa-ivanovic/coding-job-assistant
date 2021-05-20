@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.exception.UserException;
-import ftn.sbnz.model.User;
-import ftn.sbnz.repository.UserRepository;
+import ftn.sbnz.model.user.User;
+import ftn.sbnz.repository.user.UserRepository;
 import ftn.sbnz.security.CustomUserDetailsService;
 import ftn.sbnz.security.TokenUtils;
 

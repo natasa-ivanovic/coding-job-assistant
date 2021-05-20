@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ftn.sbnz.model.User;
-import ftn.sbnz.repository.UserRepository;
+import ftn.sbnz.model.user.User;
+import ftn.sbnz.repository.user.UserRepository;
 
 
 @Service

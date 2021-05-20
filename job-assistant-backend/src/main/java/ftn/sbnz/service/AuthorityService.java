@@ -3,8 +3,8 @@ package ftn.sbnz.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ftn.sbnz.model.Authority;
-import ftn.sbnz.repository.AuthorityRepository;
+import ftn.sbnz.model.auth.Authority;
+import ftn.sbnz.repository.auth.AuthorityRepository;
 
 @Service
 public class AuthorityService {
