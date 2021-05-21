@@ -1,12 +1,10 @@
 package sbnz.integracija;
 
-import sbnz.integracija.example.facts.Item;
+import ftn.sbnz.model.user.JobSeeker;
 
-
-rule "Classify Item - Low Range"
+rule "Add new JobSeeker"
     when
-        $i: Item( cost <= 300, category == Category.NA )
+        $jobSeeker: JobSeeker()
     then
-        $i.setCategory(Item.Category.LOW_RANGE);
-        update($i);
+        System.out.println("Dodat nov JobSeeker");
 end

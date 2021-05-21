@@ -1,11 +1,14 @@
 package sbnz.integracija;
 
-import sbnz.integracija.example.facts.Item;
+import ftn.sbnz.model.Test;
 
-rule "Classify Item - High Range"
+rule "Add new Test"
     when
-        $i: Item( cost > 300, category == Category.NA )
+        $test: Test (enableMe == false)
     then
-        $i.setCategory(Item.Category.HIGH_RANGE);
-        update($i);
+        System.out.println("Usao u Test Rule");
+        // System.out.println("Ovo je izmena pravila.");
+        $test.setTest("Test successful!");
+        $test.setEnableMe(true);
+        update($test);
 end
