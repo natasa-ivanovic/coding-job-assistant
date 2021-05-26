@@ -7,7 +7,6 @@ rule "Add new Test"
         $test: Test (enableMe == false)
     then
         System.out.println("Usao u Test Rule");
-        // System.out.println("Ovo je izmena pravila.");
         $test.setTest("Test successful!");
         $test.setEnableMe(true);
         update($test);
