@@ -7,12 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.knowledge.KnowledgeImportance;
-import ftn.sbnz.model.programming_language.ProgrammingImportance;
-import ftn.sbnz.model.technology.TechnologyImportance;
+import ftn.sbnz.model.knowledge.Knowledge;
+import ftn.sbnz.model.programming_language.ProgrammingLanguage;
+import ftn.sbnz.model.technology.Technology;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -31,17 +31,13 @@ public class JobPosition {
 	@Column(name = "title", unique = false, nullable = false)
 	@NonNull
 	private String title;
-
-	@Column(name = "subtitle", unique = false, nullable = false)
-	@NonNull
-	private String subtitle; 
 	
-	@OneToMany
-	private Set<ProgrammingImportance> programmingImportances;
+	@ManyToMany
+	private Set<ProgrammingLanguage> programmingLanguages;
 
-	@OneToMany
-	private Set<KnowledgeImportance> knowledgeImportances;
+	@ManyToMany
+	private Set<Knowledge> knowledge;
 
-	@OneToMany
-	private Set<TechnologyImportance> technologyImportances;
+	@ManyToMany
+	private Set<Technology> technologies;
 }
