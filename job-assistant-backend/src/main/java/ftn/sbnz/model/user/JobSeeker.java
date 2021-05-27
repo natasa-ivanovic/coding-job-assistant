@@ -1,5 +1,6 @@
 package ftn.sbnz.model.user;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -40,34 +41,34 @@ public class JobSeeker extends User{
 	@Column(name = "education")
 	private EducationLevel education;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<TechnologyProficiency> technologyProficiencies;
+	@ManyToMany
+	private Set<TechnologyProficiency> technologyProficiencies = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<SoftSkillProficiency> softSkillProficiencies;
+	@ManyToMany
+	private Set<SoftSkillProficiency> softSkillProficiencies = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<ProgrammingProficiency> programmingProficiencies;
+	@ManyToMany
+	private Set<ProgrammingProficiency> programmingProficiencies = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<LanguageProficiency> languageProficiencies;
+	@ManyToMany
+	private Set<LanguageProficiency> languageProficiencies = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<KnowledgeProficiency> knowledgeProficiencies;
+	@ManyToMany
+	private Set<KnowledgeProficiency> knowledgeProficiencies = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<WorkingExperience> experience;
+	@OneToMany
+	private Set<WorkingExperience> experience = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobOfferReview> reviews;
+	@OneToMany
+	private Set<JobOfferReview> reviews = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobOfferSuggestion> offerSuggestions;
+	@OneToMany
+	private Set<JobOfferSuggestion> offerSuggestions = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobPositionSuggestion> positionSuggestions;
+	@OneToMany
+	private Set<JobPositionSuggestion> positionSuggestions = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobSeekerRanking> offerRankings;
+	@OneToMany
+	private Set<JobSeekerRanking> offerRankings = new HashSet<>();
 	
 }

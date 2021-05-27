@@ -35,15 +35,9 @@ public class SoftSkillProficiency {
 	@NonNull
 	private SkillProficiency proficiency;
 	
-	@ManyToMany
-	private Set<JobSeeker> jobSeekers;
-	
 	@ManyToOne
 	private SoftSkill softSkill;
 
 	@OneToMany
-	private Set<InterviewSuggestion> interviewSuggestions;
-	
-	@OneToMany(mappedBy = "softSkillProficiency")
-	private Set<SoftSkillImportance> softSkillImportances = new HashSet<>();
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 }

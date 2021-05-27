@@ -34,16 +34,10 @@ public class TechnologyProficiency {
 	@Column(name = "proficiency", unique = false, nullable = false)
 	@NonNull
 	private SkillProficiency proficiency;
-	
-	@ManyToMany
-	private Set<JobSeeker> jobSeekers;
-	
+		
 	@ManyToOne
 	private Technology technology;
 
 	@OneToMany
-	private Set<InterviewSuggestion> interviewSuggestions;
-	
-	@OneToMany(mappedBy = "technologyProficiency")
-	private Set<TechnologyImportance> technologyImportances = new HashSet<>();
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 }

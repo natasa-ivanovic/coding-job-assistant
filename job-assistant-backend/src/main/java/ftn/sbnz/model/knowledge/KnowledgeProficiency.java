@@ -35,15 +35,9 @@ public class KnowledgeProficiency {
 	@NonNull
 	private SkillProficiency proficiency;
 	
-	@ManyToMany
-	private Set<JobSeeker> jobSeekers;
-	
 	@ManyToOne
 	private Knowledge knowledge;
 
 	@OneToMany
-	private Set<InterviewSuggestion> interviewSuggestions;
-	
-	@OneToMany(mappedBy = "knowledgeProficiency")
-	private Set<KnowledgeImportance> knowledgeImportances = new HashSet<>();
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 }

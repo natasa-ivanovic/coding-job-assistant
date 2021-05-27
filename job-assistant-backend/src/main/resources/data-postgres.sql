@@ -696,7 +696,7 @@ insert into language_proficiencies (id, language_id, proficiency) values (23, 5,
 insert into language_proficiencies (id, language_id, proficiency) values (24, 5, 3); -- EXCELLENT
 insert into language_proficiencies (id, language_id, proficiency) values (25, 5, 4); -- EXPERT
 
--- user proficiencies
+----------------------- users proficiencies -------------------------------
 -- user with id 2 - 'Job Seeker'
 
 -- java, javascript, python
@@ -717,7 +717,7 @@ insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencie
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 8); -- SQL - VERY_GOOD
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 83); -- EC6 - VERY_GOOD
 
-
+------------------------------------------------------------------------------
 
 -- companies
 insert into companies (id, name, rank) values (1, 'Levi9', 0);
@@ -736,7 +736,7 @@ insert into language_importances (id, language_proficiency_id, optional, importa
 insert into job_offers (id, company_id, position_id, seniority, rank) values (1, 1, 1, 2, 0); -- BACKEND, MEDIOR, NONE
 
 -- knowledge importances
-insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (1, 8, false, 7); -- SQL DATABASES, GOOD
+insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (1, 8, false, 7); -- SQL DATABASES, VERY GOOD
 insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (2, 44, false, 10); -- REST, EXCELLENT
 insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (3, 65, false, 10); -- Object oriented programming, EXPERT
 insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (4, 73, false, 8); -- Design patterns, VERY GOOD
@@ -936,9 +936,3 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 4); -- Time management, EXPERT
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 5); -- Self motivation, EXCELLENT
 -----------------------------------
-
-
-
-
-
-

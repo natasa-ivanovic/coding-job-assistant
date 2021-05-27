@@ -26,7 +26,7 @@ public class SessionInitializer {
 		List<JobPosition> positions = jobPositionRepo.findAll();
 		for (JobPosition jp : positions) {
 			session.insert(jp);
-			System.out.println("Inserted Job Position " + jp.getTitle() + " into session.");
+//			System.out.println("Inserted Job Position " + jp.getTitle() + " into session.");
 		}
 	}
 }

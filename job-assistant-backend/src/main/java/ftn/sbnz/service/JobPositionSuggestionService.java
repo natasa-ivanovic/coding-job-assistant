@@ -1,8 +1,8 @@
 package ftn.sbnz.service;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 
-import org.apache.tools.ant.types.resources.selectors.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +20,30 @@ public class JobPositionSuggestionService {
 
 	private JobPositionRatingRepository ratingRepository;
 
+	private UserService userService;
+
 	private KieSessionService kieSession;
 
 	@Autowired
-	public JobPositionSuggestionService(JobPositionSuggestionRepository repository, KieSessionService kieSession, JobPositionRatingRepository ratingRepository) {
+	public JobPositionSuggestionService(JobPositionSuggestionRepository repository, KieSessionService kieSession,
+			JobPositionRatingRepository ratingRepository, UserService userService) {
 		this.repository = repository;
 		this.kieSession = kieSession;
 		this.ratingRepository = ratingRepository;
+		this.userService = userService;
 	}
 
 	public JobPositionSuggestionDTO create(JobSeeker jobSeeker) {
-		Date now = new Date();
-		JobPositionSuggestion suggestion = new JobPositionSuggestion(new Timestamp(now.getMillis()), jobSeeker);
+		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
+		Calendar rightNow = Calendar.getInstance();
+		JobPositionSuggestion suggestion = new JobPositionSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
 		kieSession.fireAllRules();
 
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {
 			this.ratingRepository.save(rating);
 		}
-		
+
 		JobPositionSuggestion created = repository.save(suggestion);
 		return new JobPositionSuggestionDTO(created);
 	}

@@ -1,5 +1,6 @@
 package ftn.sbnz.model.user;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,13 +43,13 @@ public class WorkingExperience {
 	private JobSeeker jobSeeker;
 	
 	@ManyToMany
-	private Set<Technology> technologies;
+	private Set<Technology> technologies = new HashSet<>();
 	
 	@ManyToMany
-	private Set<ProgrammingLanguage> progLanguages;
+	private Set<ProgrammingLanguage> progLanguages = new HashSet<>();
 	
 	@ManyToMany
-	private Set<Knowledge> knowledge;
+	private Set<Knowledge> knowledge = new HashSet<>();
 	
 	@ManyToOne
 	private JobPosition position;

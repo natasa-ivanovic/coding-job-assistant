@@ -1,6 +1,7 @@
 package ftn.sbnz.model.job_offer;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -33,7 +34,7 @@ public class JobOfferSuggestion {
 	private Timestamp date;
 	
 	@OneToMany
-	private Set<JobOfferRating> offerRatings;
+	private Set<JobOfferRating> offerRatings = new HashSet<>();
 
 	@ManyToOne
 	private JobSeeker jobSeeker;

@@ -36,15 +36,9 @@ public class LanguageProficiency {
 	@NonNull
 	private SkillProficiency proficiency;
 	
-	@ManyToMany
-	private Set<JobSeeker> jobSeekers;
-	
 	@ManyToOne
 	private Language language;
 
 	@OneToMany
-	private Set<InterviewSuggestion> interviewSuggestions;
-	
-	@OneToMany(mappedBy = "languageProficiency")
-	private Set<LanguageImportance> languageImportances = new HashSet<>();
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 }

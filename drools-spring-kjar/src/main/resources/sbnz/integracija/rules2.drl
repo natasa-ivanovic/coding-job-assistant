@@ -129,12 +129,12 @@ rule "JobPositionSuggestion - phase 2"
         
         $ratingList.sort((o1, o2) -> Integer.compare(o1.getRating(), o2.getRating()));
         
-		List<JobPositionRating> $jprTopTen;
+		Set<JobPositionRating> $jprTopTen;
 		
 		if ($ratingList.size() >= 10) 
-			$jprTopTen = new ArrayList($ratingList.subList(0,10));
+			$jprTopTen = new HashSet($ratingList.subList(0,10));
 		else 
-			$jprTopTen = new ArrayList($ratingList.subList(0, $ratingList.size()));
+			$jprTopTen = new HashSet($ratingList.subList(0, $ratingList.size()));
 		
         $jps.setPositionRatings($jprTopTen);
         
@@ -149,7 +149,5 @@ rule "JobPositionSuggestion - phase 3"
     then
         System.out.println("JobPositionSuggestion - PHASE 3");
         
-        // popuni seniority
-        
-        
+        // popuni seniority        
 end
