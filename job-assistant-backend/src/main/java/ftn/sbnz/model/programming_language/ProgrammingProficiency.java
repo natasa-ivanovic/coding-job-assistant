@@ -1,5 +1,6 @@
 package ftn.sbnz.model.programming_language;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,4 +43,7 @@ public class ProgrammingProficiency {
 
 	@OneToMany
 	private Set<InterviewSuggestion> interviewSuggestions;
+	
+	@OneToMany(mappedBy = "programmingProficiency")
+	private Set<ProgrammingImportance> programmingImportances = new HashSet<>();
 }

@@ -1,5 +1,6 @@
 package ftn.sbnz.model.soft_skill;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,4 +43,7 @@ public class SoftSkillProficiency {
 
 	@OneToMany
 	private Set<InterviewSuggestion> interviewSuggestions;
+	
+	@OneToMany(mappedBy = "softSkillProficiency")
+	private Set<SoftSkillImportance> softSkillImportances = new HashSet<>();
 }

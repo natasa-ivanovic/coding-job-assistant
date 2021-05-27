@@ -1,5 +1,6 @@
 package ftn.sbnz.model.technology;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,4 +43,7 @@ public class TechnologyProficiency {
 
 	@OneToMany
 	private Set<InterviewSuggestion> interviewSuggestions;
+	
+	@OneToMany(mappedBy = "technologyProficiency")
+	private Set<TechnologyImportance> technologyImportances = new HashSet<>();
 }

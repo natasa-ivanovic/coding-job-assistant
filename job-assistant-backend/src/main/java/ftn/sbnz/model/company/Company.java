@@ -32,9 +32,6 @@ public class Company {
 	@NonNull
 	private String name;
 	
-	@Column(name = "popularity", unique = false, nullable = false)
-	private float popularity;
-
 	@Column(name = "rank", unique = false, nullable = false)
 	@NonNull
 	private MedalRank medal;

@@ -5,19 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.enums.SkillProficiency;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "programming_importances")
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class ProgrammingImportance {
 	@Id
@@ -27,13 +24,10 @@ public class ProgrammingImportance {
 	@Column(name = "optional", unique = false, nullable = false)
 	private boolean optional;
 	
-	@Column(name = "proficiency", unique = false, nullable = false)
-	@NonNull
-	private SkillProficiency proficiency;
-
 	@Column(name = "importance", unique = false, nullable = false)
 	private int importance;
 	
-	@ManyToOne
-	private ProgrammingLanguage progLanguage;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "programming_proficiency_id", nullable = false, unique = false) 
+	private ProgrammingProficiency programmingProficiency;
 }
