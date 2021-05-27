@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -39,34 +40,34 @@ public class JobSeeker extends User{
 	@Column(name = "education")
 	private EducationLevel education;
 	
-	@ManyToMany
-	private Set<TechnologyProficiency> technologies;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<TechnologyProficiency> technologyProficiencies;
 
-	@ManyToMany
-	private Set<SoftSkillProficiency> softSkills;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<SoftSkillProficiency> softSkillProficiencies;
 	
-	@ManyToMany
-	private Set<ProgrammingProficiency> progLanguages;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<ProgrammingProficiency> programmingProficiencies;
 	
-	@ManyToMany
-	private Set<LanguageProficiency> languages;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<LanguageProficiency> languageProficiencies;
 	
-	@ManyToMany
-	private Set<KnowledgeProficiency> knowledge;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<KnowledgeProficiency> knowledgeProficiencies;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<WorkingExperience> experience;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobOfferReview> reviews;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobOfferSuggestion> offerSuggestions;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobPositionSuggestion> positionSuggestions;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobSeekerRanking> offerRankings;
 	
 }

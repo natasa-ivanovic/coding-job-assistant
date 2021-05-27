@@ -1,13 +1,155 @@
 package sbnz.integracija;
 
-import ftn.sbnz.model.Test;
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.technology.Technology;
+import ftn.sbnz.model.technology.TechnologyProficiency;
+import ftn.sbnz.model.programming_language.ProgrammingLanguage;
+import ftn.sbnz.model.programming_language.ProgrammingProficiency;
+import ftn.sbnz.model.knowledge.Knowledge;
+import ftn.sbnz.model.knowledge.KnowledgeProficiency;
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
 
-rule "Add new Test"
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import java.lang.StringBuilder;
+import java.lang.Integer;
+import java.lang.Object;
+
+global Integer programmingLanguageCoefficient;
+global Integer technologyCoefficient;
+global Integer knowledgeCoefficient;
+
+rule "JobPositionSuggestion - phase 1"
     when
-        $test: Test (enableMe == false)
+        $jps: JobPositionSuggestion(positionRatings.size() == 0, $user: jobSeeker ) and
+        $u_progLanguages: List() from accumulate(ProgrammingProficiency($programmingLang: programmingLanguage)
+        										from $user.programmingProficiencies,
+        										collectList($programmingLang)) and
+        $positions: ArrayList() from collect($jp: JobPosition
+        							   		($p_progLanguages: programmingLanguages,
+        							   		 $u_progLanguages intersects $p_progLanguages))
     then
-        System.out.println("Usao u Test Rule");
-        $test.setTest("Test successful!");
-        $test.setEnableMe(true);
-        update($test);
+        System.out.println("JobPositionSuggestion - PHASE 1");
+        
+        System.out.println("Number of positions: " + $positions.size());
+        for (int i = 0; i != $positions.size(); i++) {
+        	JobPosition $jp = (JobPosition) $positions.get(i);
+        	for (ProgrammingLanguage $lang : $jp.getProgrammingLanguages()) {
+        		JobPositionRating $jpr = new JobPositionRating();
+        		$jpr.setRating(0);
+        		$jpr.setTitle($jp.getTitle());
+        		$jpr.setSubtitle($lang.getName());
+        		$jpr.setDescription("");
+        		$jpr.setJobPosition($jp);
+        		$jpr.setSeniority(SeniorityLevel.NONE);
+        		$jps.getPositionRatings().add($jpr);
+    			System.out.println("Added job position with title: " + $jpr.getTitle() + " for language " + $jpr.getSubtitle());    
+        	}
+        }
+        update($jps);
+end
+
+rule "JobPositionSuggestion - phase 2"
+    when
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0) and
+        forall($pr: JobPositionRating(rating == 0, jobPosition != null, 
+        						     "".equals(description),
+        						     seniority.equals(SeniorityLevel.NONE))
+        						     from $positionRatings)
+    then
+        System.out.println("JobPositionSuggestion - PHASE 2");
+        
+        List<JobPositionRating> $ratingList = new ArrayList<>();
+        for (Iterator<JobPositionRating> iterator = $positionRatings.iterator(); iterator.hasNext();) {
+        	JobPositionRating $jpr = iterator.next();
+        	
+	        // rating = curProgLang * proficiency + everyTech * proficency in each + everyKnowledge * proficiency in each
+        	int $rating = 0;
+	        // description = cur lang - proficiency, every tech with every proficiency and knowledge with proficiency
+	        StringBuilder $description = new StringBuilder();
+
+	        Optional<ProgrammingProficiency> $profOptional = $user.getProgrammingProficiencies().stream().
+	        									 filter(prof -> prof.getProgrammingLanguage().getName().
+	        									 		equals($jpr.getSubtitle())).findFirst();
+	        if ($profOptional.isPresent()) {
+	        	ProgrammingProficiency $prof = $profOptional.get();
+				int $progLangValue = $prof.getProficiency().getValue() + 1;
+		        
+		        $rating += $progLangValue * programmingLanguageCoefficient;
+	
+				$description.append("Programming language - ");
+				$description.append($prof.getProgrammingLanguage().getName());
+				$description.append(" (" + $prof.getProficiency().toString() + ")\n");
+				
+		        for (Technology $t : $jpr.getJobPosition().getTechnologies()) {
+		        	Optional<TechnologyProficiency> $techOptional = $user.getTechnologyProficiencies().stream().
+		        									                 filter(tech -> tech.getTechnology().
+		        									                 		getId().equals($t.getId())).findFirst();
+		     		if ($techOptional.isPresent()) {
+		     			TechnologyProficiency $tech = $techOptional.get();
+			        	int $techValue = $tech.getProficiency().getValue() + 1;
+			        	$rating += $techValue * technologyCoefficient;
+			        	$description.append("Technology - ");
+			        	$description.append($tech.getTechnology().getName());
+			        	$description.append(" (" + $tech.getProficiency().toString() + ")\n");
+		        	}
+		        }	        
+		        
+		        for (Knowledge $k : $jpr.getJobPosition().getKnowledge()) {
+		        	Optional<KnowledgeProficiency> $knowOptional = $user.getKnowledgeProficiencies().stream().
+		        									   filter(kno -> kno.getKnowledge().
+		        									   		  getId().equals($k.getId())).findFirst();
+				    if ($knowOptional.isPresent()) {
+		     			KnowledgeProficiency $know = $knowOptional.get();
+			        	int $knowledgeValue = $know.getProficiency().getValue() + 1;
+			        	$rating += $knowledgeValue * knowledgeCoefficient;
+			        	$description.append("Knowledge - ");
+			        	$description.append($know.getKnowledge().getName());
+			        	$description.append(" (" + $know.getProficiency().toString() + ")\n");
+		        	}
+	
+		        }
+		        $jpr.setRating($rating);
+	        	$jpr.setDescription($description.toString());
+	        	$ratingList.add($jpr);
+	        }
+        }
+        
+        $ratingList.sort((o1, o2) -> Integer.compare(o1.getRating(), o2.getRating()));
+        
+		List<JobPositionRating> $jprTopTen;
+		
+		if ($ratingList.size() >= 10) 
+			$jprTopTen = new ArrayList($ratingList.subList(0,10));
+		else 
+			$jprTopTen = new ArrayList($ratingList.subList(0, $ratingList.size()));
+		
+        $jps.setPositionRatings($jprTopTen);
+        
+        update($jps);
+end
+
+rule "JobPositionSuggestion - phase 3"
+    when
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0) and
+        forall($pr: JobPositionRating(rating != 0, !("".equals(description)), seniority.equals(SeniorityLevel.NONE)) from $positionRatings)
+    then
+        System.out.println("JobPositionSuggestion - PHASE 3");
+        
+        // popuni seniority
+        
+        
 end

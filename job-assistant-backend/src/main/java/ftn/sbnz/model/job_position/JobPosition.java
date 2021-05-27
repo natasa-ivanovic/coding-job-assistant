@@ -1,9 +1,11 @@
 package ftn.sbnz.model.job_position;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,12 +34,12 @@ public class JobPosition {
 	@NonNull
 	private String title;
 	
-	@ManyToMany
-	private Set<ProgrammingLanguage> programmingLanguages;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<ProgrammingLanguage> programmingLanguages = new HashSet<>();
 
-	@ManyToMany
-	private Set<Knowledge> knowledge;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Knowledge> knowledge = new HashSet<>();
 
-	@ManyToMany
-	private Set<Technology> technologies;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Technology> technologies = new HashSet<>();
 }

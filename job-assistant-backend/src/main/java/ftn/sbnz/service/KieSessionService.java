@@ -15,6 +15,7 @@ public class KieSessionService {
 	public KieSessionService(KieContainer kieContainer) {
 		this.kieContainer = kieContainer;
 		this.kieSession = this.kieContainer.newKieSession("rulesSession");
+		System.out.println("Pokrenut opet Kie Session Service Bean");
 	}
 	
 	public void insert(Object o) {
@@ -27,6 +28,10 @@ public class KieSessionService {
 	
 	public void dispose() {
 		this.kieSession.dispose();
+	}
+	
+	public void setGlobal(String identifier, Object value) {
+		this.kieSession.setGlobal(identifier, value);
 	}
 	
 }
