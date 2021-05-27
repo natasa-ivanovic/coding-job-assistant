@@ -1,5 +1,6 @@
 package ftn.sbnz.model.knowledge;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,4 +43,7 @@ public class KnowledgeProficiency {
 
 	@OneToMany
 	private Set<InterviewSuggestion> interviewSuggestions;
+	
+	@OneToMany(mappedBy = "knowledgeProficiency")
+	private Set<KnowledgeImportance> knowledgeImportances = new HashSet<>();
 }

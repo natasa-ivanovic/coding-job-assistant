@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -50,19 +51,19 @@ public class JobOffer {
 	@ManyToOne
 	private JobPosition position;
 	
-	@OneToMany
+	@ManyToMany
 	private Set<ProgrammingImportance> programmingImportances;
 
-	@OneToMany
+	@ManyToMany
 	private Set<KnowledgeImportance> knowledgeImportances;
 
-	@OneToMany
+	@ManyToMany
 	private Set<TechnologyImportance> technologyImportances;
 
-	@OneToMany
+	@ManyToMany
 	private Set<SoftSkillImportance> softSkillImportances;
 
-	@OneToMany
+	@ManyToMany
 	private Set<LanguageImportance> languageImportances;
 	
 	@OneToMany

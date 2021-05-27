@@ -40,19 +40,19 @@ public class JobSeeker extends User{
 	private EducationLevel education;
 	
 	@ManyToMany
-	private Set<TechnologyProficiency> technologies;
+	private Set<TechnologyProficiency> technologyProficiencies;
 
 	@ManyToMany
-	private Set<SoftSkillProficiency> softSkills;
+	private Set<SoftSkillProficiency> softSkillProficiencies;
 	
 	@ManyToMany
-	private Set<ProgrammingProficiency> progLanguages;
+	private Set<ProgrammingProficiency> programmingProficiencies;
 	
 	@ManyToMany
-	private Set<LanguageProficiency> languages;
+	private Set<LanguageProficiency> languageProficiencies;
 	
 	@ManyToMany
-	private Set<KnowledgeProficiency> knowledge;
+	private Set<KnowledgeProficiency> knowledgeProficiencies;
 	
 	@OneToMany
 	private Set<WorkingExperience> experience;

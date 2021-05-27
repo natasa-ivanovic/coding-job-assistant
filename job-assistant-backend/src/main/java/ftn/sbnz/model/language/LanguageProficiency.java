@@ -1,5 +1,6 @@
 package ftn.sbnz.model.language;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.knowledge.KnowledgeImportance;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,4 +44,7 @@ public class LanguageProficiency {
 
 	@OneToMany
 	private Set<InterviewSuggestion> interviewSuggestions;
+	
+	@OneToMany(mappedBy = "languageProficiency")
+	private Set<LanguageImportance> languageImportances = new HashSet<>();
 }
