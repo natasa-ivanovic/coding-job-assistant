@@ -38,10 +38,7 @@ public class WorkingExperience {
 	@Column(name = "seniority", unique = false, nullable = false)
 	@NonNull
 	private SeniorityLevel seniority;
-	
-	@ManyToOne
-	private JobSeeker jobSeeker;
-	
+		
 	@ManyToMany
 	private Set<Technology> technologies = new HashSet<>();
 	

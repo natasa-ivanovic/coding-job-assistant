@@ -19,6 +19,8 @@ public class SessionInitializer {
 		session.setGlobal("programmingLanguageCoefficient", new Integer(10));
 		session.setGlobal("technologyCoefficient", new Integer(8));
 		session.setGlobal("knowledgeCoefficient", new Integer(5));
+		session.setGlobal("monthsExperienceCoefficient", new Float(1));
+		
 	}
 	
 	private static void addJobPositionsToContext(ApplicationContext context, KieSessionService session) {

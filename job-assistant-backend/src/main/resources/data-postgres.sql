@@ -717,6 +717,19 @@ insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencie
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 8); -- SQL - VERY_GOOD
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 83); -- EC6 - VERY_GOOD
 
+----------------------- users working experience ---------------------------
+-- user with id 2 - 'Job Seeker'
+
+insert into working_experiences (id, months, seniority, position_id) values (1, 20, 1, 1); -- Backend Junior Dev 20 months, Java
+
+insert into working_experiences_prog_languages (working_experience_id, prog_languages_id) values (1, 4);
+
+insert into working_experiences_technologies (working_experience_id, technologies_id) values (1, 16);
+
+insert into working_experiences_knowledge (working_experience_id, knowledge_id) values (1, 9);
+
+insert into users_working_experience (job_seeker_id, working_experience_id) values (2, 1);
+
 ------------------------------------------------------------------------------
 
 -- companies

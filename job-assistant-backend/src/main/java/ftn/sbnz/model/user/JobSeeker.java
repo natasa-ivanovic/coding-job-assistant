@@ -56,8 +56,8 @@ public class JobSeeker extends User{
 	@ManyToMany
 	private Set<KnowledgeProficiency> knowledgeProficiencies = new HashSet<>();
 	
-	@OneToMany
-	private Set<WorkingExperience> experience = new HashSet<>();
+	@OneToMany//(mappedBy = "jobSeeker")
+	private Set<WorkingExperience> workingExperience = new HashSet<>();
 	
 	@OneToMany
 	private Set<JobOfferReview> reviews = new HashSet<>();

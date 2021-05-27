@@ -4,6 +4,7 @@ import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.job_position.JobPositionSuggestion;
 import ftn.sbnz.model.job_position.JobPositionRating;
 import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.WorkingExperience;
 import ftn.sbnz.model.technology.Technology;
 import ftn.sbnz.model.technology.TechnologyProficiency;
 import ftn.sbnz.model.programming_language.ProgrammingLanguage;
@@ -29,6 +30,7 @@ import java.lang.Object;
 global Integer programmingLanguageCoefficient;
 global Integer technologyCoefficient;
 global Integer knowledgeCoefficient;
+global Float monthsExperienceCoefficient;
 
 rule "JobPositionSuggestion - phase 1"
     when
@@ -119,22 +121,22 @@ rule "JobPositionSuggestion - phase 2"
 			        	$description.append($know.getKnowledge().getName());
 			        	$description.append(" (" + $know.getProficiency().toString() + ")\n");
 		        	}
-	
 		        }
 		        $jpr.setRating($rating);
 	        	$jpr.setDescription($description.toString());
 	        	$ratingList.add($jpr);
+    			System.out.println("Updated job position with title: " + $jpr.getTitle() + "/" + 
+    								$jpr.getSubtitle() + " with rating " + $rating);  
 	        }
         }
         
-        $ratingList.sort((o1, o2) -> Integer.compare(o1.getRating(), o2.getRating()));
-        
-		Set<JobPositionRating> $jprTopTen;
+        $ratingList.sort((o1, o2) -> ((JobPositionRating) o2).getRating() -  ((JobPositionRating) o1).getRating());
+		List<JobPositionRating> $jprTopTen;
 		
-		if ($ratingList.size() >= 10) 
-			$jprTopTen = new HashSet($ratingList.subList(0,10));
+		if ($ratingList.size() >= 3) 
+			$jprTopTen = new ArrayList($ratingList.subList(0, 3));
 		else 
-			$jprTopTen = new HashSet($ratingList.subList(0, $ratingList.size()));
+			$jprTopTen = new ArrayList($ratingList.subList(0, $ratingList.size()));
 		
         $jps.setPositionRatings($jprTopTen);
         
@@ -149,5 +151,36 @@ rule "JobPositionSuggestion - phase 3"
     then
         System.out.println("JobPositionSuggestion - PHASE 3");
         
-        // popuni seniority        
+        List<JobPositionRating> $ratingList = new ArrayList<>();
+        for (Iterator<JobPositionRating> iterator = $positionRatings.iterator(); iterator.hasNext();) {
+        	JobPositionRating $jpr = iterator.next();
+       		int $seniorityPoints = 0;
+       		SeniorityLevel $newLevel = SeniorityLevel.JUNIOR;
+        	for (WorkingExperience $work : $user.getWorkingExperience()) {
+	        	Optional<ProgrammingLanguage> $langOptional = $work.getProgLanguages().stream().
+	        									                 filter(pl -> pl.getName().
+	        									                 		equals($jpr.getSubtitle())).findFirst();
+	     		if ($langOptional.isPresent()) {
+	     			int $effectiveMonths = $work.getSeniority().getValue() * $work.getMonths();
+	     			$seniorityPoints += (int) ($effectiveMonths * monthsExperienceCoefficient);
+	     			if ($effectiveMonths >= 18)
+	     				$newLevel = SeniorityLevel.MEDIOR;
+     				if ($effectiveMonths >= 36)
+     					$newLevel = SeniorityLevel.SENIOR;
+     				break;
+     				// TODO: expand by evaluating technologies/knowledge and potentially other working experience
+	        	}
+	        }
+	        $jpr.setSeniority($newLevel);
+	        $jpr.setRating($jpr.getRating() + $seniorityPoints);
+			System.out.println("Updated job position with title: " + $jpr.getTitle() + "/" + 
+								$jpr.getSubtitle() + " with seniority level " + $newLevel);  
+	        $ratingList.add($jpr);
+    	}
+        
+        $ratingList.sort((o1, o2) -> ((JobPositionRating) o2).getRating() -  ((JobPositionRating) o1).getRating());
+        
+        $jps.setPositionRatings($ratingList);
+        
+    	update($jps);
 end
