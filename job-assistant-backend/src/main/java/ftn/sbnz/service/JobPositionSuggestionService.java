@@ -38,6 +38,10 @@ public class JobPositionSuggestionService {
 		Calendar rightNow = Calendar.getInstance();
 		JobPositionSuggestion suggestion = new JobPositionSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
+		kieSession.setAgendaFocus("jps-p4");
+		kieSession.setAgendaFocus("jps-p3");
+		kieSession.setAgendaFocus("jps-p2");
+		kieSession.setAgendaFocus("jps-p1");
 		kieSession.fireAllRules();
 
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {

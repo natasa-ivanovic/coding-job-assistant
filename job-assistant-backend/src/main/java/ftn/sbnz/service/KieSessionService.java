@@ -34,4 +34,8 @@ public class KieSessionService {
 		this.kieSession.setGlobal(identifier, value);
 	}
 	
+	public void setAgendaFocus(String groupName) {
+		this.kieSession.getAgenda().getAgendaGroup(groupName).setFocus();
+	}
+	
 }
