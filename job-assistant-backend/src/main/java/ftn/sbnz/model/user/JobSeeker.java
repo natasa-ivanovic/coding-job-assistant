@@ -18,13 +18,16 @@ import ftn.sbnz.model.language.LanguageProficiency;
 import ftn.sbnz.model.programming_language.ProgrammingProficiency;
 import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
 import ftn.sbnz.model.technology.TechnologyProficiency;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @DiscriminatorValue("USER")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+
 public class JobSeeker extends User{
 	/**
 	 * 

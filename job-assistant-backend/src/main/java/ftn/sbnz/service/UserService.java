@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.exception.UserException;
+import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.repository.user.UserRepository;
 import ftn.sbnz.security.CustomUserDetailsService;
@@ -41,6 +42,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+
+	public void save(JobSeeker dbJobSeeker) {
+		this.userRepository.save(dbJobSeeker);		
+	}
+    
 	public UserTokenStateDTO login(String username, String password) throws UserException {
 		User existUser = null;
       try {
@@ -82,4 +88,5 @@ public class UserService {
 
         return new UserTokenStateDTO(user.getId(), jwt, expiresIn, user.getUsername(), user.getName(), user.getSurname());
     }
+
 }

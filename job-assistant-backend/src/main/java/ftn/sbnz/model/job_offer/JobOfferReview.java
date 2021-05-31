@@ -1,5 +1,8 @@
 package ftn.sbnz.model.job_offer;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +12,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_position.JobPositionRating;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "job_offer_reviews")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class JobOfferReview {
