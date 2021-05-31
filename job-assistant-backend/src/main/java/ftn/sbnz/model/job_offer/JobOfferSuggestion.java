@@ -1,8 +1,8 @@
 package ftn.sbnz.model.job_offer;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,8 +34,9 @@ public class JobOfferSuggestion {
 	private Timestamp date;
 	
 	@OneToMany
-	private Set<JobOfferRating> offerRatings = new HashSet<>();
+	private List<JobOfferRating> offerRatings = new ArrayList<>();
 
 	@ManyToOne
+	@NonNull
 	private JobSeeker jobSeeker;
 }

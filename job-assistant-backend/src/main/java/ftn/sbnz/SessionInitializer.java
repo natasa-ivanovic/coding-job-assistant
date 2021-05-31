@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 
+import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.repository.job_offer.JobOfferRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.service.KieSessionService;
 
@@ -13,6 +15,7 @@ public class SessionInitializer {
 		KieSessionService kieSession = context.getBean(KieSessionService.class);
 		initializeGlobals(kieSession);
 		addJobPositionsToContext(context, kieSession);
+		addJobOffersToContext(context, kieSession);
 	}
 
 	private static void initializeGlobals(KieSessionService session) {
@@ -29,6 +32,14 @@ public class SessionInitializer {
 		for (JobPosition jp : positions) {
 			session.insert(jp);
 //			System.out.println("Inserted Job Position " + jp.getTitle() + " into session.");
+		}
+	}
+	
+	private static void addJobOffersToContext(ApplicationContext context, KieSessionService session) {
+		JobOfferRepository jobOfferRepo = context.getBean(JobOfferRepository.class);
+		List<JobOffer> offers = jobOfferRepo.findAll();
+		for (JobOffer jo : offers) {
+			session.insert(jo);
 		}
 	}
 }

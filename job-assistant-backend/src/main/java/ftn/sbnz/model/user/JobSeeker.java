@@ -1,6 +1,8 @@
 package ftn.sbnz.model.user;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -62,10 +64,10 @@ public class JobSeeker extends User{
 	private Set<JobOfferReview> reviews = new HashSet<>();
 	
 	@OneToMany
-	private Set<JobOfferSuggestion> offerSuggestions = new HashSet<>();
+	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();
 	
 	@OneToMany
-	private Set<JobPositionSuggestion> positionSuggestions = new HashSet<>();
+	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
 	
 	@OneToMany
 	private Set<JobSeekerRanking> offerRankings = new HashSet<>();

@@ -1,0 +1,62 @@
+package sbnz.integracija;
+
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.WorkingExperience;
+import ftn.sbnz.model.technology.Technology;
+import ftn.sbnz.model.technology.TechnologyProficiency;
+import ftn.sbnz.model.programming_language.ProgrammingLanguage;
+import ftn.sbnz.model.programming_language.ProgrammingProficiency;
+import ftn.sbnz.model.knowledge.Knowledge;
+import ftn.sbnz.model.knowledge.KnowledgeProficiency;
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.JobOfferCategory;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import java.lang.StringBuilder;
+import java.lang.Integer;
+import java.lang.Object;
+
+
+rule "JobOfferSuggestion - offer selecting"
+	agenda-group "jos-p1"
+	lock-on-active
+	when $jobOfferSuggestion: JobOfferSuggestion($offerRatings: offerRatings, $user: jobSeeker) and
+		 forall(JobOfferRating(rating == 0) from $offerRatings) and
+		 $offer: JobOffer()
+		 $jobPositionSuggestions : List(size > 0) from collect (JobPositionSuggestion(jobSeeker.getId() == $user.getId())) and
+		 $latestJobPositionSuggestions : $jobPositionSuggestions.get($jobPositionSuggestions.size() - 1)
+		 //todo: query
+		 $latestJobPositions : List() from accumulate (JobPositionRating($jobPosition: jobPosition)
+		 											   from $latestJobPositionSuggestions.positionRatings,
+													   collectList($jobPosition)
+		 											) and
+		 eval($latestJobPositions contains $offer.jobPosition)
+	then
+		System.out.println("JobOfferSuggestion - PHASE 1");
+		JobOfferRating $jobOfferSuggestion = new JobOfferRating();
+		$jobOfferSuggestion.setRating(0);
+		$jobOfferSuggestion.setJobOfferCategory(JobOfferCategory.NONE);
+		$jobOfferSuggestion.setDescription("");
+		modify($jobOfferSuggestion) {
+			getOfferRatings().add($jobOfferSuggestion);
+		}
+		insert($jobOfferSuggestion);
+		System.out.println("Added job offer from company: " + $offer.getCompany().getName() + " for position " + $offer.getPosition().getTitle());
+end
