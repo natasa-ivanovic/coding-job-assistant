@@ -49,6 +49,8 @@ public class JobPositionSuggestionService {
 		}
 
 		JobPositionSuggestion created = repository.save(suggestion);
+		dbJobSeeker.getPositionSuggestions().add(suggestion);
+		userService.save(dbJobSeeker);
 		return new JobPositionSuggestionDTO(created);
 	}
 
