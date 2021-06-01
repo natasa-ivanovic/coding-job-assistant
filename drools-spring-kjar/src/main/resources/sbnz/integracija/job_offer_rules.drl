@@ -10,12 +10,18 @@ import ftn.sbnz.model.job_offer.JobOfferRating;
 
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.WorkingExperience;
+
 import ftn.sbnz.model.technology.Technology;
+import ftn.sbnz.model.technology.TechnologyImportance;
 import ftn.sbnz.model.technology.TechnologyProficiency;
+
 import ftn.sbnz.model.programming_language.ProgrammingLanguage;
 import ftn.sbnz.model.programming_language.ProgrammingProficiency;
+import ftn.sbnz.model.programming_language.ProgrammingImportance;
+
 import ftn.sbnz.model.knowledge.Knowledge;
 import ftn.sbnz.model.knowledge.KnowledgeProficiency;
+
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.enums.JobOfferCategory;
@@ -34,29 +40,179 @@ import java.lang.Integer;
 import java.lang.Object;
 
 
-rule "JobOfferSuggestion - offer selecting"
+rule "JobOfferSuggestion - phase 1 - offer selecting"
 	agenda-group "jos-p1"
 	lock-on-active
-	when $jobOfferSuggestion: JobOfferSuggestion($offerRatings: offerRatings, $user: jobSeeker) and
-		 forall(JobOfferRating(rating == 0) from $offerRatings) and
-		 $offer: JobOffer()
-		 $jobPositionSuggestions : List(size > 0) from collect (JobPositionSuggestion(jobSeeker.getId() == $user.getId())) and
-		 $latestJobPositionSuggestions : $jobPositionSuggestions.get($jobPositionSuggestions.size() - 1)
-		 //todo: query
-		 $latestJobPositions : List() from accumulate (JobPositionRating($jobPosition: jobPosition)
-		 											   from $latestJobPositionSuggestions.positionRatings,
-													   collectList($jobPosition)
-		 											) and
-		 eval($latestJobPositions contains $offer.jobPosition)
+	when 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($offerRatings: offerRatings, $user: jobSeeker) 
+					and
+		forall(JobOfferRating(rating == 0) from $offerRatings) 
+		and
+		$offer: JobOffer() 
+		and
+		$jobPositionSuggestions: 
+					List(size > 0) from collect (JobPositionSuggestion(jobSeeker.getId() == $user.getId())) 
+					and
+		$latestJobPositionSuggestions: 
+					JobPositionSuggestion() from $jobPositionSuggestions.get($jobPositionSuggestions.size() - 1)
+					and
+		//todo: query
+		Number(intValue >= 1) from accumulate (JobPositionRating($jobPosition: jobPosition, jobPosition.getTitle == $offer.getPosition().getTitle())
+		 											   from $latestJobPositionSuggestions.getPositionRatings(),
+													   count($jobPosition)
+		 										)
 	then
-		System.out.println("JobOfferSuggestion - PHASE 1");
-		JobOfferRating $jobOfferSuggestion = new JobOfferRating();
-		$jobOfferSuggestion.setRating(0);
-		$jobOfferSuggestion.setJobOfferCategory(JobOfferCategory.NONE);
-		$jobOfferSuggestion.setDescription("");
+		JobOfferRating $jor = new JobOfferRating();
+		$jor.setRating(0);
+		$jor.setCategory(JobOfferCategory.NONE);
+		$jor.setDescription("");
+		$jor.setJobOffer($offer);
 		modify($jobOfferSuggestion) {
-			getOfferRatings().add($jobOfferSuggestion);
+			getOfferRatings().add($jor)
 		}
-		insert($jobOfferSuggestion);
-		System.out.println("Added job offer from company: " + $offer.getCompany().getName() + " for position " + $offer.getPosition().getTitle());
+		insert($jor);
+		System.out.println("Phase 1 - Added job offer from company: " + $offer.getCompany().getName() + " for position " + $offer.getPosition().getTitle());
 end
+
+rule "JobOfferSuggestion - phase 2 - mandatory programming languages  (exist)"
+	agenda-group "jos-p2"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(rating == 0, $progImportances: jobOffer.getProgrammingImportances()) 
+		and 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userProgrammingLang: 
+					List() from accumulate(ProgrammingProficiency($progLang : programmingLanguage.getName()) 
+					   	   from $user.getProgrammingProficiencies(),
+					       collectList($progLang)) 
+		and
+		$offerProgImportance: 
+					ProgrammingImportance(optional == false, $userProgrammingLang contains programmingProficiency.getProgrammingLanguage().getName())
+					from $progImportances 
+		and
+		$userProficiency: 
+					ProgrammingProficiency(programmingLanguage.getName() == $offerProgImportance.getProgrammingProficiency().getProgrammingLanguage().getName()) 
+					from $user.getProgrammingProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerProgImportance.getProgrammingProficiency().getProficiency());
+		int $points = $offerProgImportance.getImportance() * $difference;
+		String $newDescription = "Programming language - " + $userProficiency.getProgrammingLanguage().getName() + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($points),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (mandatory exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);	
+end
+
+rule "JobOfferSuggestion - phase 2 - mandatory programming languages (not exist)"
+	agenda-group "jos-p2"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getProgrammingImportances()) 
+					and 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+					and
+		$userProgrammingLang: 
+					List() from accumulate(ProgrammingProficiency($progLang : programmingLanguage.getName()) 
+						   from $user.getProgrammingProficiencies(),
+						   collectList($progLang)) 
+					and
+		$offerProgImportance: 
+					ProgrammingImportance(optional == false, $userProgrammingLang not contains programmingProficiency.getProgrammingLanguage().getName())
+					from $progImportances
+	then
+		int $points = $offerProgImportance.getImportance() * $offerProgImportance.getProgrammingProficiency().getProficiency().getValue() * (-1);
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $language = $offerProgImportance.getProgrammingProficiency().getProgrammingLanguage().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Missing user proficiency for mandatory programming language - " + $language + " - negative points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (mandatory not exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);	
+end
+
+rule "JobOfferSuggestion - phase 2 - optional programming languages"
+	agenda-group "jos-p2"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getProgrammingImportances()) 
+					and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+					and
+		$userProgrammingLang: 
+					List() from accumulate(ProgrammingProficiency($progLang : programmingLanguage.getName()) 
+						   from $user.getProgrammingProficiencies(),
+						   collectList($progLang)) 
+					and
+		$offerProgImportance: 
+					ProgrammingImportance(optional == true, $userProgrammingLang contains programmingProficiency.getProgrammingLanguage().getName())
+					from $progImportances
+					and
+		$userProficiency: 
+					ProgrammingProficiency(programmingLanguage.getName() == $offerProgImportance.getProgrammingProficiency().getProgrammingLanguage().getName()) 
+					from $user.getProgrammingProficiencies()
+	then 
+		int $points = $offerProgImportance.getImportance() * $userProficiency.getProficiency().getValue();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $language = $offerProgImportance.getProgrammingProficiency().getProgrammingLanguage().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "User proficiency for optional programming language - " + $language + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (optional) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 3 - technology (exist)"
+	agenda-group "jos-p3"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $techImportances: jobOffer.getTechnologyImportances()) 
+					and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+					and
+		$userTech: 
+					List() from accumulate(TechnologyProficiency($technology : technology.getName()) 
+					from $user.getTechnologyProficiencies(),
+				   	collectList($technology)) 
+					and
+		$offerTechImportance: 
+					TechnologyImportance($userTech contains technologyProficiency.getTechnology().getName())
+					from $techImportances 
+					and
+		$userProficiency: 
+					TechnologyProficiency(technology.getName() == $offerTechImportance.getTechnologyProficiency().getTechnology().getName()) 
+					from $user.getTechnologyProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerTechImportance.getTechnologyProficiency().getProficiency());
+		int $points = $offerTechImportance.getImportance() * $difference;
+		String $newDescription = "Technology - " + $userProficiency.getTechnology().getName() + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($points),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 3 (technology exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+

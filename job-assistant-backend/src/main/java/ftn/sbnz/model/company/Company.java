@@ -4,9 +4,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,9 +38,9 @@ public class Company {
 	@NonNull
 	private MedalRank medal;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobOffer> jobOffers;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobOfferReview> jobOffersReviews;
 }
