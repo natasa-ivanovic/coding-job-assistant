@@ -29,6 +29,15 @@ public enum SkillProficiency {
         return (SkillProficiency) map.get(skillProf);
     }
     
+    public int skillDifference(SkillProficiency skillProf) {
+    	if (this.getValue() == skillProf.getValue())
+    		return 1;
+    	if (this.getValue() > skillProf.getValue())
+    		return this.getValue() - skillProf.getValue() + 1;
+    	
+    	return this.getValue() - skillProf.getValue() - 1;
+    }
+    
 	public int getValue() {
         return value;
     }

@@ -1,9 +1,11 @@
 package ftn.sbnz.model.job_offer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,24 +53,24 @@ public class JobOffer {
 	@ManyToOne
 	private JobPosition position;
 	
-	@ManyToMany
-	private Set<ProgrammingImportance> programmingImportances;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<ProgrammingImportance> programmingImportances = new HashSet<>();
 
-	@ManyToMany
-	private Set<KnowledgeImportance> knowledgeImportances;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<KnowledgeImportance> knowledgeImportances = new HashSet<>();
 
-	@ManyToMany
-	private Set<TechnologyImportance> technologyImportances;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<TechnologyImportance> technologyImportances = new HashSet<>();
 
-	@ManyToMany
-	private Set<SoftSkillImportance> softSkillImportances;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<SoftSkillImportance> softSkillImportances = new HashSet<>();
 
-	@ManyToMany
-	private Set<LanguageImportance> languageImportances;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<LanguageImportance> languageImportances = new HashSet<>();
 	
-	@OneToMany
-	private Set<JobOfferReview> reviews;
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<JobOfferReview> reviews = new HashSet<>();
 	
-	@OneToMany
-	private Set<JobSeekerRanking> rankings;
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<JobSeekerRanking> rankings = new HashSet<>();
 }

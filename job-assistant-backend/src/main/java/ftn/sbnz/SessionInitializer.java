@@ -9,6 +9,8 @@ import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.repository.company.CompanyRepository;
 import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.repository.job_offer.JobOfferRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.service.KieSessionService;
 
@@ -18,6 +20,7 @@ public class SessionInitializer {
 		initializeGlobals(kieSession);
 		addJobPositionsToContext(context, kieSession);
 		addCompaniesToContext(context, kieSession);
+		addJobOffersToContext(context, kieSession);
 		addOfferReviewsToContext(context, kieSession);
 	}
 
@@ -49,6 +52,14 @@ public class SessionInitializer {
 		List<JobOfferReview> list = repo.findAll();
 		for (JobOfferReview r : list) {
 			session.insert(r);
+		}
+	}
+	
+	private static void addJobOffersToContext(ApplicationContext context, KieSessionService session) {
+		JobOfferRepository jobOfferRepo = context.getBean(JobOfferRepository.class);
+		List<JobOffer> offers = jobOfferRepo.findAll();
+		for (JobOffer jo : offers) {
+			session.insert(jo);
 		}
 	}
 }

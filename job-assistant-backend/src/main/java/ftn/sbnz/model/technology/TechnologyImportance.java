@@ -20,10 +20,7 @@ public class TechnologyImportance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "optional", unique = false, nullable = false)
-	private boolean optional;
-	
+		
 	@Column(name = "importance", unique = false, nullable = false)
 	private int importance;
 	
