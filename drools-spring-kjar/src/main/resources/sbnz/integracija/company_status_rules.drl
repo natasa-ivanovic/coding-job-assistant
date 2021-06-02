@@ -4,45 +4,23 @@ import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.enums.MedalRank;
 
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-import java.util.HashSet;
-
-
-import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.job_position.JobPositionSuggestion;
-import ftn.sbnz.model.job_position.JobPositionRating;
-import ftn.sbnz.model.user.JobSeeker;
-import ftn.sbnz.model.user.WorkingExperience;
-import ftn.sbnz.model.technology.Technology;
-import ftn.sbnz.model.technology.TechnologyProficiency;
-import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-import ftn.sbnz.model.programming_language.ProgrammingProficiency;
-import ftn.sbnz.model.knowledge.Knowledge;
-import ftn.sbnz.model.knowledge.KnowledgeProficiency;
-import ftn.sbnz.model.enums.SkillProficiency;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-
-import java.lang.StringBuilder;
-import java.lang.Object;
-
 
 
 rule "Company Status - BRONZE"
     when
         $company: Company(medal == MedalRank.NONE) and
-        Number(intValue > 1) from accumulate(JobOfferReview
-                                                ($date: date, $date.isAfter(LocalDate.now().minusMonths(6)),
+        Number(intValue > 5) from accumulate(JobOfferReview
+                                                ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
                                                  company == $company,
-                                                 jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 0),
+                                                 jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                                             count(1))
     then
+        System.out.println("Company " + $company.getName() + " status set to BRONZE");
         modify ($company) {
             setMedal(MedalRank.BRONZE)
         }
@@ -50,19 +28,23 @@ end
 
 rule "Company Status - SILVER"
     when
-        $company: Company(medal == MedalRank.BRONZE) and
-        accumulate  (JobOfferReview ($company == company, $rating: rating), 
-                    $sum: sum($rating), 
+        $company: Company(medal == MedalRank.BRONZE, $companyId: id) and
+        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
+                    $sum: sum($rating),
                     $count: count(1)) and
-        eval ((doubleValue($sum) / doubleValue($count)) > 3.5) and
         accumulate  (JobOfferReview
-                        ($date: date, $date.isAfter(LocalDate.now().minusMonths(6)),
-                         company == $company, $hired: hired,
-                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 15),
-                    $numNotHired: count(1),
-                    $hiredList: collectList($hired == true)) and
-        eval($numNotHired > 1 && $hiredList.size() > 1)
+                        ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == $companyId,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
+                    $totalReviews: count(1)) and
+        accumulate  (JobOfferReview
+                        ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == $companyId, hired == true,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
+                    $totalHired: count(1)) and
+        eval(($sum / $count) > 3.5 && $totalReviews >= 8 && $totalHired >= 5)
     then
+        System.out.println("Company " + $company.getName() + " status set to SILVER");
         modify ($company) {
             setMedal(MedalRank.SILVER)
         }
@@ -70,19 +52,23 @@ end
 
 rule "Company Status - GOLD"
     when
-        $company: Company(medal == MedalRank.SILVER) and
-        accumulate  (JobOfferReview ($company == company, $rating: rating), 
+        $company: Company(medal == MedalRank.SILVER, $companyId: id) and
+        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
                     $sum: sum($rating), 
                     $count: count(1)) and
-        eval ((doubleValue($sum) / doubleValue($count)) > 4.5) and
         accumulate  (JobOfferReview
-                        ($date: date, $date.isAfter(LocalDate.now().minusMonths(6)),
-                         company == $company, $hired: hired,
-                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 30),
-                    $numNotHired: count(1),
-                    $hiredList: collectList($hired == true)) and
-        eval($numNotHired > 1 && $hiredList.size() > 1)
+                        ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == $companyId,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
+                    $totalReviews: count(1)) and
+        accumulate  (JobOfferReview
+                        ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == $companyId, hired == true,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
+                    $totalHired: count(1)) and
+        eval(($sum / $count) > 4 && $totalReviews >= 10 && $totalHired >= 8)
     then
+        System.out.println("Company " + $company.getName() + " status set to GOLD");
         modify ($company) {
             setMedal(MedalRank.GOLD)
         }

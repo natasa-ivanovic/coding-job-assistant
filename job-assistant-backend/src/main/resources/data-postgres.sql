@@ -1013,17 +1013,17 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 -- REVIEWS
 
 -- Levi 9 - BACKEND, MEDIOR, 'Job Seeker' user review - 1
-insert into job_offer_reviews ( id, poster_id, job_offer_id, company_id, rating, 
-								content, date, hired, interview_complexity, job_offered, 
-								rated_useful, rated_not_useful, recommends, salary)
-						values (1, 2, 1, 1, 5, 
-								'This is review 1 content', '2021-03-07 16:00:00.508-07', true, 2, true, 
-								10, 2, true, 1000);
+-- insert into job_offer_reviews ( poster_id, job_offer_id, company_id, rating, 
+-- 								content, date, hired, job_offered, interview_complexity, 
+-- 								rated_useful, rated_not_useful, recommends, salary)
+-- 						values (2, 1, 1, 5, 
+-- 								'This is review 1 content', '2021-03-07 16:00:00.508-07', true, true, 2, 
+-- 								10, 2, true, 1000);
 
--- Levi 9 - BACKEND, MEDIOR, 'Job Seeker' user review - 2
-insert into job_offer_reviews ( id, poster_id, job_offer_id, company_id, rating, 
-								content, date, hired, interview_complexity, job_offered, 
-								rated_useful, rated_not_useful, recommends, salary)
-						values (2, 2, 1, 1, 5, 
-								'This is review 2 content', '2021-03-07 16:00:00.508-07', true, 2, true, 
-								10, 2, true, 1000);
+-- -- Levi 9 - BACKEND, MEDIOR, 'Job Seeker' user review - 2
+-- insert into job_offer_reviews ( id, poster_id, job_offer_id, company_id, rating, 
+-- 								content, date, hired, interview_complexity, job_offered, 
+-- 								rated_useful, rated_not_useful, recommends, salary)
+-- 						values (2, 2, 1, 1, 5, 
+-- 								'This is review 2 content', '2021-03-07 16:00:00.508-07', true, 2, true, 
+-- 								10, 2, true, 1000);
