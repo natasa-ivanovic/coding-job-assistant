@@ -35,6 +35,8 @@ public class JobOfferSuggestionService {
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferSuggestion suggestion = new JobOfferSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
+		kieSession.setAgendaFocus("jos-p5");
+		kieSession.setAgendaFocus("jos-p4");
 		kieSession.setAgendaFocus("jos-p3");
 		kieSession.setAgendaFocus("jos-p2");
 		kieSession.setAgendaFocus("jos-p1");

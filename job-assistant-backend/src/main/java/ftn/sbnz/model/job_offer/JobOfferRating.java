@@ -31,7 +31,7 @@ public class JobOfferRating {
 	@Column(name = "rating", unique = false, nullable = false)
 	private int rating;
 
-	@Column(name = "description", unique = false, nullable = false)
+	@Column(name = "description", unique = false, nullable = false, columnDefinition="TEXT")
 	@NonNull
 	private String description;
 	

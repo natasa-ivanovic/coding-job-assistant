@@ -724,6 +724,9 @@ insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencie
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 8); -- SQL - VERY_GOOD
 insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencies_id) values (2, 83); -- EC6 - VERY_GOOD
 
+-- English
+insert into users_language_proficiencies (job_seeker_id, language_proficiencies_id) values (2, 3); -- ENGLISH, EXCELLENT
+
 ----------------------- users working experience ---------------------------
 -- user with id 2 - 'Job Seeker'
 
