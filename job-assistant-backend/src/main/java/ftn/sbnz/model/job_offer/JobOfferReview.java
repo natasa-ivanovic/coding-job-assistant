@@ -59,6 +59,10 @@ public class JobOfferReview {
 	
 	@Column(name = "recommends", unique = false, nullable = false)
 	private boolean recommends;
+
+	@Column(name = "date")
+	@NonNull
+	private Timestamp date;
 	
 	@ManyToOne
 	private Company company;
