@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 
-import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.repository.company.CompanyRepository;
+import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
+import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.repository.job_offer.JobOfferRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.service.KieSessionService;
@@ -15,7 +19,9 @@ public class SessionInitializer {
 		KieSessionService kieSession = context.getBean(KieSessionService.class);
 		initializeGlobals(kieSession);
 		addJobPositionsToContext(context, kieSession);
+		addCompaniesToContext(context, kieSession);
 		addJobOffersToContext(context, kieSession);
+		addOfferReviewsToContext(context, kieSession);
 	}
 
 	private static void initializeGlobals(KieSessionService session) {
@@ -23,7 +29,6 @@ public class SessionInitializer {
 		session.setGlobal("technologyCoefficient", new Integer(8));
 		session.setGlobal("knowledgeCoefficient", new Integer(5));
 		session.setGlobal("monthsExperienceCoefficient", new Float(1));
-		
 	}
 	
 	private static void addJobPositionsToContext(ApplicationContext context, KieSessionService session) {
@@ -31,7 +36,22 @@ public class SessionInitializer {
 		List<JobPosition> positions = jobPositionRepo.findAll();
 		for (JobPosition jp : positions) {
 			session.insert(jp);
-//			System.out.println("Inserted Job Position " + jp.getTitle() + " into session.");
+		}
+	}
+	
+	private static void addCompaniesToContext(ApplicationContext context, KieSessionService session) {
+		CompanyRepository repo = context.getBean(CompanyRepository.class);
+		List<Company> companies = repo.findAll();
+		for (Company c : companies) {
+			session.insert(c);
+		}
+	}
+	
+	private static void addOfferReviewsToContext(ApplicationContext context, KieSessionService session) {
+		JobOfferReviewRepository repo = context.getBean(JobOfferReviewRepository.class);
+		List<JobOfferReview> list = repo.findAll();
+		for (JobOfferReview r : list) {
+			session.insert(r);
 		}
 	}
 	

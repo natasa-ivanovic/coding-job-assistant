@@ -969,7 +969,9 @@ insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) v
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 3); -- Team work, EXPERT
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 4); -- Time management, EXPERT
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 5); -- Self motivation, EXCELLENT
--- -----------------------------------
+
+-----------------------------------------------------------------
+
 -- -- -- Vivify
 insert into job_offers (id, company_id, position_id, seniority, rank) values (7, 4, 1, 2, 0); -- BACKEND, MEDIOR, NONE
 
@@ -1009,3 +1011,24 @@ insert into job_offers_language_importances (job_offer_id, language_importances_
 
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (7, 1); -- Team work, EXCELLENT
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (7, 2); -- Time management, VERY GOOD
+
+-----------------------------------
+
+
+-- REVIEWS
+
+-- Levi 9 - BACKEND, MEDIOR, 'Job Seeker' user review - 1
+-- insert into job_offer_reviews ( poster_id, job_offer_id, company_id, rating, 
+-- 								content, date, hired, job_offered, interview_complexity, 
+-- 								rated_useful, rated_not_useful, recommends, salary)
+-- 						values (2, 1, 1, 5, 
+-- 								'This is review 1 content', '2021-03-07 16:00:00.508-07', true, true, 2, 
+-- 								10, 2, true, 1000);
+
+-- -- Levi 9 - BACKEND, MEDIOR, 'Job Seeker' user review - 2
+-- insert into job_offer_reviews ( id, poster_id, job_offer_id, company_id, rating, 
+-- 								content, date, hired, interview_complexity, job_offered, 
+-- 								rated_useful, rated_not_useful, recommends, salary)
+-- 						values (2, 2, 1, 1, 5, 
+-- 								'This is review 2 content', '2021-03-07 16:00:00.508-07', true, 2, true, 
+-- 								10, 2, true, 1000);

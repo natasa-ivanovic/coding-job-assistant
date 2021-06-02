@@ -1,7 +1,6 @@
 package ftn.sbnz.model.job_offer;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
 import ftn.sbnz.model.company.Company;
-import ftn.sbnz.model.job_position.JobPositionRating;
 import ftn.sbnz.model.user.JobSeeker;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -59,6 +57,10 @@ public class JobOfferReview {
 	
 	@Column(name = "recommends", unique = false, nullable = false)
 	private boolean recommends;
+
+	@Column(name = "date")
+	@NonNull
+	private Timestamp date;
 	
 	@ManyToOne
 	private Company company;
@@ -68,4 +70,20 @@ public class JobOfferReview {
 	
 	@ManyToOne
 	private JobSeeker poster;
+	
+	public JobOfferReview(JobOfferReviewDTO dto, JobOffer offer, JobSeeker user, Timestamp time) {
+		this.poster = user;
+		this.jobOffer = offer;
+		this.company = offer.getCompany();
+		this.date = time;
+		this.rating = dto.getRating();
+		this.content = dto.getContent();
+		this.salary = dto.getSalary();
+		this.hired = dto.isHired();
+		this.jobOffered = dto.isJobOffered();
+		this.recommends = dto.isRecommends();
+		this.interviewComplexity = dto.getInterviewComplexity();
+		this.ratedUseful = dto.getRatedUseful();
+		this.ratedNotUseful = dto.getRatedNotUseful();
+	}
 }
