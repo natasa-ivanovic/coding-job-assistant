@@ -727,6 +727,11 @@ insert into users_knowledge_proficiencies (job_seeker_id, knowledge_proficiencie
 -- English
 insert into users_language_proficiencies (job_seeker_id, language_proficiencies_id) values (2, 3); -- ENGLISH, EXCELLENT
 
+--Team work, EXPERT
+insert into users_soft_skill_proficiencies (job_seeker_id, soft_skill_proficiencies_id) values (2, 25);
+--Time management, EXPERT
+insert into users_soft_skill_proficiencies (job_seeker_id, soft_skill_proficiencies_id) values (2, 40);
+
 ----------------------- users working experience ---------------------------
 -- user with id 2 - 'Job Seeker'
 

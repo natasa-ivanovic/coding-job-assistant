@@ -1,6 +1,8 @@
 package ftn.sbnz.model.job_offer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -72,5 +74,6 @@ public class JobOffer {
 	private Set<JobOfferReview> reviews = new HashSet<>();
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobSeekerRanking> rankings = new HashSet<>();
+	private List<JobSeekerRanking> rankings = new ArrayList<>();
+	
 }
