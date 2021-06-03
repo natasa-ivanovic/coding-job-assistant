@@ -32,7 +32,7 @@ public class JobOfferReviewController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> createReview(@RequestBody JobOfferReviewDTO dto) {
+	public ResponseEntity<Object> createReview(@RequestBody JobOfferReviewDTO dto) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
 		service.create(dto, jobSeeker);

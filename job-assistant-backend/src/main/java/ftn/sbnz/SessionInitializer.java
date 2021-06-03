@@ -7,17 +7,20 @@ import org.springframework.context.ApplicationContext;
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyRepository;
 import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.repository.job_offer.JobOfferRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
+import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.service.KieSessionService;
 
 public class SessionInitializer {
 	public static void initializeSession(ApplicationContext context) {
 		KieSessionService kieSession = context.getBean(KieSessionService.class);
 		initializeGlobals(kieSession);
+		addJobSeekersToContext(context, kieSession);
 		addJobPositionsToContext(context, kieSession);
 		addCompaniesToContext(context, kieSession);
 		addJobOffersToContext(context, kieSession);
@@ -30,10 +33,17 @@ public class SessionInitializer {
 		session.setGlobal("knowledgeCoefficient", new Integer(5));
 		session.setGlobal("monthsExperienceCoefficient", new Float(1));
 	}
-	
+
+	private static void addJobSeekersToContext(ApplicationContext context, KieSessionService session) {
+		JobSeekerRepository repo = context.getBean(JobSeekerRepository.class);
+		List<JobSeeker> jobSeekers = repo.findAll();
+		for (JobSeeker js : jobSeekers) {
+			session.insert(js);
+		}
+	}
 	private static void addJobPositionsToContext(ApplicationContext context, KieSessionService session) {
-		JobPositionRepository jobPositionRepo = context.getBean(JobPositionRepository.class);
-		List<JobPosition> positions = jobPositionRepo.findAll();
+		JobPositionRepository repo = context.getBean(JobPositionRepository.class);
+		List<JobPosition> positions = repo.findAll();
 		for (JobPosition jp : positions) {
 			session.insert(jp);
 		}
