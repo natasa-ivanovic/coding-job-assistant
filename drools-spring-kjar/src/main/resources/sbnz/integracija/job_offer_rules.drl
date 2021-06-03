@@ -427,7 +427,7 @@ rule "JobOfferSuggestion - phase 7 - classify IMPROVEMENT NEEDED"
 		modify($jobOfferRating) {
 			setCategory(JobOfferCategory.IMPROVEMENT_NEEDED)
 		}
-		System.out.println("Phase 7 - Improvement needed for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+		System.out.println("Phase 7 - IMPROVEMENT NEEDED for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
 end
 
 
@@ -439,18 +439,20 @@ rule "JobOfferSuggestion - phase 7 - classify LOW COMPETITION"
 		$jobOfferRating:
 					JobOfferRating(category == JobOfferCategory.NONE)
 					and
-		accumulate (JobOffer($rankings: rankings), 
-					$followers: sum($rankings.size()), 
-					$all: count(1))
+		accumulate (JobSeekerRanking(), $followers: count(1))
 					and
-		eval($jobOfferRating.getJobOffer().getRankings().size() < ($followers/$all))
+		accumulate (JobOffer(), $allOffers: count(1))
+					and
+		accumulate(JobSeekerRanking(jobOffer.getId() == $jobOfferRating.getJobOffer().getId()), $offerFollowers: count(1))
+					and
+		eval($offerFollowers <= ($followers/$allOffers))
 	then
 		int $newRating = $jobOfferRating.getRating() + Math.abs($jobOfferRating.getJobOffer().getRankings().size() - 5);
 		modify($jobOfferRating) {
 			setCategory(JobOfferCategory.LOW_COMPETITION),
 			setRating($newRating)
 		}
-		System.out.println("Phase 7 - IMPROVEMENT NEEDED for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+		System.out.println("Phase 7 - LOW COMPETITION for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
 end
 
 
@@ -460,9 +462,11 @@ rule "JobOfferSuggestion - phase 7 - classify HOT COMPANY"
 	lock-on-active
 	when
 		$jobOfferRating:
-					JobOfferRating(category == JobOfferCategory.NONE, jobOffer.getCompany().getMedal() != MedalRank.NONE)
+					JobOfferRating(category == JobOfferCategory.NONE, $companyId: jobOffer.getCompany().getId())
+		and
+        $company: Company(id == $companyId, medal.getValue() >= 1, $medal: medal.getValue())
 	then
-		int $newRating = $jobOfferRating.getRating() + $jobOfferRating.getJobOffer().getCompany().getMedal().getValue() * 5;
+		int $newRating = $jobOfferRating.getRating() + $medal * 5;
 		modify($jobOfferRating) {
 			setCategory(JobOfferCategory.HOT_COMPANY),
 			setRating($newRating)

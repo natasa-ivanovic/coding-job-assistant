@@ -1,6 +1,7 @@
 package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,11 +50,16 @@ public class JobOffer {
 	@NonNull
 	private MedalRank medal;
 	
+	@Column(name = "datePosted", unique = false, nullable = false)
+	@NonNull
+	private Date datePosted;
+	
 	@ManyToOne
 	private Company company;
 	
 	@ManyToOne
 	private JobPosition position;
+	
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<ProgrammingImportance> programmingImportances = new HashSet<>();

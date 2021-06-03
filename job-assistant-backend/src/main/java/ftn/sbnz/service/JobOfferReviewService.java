@@ -42,9 +42,12 @@ public class JobOfferReviewService {
 		userService.save(dbJobSeeker);
 		
 		kieSession.insert(created);
+		kieSession.setAgendaFocus("job-offer-status");
+		kieSession.setAgendaFocus("company-status");
 		kieSession.fireAllRules();
 		
 		companyService.updateDBFromRule(offer.getCompany());
+		offerService.updateDBFromRule(offer);
 	}
 
 }

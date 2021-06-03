@@ -12,6 +12,7 @@ import java.util.Set;
 
 
 rule "Company Status - BRONZE"
+    agenda-group "company-status"
     when
         $company: Company(medal == MedalRank.NONE) and
         Number(intValue > 5) from accumulate(JobOfferReview
@@ -27,6 +28,7 @@ rule "Company Status - BRONZE"
 end
 
 rule "Company Status - SILVER"
+    agenda-group "company-status"
     when
         $company: Company(medal == MedalRank.BRONZE, $companyId: id) and
         accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
@@ -51,6 +53,7 @@ rule "Company Status - SILVER"
 end
 
 rule "Company Status - GOLD"
+    agenda-group "company-status"
     when
         $company: Company(medal == MedalRank.SILVER, $companyId: id) and
         accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
