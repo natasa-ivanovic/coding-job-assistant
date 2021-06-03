@@ -27,9 +27,14 @@ import ftn.sbnz.model.knowledge.Knowledge;
 import ftn.sbnz.model.knowledge.KnowledgeProficiency;
 import ftn.sbnz.model.knowledge.KnowledgeImportance;
 
+import ftn.sbnz.model.soft_skill.SoftSkill;
+import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
+import ftn.sbnz.model.soft_skill.SoftSkillImportance;
+
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.enums.JobOfferCategory;
+import ftn.sbnz.model.enums.MedalRank;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ import java.util.Iterator;
 import java.lang.StringBuilder;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.Math;
 
 
 rule "JobOfferSuggestion - phase 1 - offer selecting"
@@ -154,7 +160,7 @@ rule "JobOfferSuggestion - phase 2 - optional programming languages"
 	agenda-group "jos-p2"
 	lock-on-active
 	when 
-		//TODO: prebrojati optional jezike u offeru i prebrojati njegove jezike za novi bonus koeficijente
+		//TODO: prebrojati optional jezike i njegove jezike za dodatne poene
 		$jobOfferRating: 
 					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getProgrammingImportances()) 
 					and
@@ -336,7 +342,7 @@ rule "JobOfferSuggestion - phase 5 - language"
 	agenda-group "jos-p5"
 	lock-on-active
 	when
-		//TODO: daj mu neke bouns poene ako zna jos neke strane jezike koji nisu zahtevani
+		//TODO: dati bonus poene (proficiency) za jezike koji nisu zahtevani
 		$jobOfferRating: 
 					JobOfferRating(category == JobOfferCategory.NONE, $languageImportances: jobOffer.getLanguageImportances()) 
 					and
@@ -370,6 +376,114 @@ rule "JobOfferSuggestion - phase 5 - language"
 		System.out.println("Phase 5 (languages) - JobOfferSuggestion with points " + $points + " for language " + $language + " for position " + $jobPositionName  + " in company " + $companyName);
 end
 
+
+rule "JobOfferSuggestion - phase 6 - soft skills"
+	agenda-group "jos-p6"
+	lock-on-active
+	when
+		//TODO: dati bonus poene (proficiency) za soft skills koji nisu zahtevani
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $skillImportances: jobOffer.getSoftSkillImportances()) 
+					and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+					and
+		$userSkills: 
+					List() from accumulate(SoftSkillProficiency($skill : softSkill.getName()) 
+					from $user.getSoftSkillProficiencies(),
+				   	collectList($skill)) 
+					and
+		$offerSkillImportance: 
+					SoftSkillImportance($userSkills contains softSkillProficiency.getSoftSkill().getName())
+					from $skillImportances 
+					and
+		$userProficiency: 
+					SoftSkillProficiency(softSkill.getName() == $offerSkillImportance.getSoftSkillProficiency().getSoftSkill().getName()) 
+					from $user.getSoftSkillProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerSkillImportance.getSoftSkillProficiency().getProficiency());
+		int $points =  $difference * $offerSkillImportance.getImportance();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $skill = $userProficiency.getSoftSkill().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Skill - " + $skill + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 6 (soft skills) - JobOfferSuggestion with points " + $points + " for skill " + $skill + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+salience 50
+rule "JobOfferSuggestion - phase 7 - classify IMPROVEMENT NEEDED"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, rating <= 0) 
+	then
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.IMPROVEMENT_NEEDED)
+		}
+		System.out.println("Phase 7 - Improvement needed for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 30
+rule "JobOfferSuggestion - phase 7 - classify LOW COMPETITION"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE)
+					and
+		accumulate (JobOffer($rankings: rankings), 
+					$followers: sum($rankings.size()), 
+					$all: count(1))
+					and
+		eval($jobOfferRating.getJobOffer().getRankings().size() < ($followers/$all))
+	then
+		int $newRating = $jobOfferRating.getRating() + Math.abs($jobOfferRating.getJobOffer().getRankings().size() - 5);
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.LOW_COMPETITION),
+			setRating($newRating)
+		}
+		System.out.println("Phase 7 - IMPROVEMENT NEEDED for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 10
+rule "JobOfferSuggestion - phase 7 - classify HOT COMPANY"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE, jobOffer.getCompany().getMedal() != MedalRank.NONE)
+	then
+		int $newRating = $jobOfferRating.getRating() + $jobOfferRating.getJobOffer().getCompany().getMedal().getValue() * 5;
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.HOT_COMPANY),
+			setRating($newRating)
+		}
+		System.out.println("Phase 7 - HOT COMPANY for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 0
+rule "JobOfferSuggestion - phase 7 - classify BEST MATCH"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE)
+	then
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.BEST_MATCH)
+		}
+		System.out.println("Phase 7 - BEST MATCH for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
 
 
 
