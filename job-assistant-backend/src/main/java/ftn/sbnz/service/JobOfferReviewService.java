@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
+import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.user.JobSeeker;
@@ -40,11 +41,31 @@ public class JobOfferReviewService {
 		
 		dbJobSeeker.getReviews().add(created);
 		userService.save(dbJobSeeker);
-		
-		kieSession.insert(created);
+	}
+	
+	public void approve(Long id) throws Exception {
+		JobOfferReview review = repository.getOne(id);
+		if (!review.getStatus().equals(ReviewStatus.PENDING))
+			throw new Exception("Review already accepted or declined!");			
+		review.setStatus(ReviewStatus.APPROVED);
+		review = repository.save(review);
+			
+		kieSession.insert(review);
 		kieSession.fireAllRules();
 		
-		companyService.updateDBFromRule(offer.getCompany());
+		companyService.updateDBFromRule(review.getJobOffer().getCompany());
 	}
 
+	public void decline(Long id) throws Exception {
+		JobOfferReview review = repository.getOne(id);
+		if (!review.getStatus().equals(ReviewStatus.PENDING))
+			throw new Exception("Review already accepted or declined!");			
+		review.setStatus(ReviewStatus.DECLINED);
+		review = repository.save(review);
+			
+		kieSession.insert(review);
+		kieSession.fireAllRules();
+		
+		companyService.updateDBFromRule(review.getJobOffer().getCompany());
+	}
 }

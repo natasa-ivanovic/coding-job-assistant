@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.enums.JobOfferCategory;
+import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,6 +59,9 @@ public class JobOfferReview {
 	
 	@Column(name = "recommends", unique = false, nullable = false)
 	private boolean recommends;
+	
+	@Column(name = "status", unique = false, nullable = false)
+	private ReviewStatus status;
 
 	@Column(name = "date")
 	@NonNull
@@ -85,5 +90,6 @@ public class JobOfferReview {
 		this.interviewComplexity = dto.getInterviewComplexity();
 		this.ratedUseful = dto.getRatedUseful();
 		this.ratedNotUseful = dto.getRatedNotUseful();
+		this.status = ReviewStatus.PENDING;
 	}
 }

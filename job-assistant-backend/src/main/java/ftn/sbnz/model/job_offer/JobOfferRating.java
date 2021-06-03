@@ -1,4 +1,4 @@
-package ftn.sbnz.model.job_offer;
+                                          package ftn.sbnz.model.job_offer;
 
 import java.util.Set;
 

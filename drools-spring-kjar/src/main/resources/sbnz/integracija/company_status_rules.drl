@@ -3,6 +3,7 @@ package sbnz.integracija;
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +17,8 @@ rule "Company Status - BRONZE"
         $company: Company(medal == MedalRank.NONE) and
         Number(intValue > 5) from accumulate(JobOfferReview
                                                 ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
-                                                 company == $company,
+                                                 company.id == $company.id,
+                                                 status == ReviewStatus.APPROVED,
                                                  jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                                             count(1))
     then
@@ -29,17 +31,19 @@ end
 rule "Company Status - SILVER"
     when
         $company: Company(medal == MedalRank.BRONZE, $companyId: id) and
-        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
+        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating, status == ReviewStatus.APPROVED), 
                     $sum: sum($rating),
                     $count: count(1)) and
         accumulate  (JobOfferReview
                         ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
                          company.id == $companyId,
+                         status == ReviewStatus.APPROVED,
                          jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                     $totalReviews: count(1)) and
         accumulate  (JobOfferReview
                         ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
                          company.id == $companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
                          jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                     $totalHired: count(1)) and
         eval(($sum / $count) > 3.5 && $totalReviews >= 8 && $totalHired >= 5)
@@ -53,17 +57,19 @@ end
 rule "Company Status - GOLD"
     when
         $company: Company(medal == MedalRank.SILVER, $companyId: id) and
-        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating), 
+        accumulate  (JobOfferReview ($companyId == company.id, $rating: rating, status == ReviewStatus.APPROVED), 
                     $sum: sum($rating), 
                     $count: count(1)) and
         accumulate  (JobOfferReview
                         ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
                          company.id == $companyId,
+                         status == ReviewStatus.APPROVED,
                          jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                     $totalReviews: count(1)) and
         accumulate  (JobOfferReview
                         ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
                          company.id == $companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
                          jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
                     $totalHired: count(1)) and
         eval(($sum / $count) > 4 && $totalReviews >= 10 && $totalHired >= 8)

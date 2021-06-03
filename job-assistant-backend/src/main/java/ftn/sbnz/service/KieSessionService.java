@@ -18,7 +18,6 @@ public class KieSessionService {
 	public KieSessionService(KieContainer kieContainer) {
 		this.kieContainer = kieContainer;
 		this.kieSession = this.kieContainer.newKieSession("rulesSession");
-		System.out.println("Pokrenut opet Kie Session Service Bean");
 	}
 
 	public void insert(Object o) {

@@ -1,0 +1,28 @@
+package sbnz.integracija;
+
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOfferReview;
+import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
+
+
+rule "Malicious Reviewer CEP"
+    when
+        $company: Company(medal == MedalRank.NONE) and
+        Number(intValue > 5) from accumulate(JobOfferReview
+                                                ($date: date, $date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                                                 company == $company,
+                                                 jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5),
+                                            count(1))
+    then
+        System.out.println("Company " + $company.getName() + " status set to BRONZE");
+        modify ($company) {
+            setMedal(MedalRank.BRONZE)
+        }
+end
