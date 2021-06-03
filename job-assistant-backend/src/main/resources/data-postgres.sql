@@ -761,7 +761,7 @@ insert into language_importances (id, language_proficiency_id, importance) value
 
 -- -- job offers
 -- -- Levi9
-insert into job_offers (id, company_id, position_id, seniority, rank) values (1, 1, 1, 2, 0); -- BACKEND, MEDIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (1, 1, 1, 2, 0, '2021-06-01 16:00:00.508-07'); -- BACKEND, MEDIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (1, 8, 7); -- SQL DATABASES, VERY GOOD
@@ -800,7 +800,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (1, 2); -- Time management, VERY GOOD
 -- -----------------------------------------
 -- Levi9
-insert into job_offers (id, company_id, position_id, seniority, rank) values (2, 1, 2, 2, 0); -- FRONTEND, MEDIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (2, 1, 2, 2, 0, '2021-06-01 16:00:00.508-07'); -- FRONTEND, MEDIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (5, 84, 9); -- ES6 specification, EXCELLENT
@@ -827,7 +827,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (2, 2); -- Time management, VERY GOOD
 -- -------------------------------------
 -- -- Levi9
-insert into job_offers (id, company_id, position_id, seniority, rank) values (3, 1, 3, 3, 0); -- FULLSTACK, SENIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (3, 1, 3, 3, 0, '2021-06-01 16:00:00.508-07'); -- FULLSTACK, SENIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (6, 10, 9); -- SQL DATABASES, EXCELLENT
@@ -869,7 +869,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (3, 4); -- Time management, EXPERT
 -- -------------------------------------
 -- -- Levi9
-insert into job_offers (id, company_id, position_id, seniority, rank) values (4, 1, 22, 1, 0); -- TESTER, JUNIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (4, 1, 22, 1, 0, '2021-06-01 16:00:00.508-07'); -- TESTER, JUNIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (11, 56, 10); -- Testing metodologies, BASIC
@@ -905,7 +905,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 -- -------------------------------------
 
 -- Continental
-insert into job_offers (id, company_id, position_id, seniority, rank) values (5, 2, 10, 2, 0); -- DATABASE ADMINISTRATOR, MEDIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (5, 2, 10, 2, 0, '2021-06-01 16:00:00.508-07'); -- DATABASE ADMINISTRATOR, MEDIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (13, 9, 9); -- SQL Databases, EXCELLENT
@@ -933,7 +933,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 -- ------------------------------------
 
 -- VegaIT
-insert into job_offers (id, company_id, position_id, seniority, rank) values (6, 3, 11, 2, 0); -- ARTIFICIAL INTELLIGENCE SPECIALIST, MEDIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (6, 3, 11, 2, 0, '2021-06-01 16:00:00.508-07'); -- ARTIFICIAL INTELLIGENCE SPECIALIST, MEDIOR, NONE
 
 -- knowledge importances
 insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (15, 88, 9); -- Neural networks, VERY GOOD
@@ -973,7 +973,7 @@ insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importan
 -----------------------------------------------------------------
 
 -- -- -- Vivify
-insert into job_offers (id, company_id, position_id, seniority, rank) values (7, 4, 1, 2, 0); -- BACKEND, MEDIOR, NONE
+insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (7, 4, 1, 2, 0, '2021-06-01 16:00:00.508-07'); -- BACKEND, MEDIOR, NONE
 
 -- knowledge importances
 -- insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (17, 8, false, 7); -- SQL DATABASES, VERY GOOD

@@ -49,11 +49,8 @@ public class JobOfferReviewService {
 			throw new Exception("Review already accepted or declined!");			
 		review.setStatus(ReviewStatus.APPROVED);
 		review = repository.save(review);
-			
-		kieSession.insert(review);
-		kieSession.fireAllRules();
-		
-		companyService.updateDBFromRule(review.getJobOffer().getCompany());
+
+		executeSession(review);
 	}
 
 	public void decline(Long id) throws Exception {
@@ -62,10 +59,17 @@ public class JobOfferReviewService {
 			throw new Exception("Review already accepted or declined!");			
 		review.setStatus(ReviewStatus.DECLINED);
 		review = repository.save(review);
-			
+		
+		executeSession(review);
+	}
+	
+	private void executeSession(JobOfferReview review) {
 		kieSession.insert(review);
+		kieSession.setAgendaFocus("job-offer-status");
+		kieSession.setAgendaFocus("company-status");
 		kieSession.fireAllRules();
 		
 		companyService.updateDBFromRule(review.getJobOffer().getCompany());
+		offerService.updateDBFromRule(review.getJobOffer());
 	}
 }

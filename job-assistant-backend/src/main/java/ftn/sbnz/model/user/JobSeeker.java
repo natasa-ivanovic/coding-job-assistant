@@ -73,6 +73,6 @@ public class JobSeeker extends User{
 	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
 	
 	@OneToMany
-	private Set<JobSeekerRanking> offerRankings = new HashSet<>();
+	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
 	
 }
