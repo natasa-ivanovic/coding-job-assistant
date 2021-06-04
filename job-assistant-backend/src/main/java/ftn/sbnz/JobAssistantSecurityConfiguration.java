@@ -22,6 +22,7 @@ import ftn.sbnz.security.CustomUserDetailsService;
 import ftn.sbnz.security.TokenUtils;
 import ftn.sbnz.security.auth.RestAuthenticationEntryPoint;
 import ftn.sbnz.security.auth.TokenAuthenticationFilter;
+import ftn.sbnz.service.KieSessionService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -49,6 +50,9 @@ public class JobAssistantSecurityConfiguration extends WebSecurityConfigurerAdap
 
 	@Autowired
 	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@Autowired
+	private KieSessionService kieSession;
 
 	// Registrujemo authentication manager koji ce da uradi autentifikaciju
 	// korisnika za nas
@@ -103,7 +107,7 @@ public class JobAssistantSecurityConfiguration extends WebSecurityConfigurerAdap
 				// umetni custom filter TokenAuthenticationFilter kako bi se vrsila provera JWT
 				// tokena umesto cistih korisnickog imena i lozinke (koje radi
 				// BasicAuthenticationFilter)
-				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService),
+				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService, kieSession),
 						BasicAuthenticationFilter.class);
 		// zbog jednostavnosti primera
 		http.csrf().disable();
