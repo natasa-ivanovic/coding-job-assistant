@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 
 import ftn.sbnz.model.enums.EducationLevel;
 import ftn.sbnz.model.job_offer.JobOfferReview;
+import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.job_offer.JobOfferSuggestion;
 import ftn.sbnz.model.job_position.JobPositionSuggestion;
 import ftn.sbnz.model.knowledge.KnowledgeProficiency;
@@ -75,4 +76,6 @@ public class JobSeeker extends User{
 	@OneToMany
 	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
 	
+	@OneToMany
+	private List<JobOfferStatistic> statistics = new ArrayList<>();
 }

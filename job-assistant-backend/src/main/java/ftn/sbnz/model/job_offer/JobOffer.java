@@ -82,4 +82,6 @@ public class JobOffer {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<JobSeekerRanking> rankings = new ArrayList<>();
 	
+	@OneToMany
+	private List<JobOfferStatistic> statistics = new ArrayList<>();
 }

@@ -1,0 +1,80 @@
+package sbnz.integracija;
+
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+import ftn.sbnz.model.job_offer.JobOfferDifference;
+import ftn.sbnz.model.job_offer.JobOfferStatistic;
+
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.WorkingExperience;
+
+import ftn.sbnz.model.technology.Technology;
+import ftn.sbnz.model.technology.TechnologyImportance;
+import ftn.sbnz.model.technology.TechnologyProficiency;
+
+import ftn.sbnz.model.programming_language.ProgrammingLanguage;
+import ftn.sbnz.model.programming_language.ProgrammingProficiency;
+import ftn.sbnz.model.programming_language.ProgrammingImportance;
+
+import ftn.sbnz.model.language.Language;
+import ftn.sbnz.model.language.LanguageProficiency;
+import ftn.sbnz.model.language.LanguageImportance;
+
+import ftn.sbnz.model.knowledge.Knowledge;
+import ftn.sbnz.model.knowledge.KnowledgeProficiency;
+import ftn.sbnz.model.knowledge.KnowledgeImportance;
+
+import ftn.sbnz.model.soft_skill.SoftSkill;
+import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
+import ftn.sbnz.model.soft_skill.SoftSkillImportance;
+
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.JobOfferCategory;
+import ftn.sbnz.model.enums.MedalRank;
+
+import ftn.sbnz.model.enums.CVElement;
+import ftn.sbnz.model.enums.SkillProficiency;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
+
+
+rule "Job Seeker statistic for offer - programming language"
+    agenda-group "job-seeker-statistic"
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer, jobOfferDifferences.size() == 0)
+        and
+        $userProgProficiency: ProgrammingProficiency() from $jobSeeker.getProgrammingProficiencies()
+        and
+        $jobProgProficiencies: List() from accumulate (ProgrammingImportance($proficiency: programmingProficiency) 
+                                                     from $jobOffer.getProgrammingImportances(),
+                                                     collectList($proficiency))
+        and
+        $jobProgProficiency: ProgrammingProficiency(programmingLanguage.getName() == $userProgProficiency.getProgrammingLanguage().getName())
+                             from $jobProgProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $language = $userProgProficiency.getProgrammingLanguage().getName();
+        SkillProficiency $userProficiency = $userProgProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
+        $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
+        $jod.setSubject($language);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        modify($jos) {
+            getJobOfferDifferences().add($jod);
+        }
+        System.out.println("Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+        System.out.println("---");
+end

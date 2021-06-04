@@ -1,5 +1,7 @@
 package ftn.sbnz.service;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.exception.UserException;
+import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.repository.user.UserRepository;
@@ -27,19 +30,26 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     private CustomUserDetailsService userDetailsService;
     private AuthorityService authorityService;
+    private KieSessionService kieSession;
 
     @Autowired
     public UserService(UserRepository userRepository, TokenUtils tokenUtils, AuthenticationManager authenticationManager,
-                       CustomUserDetailsService userDetailsService, AuthorityService authorityService) {
+                       CustomUserDetailsService userDetailsService, AuthorityService authorityService,
+                       KieSessionService kieSession) {
         this.userRepository = userRepository;
         this.tokenUtils = tokenUtils;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.authorityService = authorityService;
+        this.kieSession = kieSession;
     }
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    
+    public User findUser(Long id) {
+    	return userRepository.getOne(id);
     }
 
 
@@ -88,5 +98,6 @@ public class UserService {
 
         return new UserTokenStateDTO(user.getId(), jwt, expiresIn, user.getUsername(), user.getName(), user.getSurname());
     }
+    
 
 }
