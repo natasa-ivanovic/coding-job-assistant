@@ -8,10 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.enums.CVElement;
 import ftn.sbnz.model.enums.SkillProficiency;
 import lombok.Data;
-import lombok.NonNull;
 
 @Entity
 @Table(name = "job_offer_difference")
@@ -20,9 +18,6 @@ public class JobOfferDifference {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "difference_type", unique = false, nullable = false)
-	private CVElement cvElement;
 	
 	@Column(name = "subject", unique = false, nullable = false)
 	private String subject;

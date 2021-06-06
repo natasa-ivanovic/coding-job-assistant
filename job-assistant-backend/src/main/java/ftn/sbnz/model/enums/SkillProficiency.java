@@ -5,11 +5,12 @@ import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public enum SkillProficiency {
-	BASIC(0),
-	GOOD(1),
-	VERY_GOOD(2),
-	EXCELLENT(3),
-	EXPERT(4);
+	NONE(0),
+	BASIC(1),
+	GOOD(2),
+	VERY_GOOD(3),
+	EXCELLENT(4),
+	EXPERT(5);
 	
 	private int value;
     @SuppressWarnings("rawtypes")

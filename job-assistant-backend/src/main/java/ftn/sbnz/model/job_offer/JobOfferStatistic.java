@@ -17,10 +17,14 @@ import javax.persistence.Table;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "job_offer_statistic")
 @Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class JobOfferStatistic {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +35,19 @@ public class JobOfferStatistic {
 	private Timestamp date;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> jobOfferDifferences = new ArrayList<>();
+	private List<JobOfferDifference> programmingDifferences = new ArrayList<>();
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<JobOfferDifference> technologyDifferences = new ArrayList<>();
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<JobOfferDifference> knowledgeDifferences = new ArrayList<>();
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<JobOfferDifference> softSkillDifferences = new ArrayList<>();
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<JobOfferDifference> languageDifferences = new ArrayList<>();
 	
 	@ManyToOne
 	private JobOffer jobOffer;

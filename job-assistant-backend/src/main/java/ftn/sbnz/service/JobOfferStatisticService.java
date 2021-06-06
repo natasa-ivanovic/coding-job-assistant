@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ftn.sbnz.dto.job_offer.JobOfferStatisticDTO;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.user.JobSeeker;
@@ -32,7 +33,7 @@ public class JobOfferStatisticService {
 		this.kieSession = kieSession;
 	}
 	
-	public void create(Long jobSeekerId, Long jobOfferId) {
+	public JobOfferStatisticDTO create(Long jobSeekerId, Long jobOfferId) {
 		JobOffer jo = this.jobOfferService.getOffer(jobOfferId);
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		Calendar rightNow = Calendar.getInstance();
@@ -45,6 +46,8 @@ public class JobOfferStatisticService {
 		js.getStatistics().add(statistic);
 		this.jobOfferService.save(jo);
 		this.jobSeekerRepository.save(js);
+		JobOfferStatisticDTO dto = new JobOfferStatisticDTO(statistic);
+		return dto;
 }
 	
 	public void analyze(JobOfferStatistic jos) {
