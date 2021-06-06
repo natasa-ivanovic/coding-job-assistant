@@ -1,8 +1,6 @@
 package ftn.sbnz.model.user;
 
-import java.sql.Timestamp;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,11 +14,9 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.job_position.JobPositionRating;
 import ftn.sbnz.model.knowledge.Knowledge;
 import ftn.sbnz.model.programming_language.ProgrammingLanguage;
 import ftn.sbnz.model.technology.Technology;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

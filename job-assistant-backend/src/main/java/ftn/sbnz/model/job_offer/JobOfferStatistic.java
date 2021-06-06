@@ -16,11 +16,15 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "job_offer_statistic")
 @Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class JobOfferStatistic {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

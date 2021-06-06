@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import ftn.sbnz.model.enums.CVElement;
 import ftn.sbnz.model.enums.SkillProficiency;
 import lombok.Data;
-import lombok.NonNull;
 
 @Entity
 @Table(name = "job_offer_difference")
