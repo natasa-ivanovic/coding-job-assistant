@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
 import ftn.sbnz.model.company.Company;
-import ftn.sbnz.model.enums.JobOfferCategory;
 import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Getter;

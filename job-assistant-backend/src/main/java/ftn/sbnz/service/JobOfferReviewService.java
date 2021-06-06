@@ -2,14 +2,11 @@ package ftn.sbnz.service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
-import ftn.sbnz.events.MaliciousReviewerEvent;
 import ftn.sbnz.events.UserAccountStatusEvent;
 import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.job_offer.JobOffer;

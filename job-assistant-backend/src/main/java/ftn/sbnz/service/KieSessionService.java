@@ -5,8 +5,11 @@ import java.util.Collection;
 import org.drools.core.ObjectFilter;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ftn.sbnz.events.InvalidLoginEvent;
 
 @Service
 public class KieSessionService {
@@ -51,6 +54,23 @@ public class KieSessionService {
 
 		Collection<Object> results = (Collection<Object>) kieSession.getObjects(filter);
 		return results;
+	}
+
+	public void removeLoginEvents(Long userId) {
+		ObjectFilter filter = new ObjectFilter() {
+			@Override
+			public boolean accept(Object object) {
+				if (object.getClass().equals(InvalidLoginEvent.class)) {
+					InvalidLoginEvent event = (InvalidLoginEvent) object;
+					return event.getJobSeekerId().equals(userId);
+				}
+				return false;
+			}
+		};
+		Collection<FactHandle> events = this.kieSession.getFactHandles(filter);
+		for (FactHandle handle : events) {
+			this.kieSession.delete(handle);			
+		}
 	}
 
 }

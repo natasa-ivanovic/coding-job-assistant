@@ -17,64 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 
-salience 100
-rule "UserReview attempted - check if he's to be banned (3 malicious reviewer events)"
-    agenda-group "user-account-status-check"
-    when
-        $fact: UserAccountStatusEvent($userId: userId) and
-        Number(intValue > 2) from accumulate (MaliciousReviewerEvent(jobSeekerId == $userId), count(1))
-    then
-        modify ($fact) {
-            setAllowed(false),
-            setBanned(true)
-        }
-        delete($fact);
-end
-
-salience 75
-rule "UserReview attempted - not allowed (malicious event in last 15 days)"
-    agenda-group "user-account-status-check"
-    when
-        $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
-        $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime before $endDate)
-    then
-        modify ($fact) {
-            setAllowed(false),
-            setBanned(false)
-        }
-        delete($fact);
-end
-
-salience 50
-rule "UserReview attempted - allowed (no malicious event in last 15 days)"
-    agenda-group "user-account-status-check"
-    when
-        $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
-        $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime after $endDate) 
-    then
-        modify ($fact) {
-            setAllowed(true),
-            setBanned(false)
-        }
-        delete($fact);
-end
-
-
-salience 25
-rule "UserReview attempted - if it passed all checks set to allow"
-    agenda-group "user-account-status-check"
-    when
-        $fact: UserAccountStatusEvent()
-    then
-        modify ($fact) {
-            setAllowed(true),
-            setBanned(false)
-        }
-        delete($fact);
-end
-
-
-
 rule "ReviewDeclinedEvent added - review declined"
     agenda-group "job-offer-review-added"
     when

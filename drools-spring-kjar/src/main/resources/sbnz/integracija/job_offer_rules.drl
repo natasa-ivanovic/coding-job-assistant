@@ -68,7 +68,6 @@ rule "JobOfferSuggestion - phase 1 - offer selecting"
 		$latestJobPositionSuggestions: 
 					JobPositionSuggestion() from $jobPositionSuggestions.get($jobPositionSuggestions.size() - 1)
 					and
-		//todo: query
 		Number(intValue >= 1) from accumulate (JobPositionRating($jobPosition: jobPosition, jobPosition.getTitle == $offer.getPosition().getTitle())
 		 											   from $latestJobPositionSuggestions.getPositionRatings(),
 													   count($jobPosition)
@@ -160,7 +159,6 @@ rule "JobOfferSuggestion - phase 2 - optional programming languages"
 	agenda-group "jos-p2"
 	lock-on-active
 	when 
-		//TODO: prebrojati optional jezike i njegove jezike za dodatne poene
 		$jobOfferRating: 
 					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getProgrammingImportances()) 
 					and
@@ -342,7 +340,6 @@ rule "JobOfferSuggestion - phase 5 - language"
 	agenda-group "jos-p5"
 	lock-on-active
 	when
-		//TODO: dati bonus poene (proficiency) za jezike koji nisu zahtevani
 		$jobOfferRating: 
 					JobOfferRating(category == JobOfferCategory.NONE, $languageImportances: jobOffer.getLanguageImportances()) 
 					and
@@ -381,7 +378,6 @@ rule "JobOfferSuggestion - phase 6 - soft skills"
 	agenda-group "jos-p6"
 	lock-on-active
 	when
-		//TODO: dati bonus poene (proficiency) za soft skills koji nisu zahtevani
 		$jobOfferRating: 
 					JobOfferRating(category == JobOfferCategory.NONE, $skillImportances: jobOffer.getSoftSkillImportances()) 
 					and

@@ -16,8 +16,8 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Data;
-import lombok.NonNull;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Entity
