@@ -48,7 +48,7 @@ public class JobOfferStatisticService {
 		this.jobSeekerRepository.save(js);
 		JobOfferStatisticDTO dto = new JobOfferStatisticDTO(statistic);
 		return dto;
-}
+	}
 	
 	public void analyze(JobOfferStatistic jos) {
 		kieSession.insert(jos);

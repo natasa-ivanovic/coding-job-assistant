@@ -703,6 +703,83 @@ insert into language_proficiencies (id, language_id, proficiency) values (23, 5,
 insert into language_proficiencies (id, language_id, proficiency) values (24, 5, 3); -- EXCELLENT
 insert into language_proficiencies (id, language_id, proficiency) values (25, 5, 4); -- EXPERT
 
+----------------------- learning materials --------------------------------
+-- proficiency 1, 2, 3, 4, 5 (basic, good, very good, excellent, expert)
+-- cv element 0, 1, 2, 3, 4
+-- programming languages
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 0, 'Python', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 0, 'Python', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 0, 'Python', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 0, 'Python', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 0, 'Python', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 0, 'Java', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 0, 'Java', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 0, 'Java', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 0, 'Java', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 0, 'Java', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 0, 'SQL', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 0, 'SQL', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 0, 'SQL', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 0, 'SQL', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 0, 'SQL', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 0, 'JavaScript', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 0, 'JavaScript', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 0, 'JavaScript', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 0, 'JavaScript', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 0, 'JavaScript', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 0, 'C#', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 0, 'C#', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 0, 'C#', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 0, 'C#', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 0, 'C#', 'expert url', 'expert description'); -- expert
+
+-- technologies
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Spring Boot', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Spring Boot', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Spring Boot', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Spring Boot', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Spring Boot', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Spring', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Spring', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Spring', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Spring', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Spring', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'JUnit', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'JUnit', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'JUnit', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'JUnit', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'JUnit', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Selenium', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Selenium', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Selenium', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Selenium', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Selenium', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Jasmine', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Jasmine', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Jasmine', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Jasmine', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Jasmine', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Vue', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Vue', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Vue', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Vue', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Vue', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Angular', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Angular', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Angular', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Angular', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Angular', 'expert url', 'expert description'); -- expert
+
 ----------------------- users proficiencies -------------------------------
 -- user with id 2 - 'Job Seeker'
 

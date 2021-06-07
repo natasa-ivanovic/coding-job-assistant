@@ -1,28 +1,42 @@
 package ftn.sbnz.model.interview;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DiscriminatorOptions;
-
+import ftn.sbnz.model.enums.CVElement;
+import ftn.sbnz.model.enums.SkillProficiency;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING, length = 8)
-// bice ili RESOURCE ili ADVICE
-@DiscriminatorOptions(force = true)
 @Table(name = "interview_suggestions")
 @Data
-public abstract class InterviewSuggestion {
+@NoArgsConstructor
+public class InterviewSuggestion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
+	
+	@Column(name = "proficiency")
+	private SkillProficiency proficiency;
+	
+	@Column(name = "cv_element")
+	private CVElement cvElement;
+	
+	@Column(name = "subject")
+	private String subject;
+	
+	@Column(name = "url", nullable = false)
+	private String url;
+
+	@Column(name = "description", unique = false, nullable = false)
+	private String description;
+	
+//	@ManyToMany
+//	private List<InterviewSuggestionStatus> statuses = new ArrayList<>();
+
 }

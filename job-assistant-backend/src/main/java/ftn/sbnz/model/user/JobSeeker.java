@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import ftn.sbnz.model.enums.EducationLevel;
+import ftn.sbnz.model.interview.InterviewSuggestionStatus;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.job_offer.JobOfferSuggestion;
@@ -78,4 +79,7 @@ public class JobSeeker extends User{
 	
 	@OneToMany
 	private List<JobOfferStatistic> statistics = new ArrayList<>();
+	
+	@OneToMany
+	private List<InterviewSuggestionStatus> interviewSuggestions = new ArrayList<>();
 }

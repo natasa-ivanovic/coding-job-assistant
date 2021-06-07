@@ -39,6 +39,7 @@ import ftn.sbnz.model.enums.JobOfferCategory;
 import ftn.sbnz.model.enums.MedalRank;
 
 import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.CVElement;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,6 +70,7 @@ rule "JobSeeker statistic for offer - programming language exists"
         $jod.setSubject($language);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
         modify($jos) {
             getProgrammingDifferences().add($jod);
         }
@@ -100,6 +102,7 @@ rule "JobSeeker statistic for offer - programing language not exists"
         $jod.setSubject($language);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
         modify($jos) {
             getProgrammingDifferences().add($jod);
         }
@@ -132,6 +135,7 @@ rule "JobSeeker statistic for offer - technology exists"
         $jod.setSubject($technology);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.TECHNOLOGY);
         modify($jos) {
             getTechnologyDifferences().add($jod);
         }
@@ -163,6 +167,7 @@ rule "JobSeeker statistic for offer - technology not exists"
         $jod.setSubject($technology);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.TECHNOLOGY);
         modify($jos) {
             getTechnologyDifferences().add($jod);
         }
@@ -195,6 +200,7 @@ rule "JobSeeker statistic for offer - knowledge exists"
         $jod.setSubject($knowledge);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.KNOWLEDGE);
         modify($jos) {
             getKnowledgeDifferences().add($jod);
         }
@@ -226,6 +232,7 @@ rule "JobSeeker statistic for offer - knowledge not exists"
         $jod.setSubject($knowledge);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.KNOWLEDGE);
         modify($jos) {
             getKnowledgeDifferences().add($jod);
         }
@@ -258,6 +265,7 @@ rule "JobSeeker statistic for offer - soft skill exists"
         $jod.setSubject($skill);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.SOFT_SKILL);
         modify($jos) {
             getSoftSkillDifferences().add($jod);
         }
@@ -289,6 +297,7 @@ rule "JobSeeker statistic for offer - soft skill not exists"
         $jod.setSubject($skill);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.SOFT_SKILL);
         modify($jos) {
             getSoftSkillDifferences().add($jod);
         }
@@ -321,6 +330,7 @@ rule "JobSeeker statistic for offer - language exists"
         $jod.setSubject($language);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.LANGUAGE);
         modify($jos) {
             getLanguageDifferences().add($jod);
         }
@@ -352,6 +362,7 @@ rule "JobSeeker statistic for offer - language not exists"
         $jod.setSubject($language);
         $jod.setUserProficiency($userProficiency);
         $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElement(CVElement.LANGUAGE);
         modify($jos) {
             getLanguageDifferences().add($jod);
         }

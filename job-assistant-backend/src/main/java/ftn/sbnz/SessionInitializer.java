@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyRepository;
-import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
-import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.repository.interview.InterviewSuggestionRepository;
 import ftn.sbnz.repository.job_offer.JobOfferRepository;
+import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.service.KieSessionService;
@@ -25,6 +27,7 @@ public class SessionInitializer {
 		addCompaniesToContext(context, kieSession);
 		addJobOffersToContext(context, kieSession);
 		addOfferReviewsToContext(context, kieSession);
+		addInterviewSuggestionsToContext(context, kieSession);
 	}
 
 	private static void initializeGlobals(KieSessionService session) {
@@ -70,6 +73,14 @@ public class SessionInitializer {
 		List<JobOffer> offers = jobOfferRepo.findAll();
 		for (JobOffer jo : offers) {
 			session.insert(jo);
+		}
+	}
+	
+	private static void addInterviewSuggestionsToContext(ApplicationContext context, KieSessionService session) {
+		InterviewSuggestionRepository interviewSuggestionRepo = context.getBean(InterviewSuggestionRepository.class);
+		List<InterviewSuggestion> suggestions = interviewSuggestionRepo.findAll();
+		for (InterviewSuggestion is : suggestions) {
+			session.insert(is);
 		}
 	}
 }
