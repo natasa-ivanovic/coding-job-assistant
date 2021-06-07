@@ -9,7 +9,7 @@ insert into user_authority (user_id, authority_id) values (1, 1);
 
 -- jobseekers
 -- password - admin1
-insert into users (id, name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education) values (2, 'Job', 'Seeker', 'user1@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 2);
+insert into users (id, name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education, continuous_learning) values (2, 'Job', 'Seeker', 'user1@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 2, false);
 
 insert into user_authority (user_id, authority_id) values (2, 2);
 

@@ -37,6 +37,15 @@ public class InterviewSuggestionController {
 		InterviewSuggestionStatusDTO dto = service.create(Long.parseLong(jobOfferDifferenceId), jobSeeker.getId());
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+	
+	@PostMapping("/check/{id}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<Object> check(@PathVariable("id") String InterviewSuggestionStatusId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
+		InterviewSuggestionStatusDTO dto = service.check(Long.parseLong(InterviewSuggestionStatusId), jobSeeker.getId());
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 
 
 }

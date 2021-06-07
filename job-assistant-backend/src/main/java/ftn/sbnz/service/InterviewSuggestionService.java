@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.interview.InterviewSuggestionStatusDTO;
+import ftn.sbnz.events.StudiedTodayEvent;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
 import ftn.sbnz.model.job_offer.JobOfferDifference;
 import ftn.sbnz.model.user.JobSeeker;
@@ -56,6 +57,25 @@ public class InterviewSuggestionService {
 	public void suggest(InterviewSuggestionStatus is) {
 		kieSession.insert(is);
 		kieSession.setAgendaFocus("interview-suggestion");
+		kieSession.fireAllRules();
+	}
+
+	public InterviewSuggestionStatusDTO check(Long interviewSuggestionStatusId, Long jobSeekerId) {
+		InterviewSuggestionStatus iss = statusRepository.getOne(interviewSuggestionStatusId);
+		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
+		Calendar rightNow = Calendar.getInstance();
+		iss.setChecked(true);
+		iss.setDateChecked(new Timestamp(rightNow.getTimeInMillis()));
+		StudiedTodayEvent event = new StudiedTodayEvent(js.getId());
+		iss = statusRepository.save(iss);
+		triggerEvent(event);
+		InterviewSuggestionStatusDTO dto = new InterviewSuggestionStatusDTO(iss);
+		return dto;
+	}
+	
+	public void triggerEvent(StudiedTodayEvent event) {
+		kieSession.insert(event);
+		kieSession.setAgendaFocus("studied-today");
 		kieSession.fireAllRules();
 	}
 

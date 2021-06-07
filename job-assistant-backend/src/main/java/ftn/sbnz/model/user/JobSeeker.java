@@ -47,6 +47,9 @@ public class JobSeeker extends User{
 	@Column(name = "education")
 	private EducationLevel education;
 	
+	@Column(name = "continuous_learning")
+	private boolean continuousLearning;
+	
 	@ManyToMany
 	private Set<TechnologyProficiency> technologyProficiencies = new HashSet<>();
 
