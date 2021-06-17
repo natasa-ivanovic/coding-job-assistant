@@ -20,6 +20,74 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-divider></v-divider>
+    <!-- admin nav -->
+    <v-list v-if="user.role === 'ADMIN'" nav dense>
+      <v-list-item-group v-model="selectedItem" color="primary">
+        <router-link :to="{ name: 'HomeAdminView' }" v-slot="{ navigate }">
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+      </v-list-item-group>
+    </v-list>
+    <!-- user nav -->
+    <v-list v-if="user.role === 'USER'" nav dense>
+      <v-list-item-group v-model="selectedItem" color="primary">
+        <router-link :to="{ name: 'HomeJobSeekerView' }" v-slot="{ navigate }">
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link :to="{ name: 'AccountView' }" v-slot="{ navigate }">
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>My account</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <v-divider></v-divider>
+        <router-link
+          :to="{ name: 'JobPositionRequestView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-list-status</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Job positions</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link
+          :to="{ name: 'JobOfferRequestView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-format-list-text</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Job offers</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+      </v-list-item-group>
+    </v-list>
   </v-container>
 </template>
 
