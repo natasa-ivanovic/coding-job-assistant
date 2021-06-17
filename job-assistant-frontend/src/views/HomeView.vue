@@ -13,10 +13,7 @@
         ><v-icon>mdi-logout</v-icon></v-btn
       >
     </v-app-bar>
-
-    <v-main class="blue-grey lighten-5 mt-10">
-      <router-view></router-view>
-    </v-main>
+    <router-view></router-view>
   </v-app>
 </template>
 
