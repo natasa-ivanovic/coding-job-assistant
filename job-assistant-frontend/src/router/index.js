@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
+import RegisterView from '../views/auth/RegisterView.vue'
 import HomeAdminView from '../views/admin/HomeAdminView.vue'
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 
@@ -12,6 +13,11 @@ const routes = [
     component: LoginView,
     name: "LoginView",
     path: "/login",
+  },
+  {
+    component: RegisterView,
+    name: "RegisterView",
+    path: "/register",
   },
   {
     component: HomeView,
