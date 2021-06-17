@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.sbnz.dto.UserDTO;
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.exception.UserException;
 import ftn.sbnz.security.auth.JwtAuthenticationRequest;
@@ -44,6 +45,12 @@ public class LoginController {
 		String password = authenticationRequest.getPassword();
 		userService.resetPassword(username, password, key);
 		return new ResponseEntity<>("Successfully reset password!", HttpStatus.OK);
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<Object> register(@RequestBody UserDTO user) throws UserException {
+		userService.register(user);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

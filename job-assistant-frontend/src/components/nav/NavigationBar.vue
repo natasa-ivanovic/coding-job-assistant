@@ -2,10 +2,10 @@
   <v-container>
     <v-layout justify-center align-center>
       <v-flex shrink>
-        <!-- <v-img
-          src="../assets/doggo.gif"
-          style="width: 100px; height: 100px"
-        ></v-img> -->
+        <v-img
+          src="../../assets/doggo.gif"
+          style="width: 150px; height: 100px"
+        ></v-img>
       </v-flex>
     </v-layout>
     <v-list>
@@ -100,4 +100,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  height: 50%;
+  width: 100%;
+}
+</style>

@@ -45,15 +45,6 @@
               />
             </v-row>
           </v-form>
-          <v-row align="center" justify="center">
-            <router-link
-              :to="{ name: 'ForgotPassword' }"
-              style="text-decoration: none;"
-              ><p class="description" style="font-size: 20px">
-                Forgot password?
-              </p></router-link
-            >
-          </v-row>
           <v-row>
             <v-col class="mt-6">
               <v-btn
@@ -66,6 +57,15 @@
                 ><b>Login</b></v-btn
               >
             </v-col>
+          </v-row>
+          <v-row align="center" justify="center">
+            <router-link
+              :to="{ name: 'RegisterView' }"
+              style="text-decoration: none;"
+              ><p class="description" style="font-size: 20px">
+                Don't have an account? Sign up
+              </p></router-link
+            >
           </v-row>
         </v-col>
       </v-row>

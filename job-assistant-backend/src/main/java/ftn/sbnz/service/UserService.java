@@ -1,5 +1,6 @@
 package ftn.sbnz.service;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -12,10 +13,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import ftn.sbnz.dto.UserDTO;
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
 import ftn.sbnz.events.UserLoginStatusEvent;
 import ftn.sbnz.exception.UserException;
+import ftn.sbnz.model.auth.Authority;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.repository.user.UserRepository;
@@ -30,16 +33,18 @@ public class UserService {
 	private AuthenticationManager authenticationManager;
 	private CustomUserDetailsService userDetailsService;
 	private KieSessionService kieSession;
+	private AuthorityService authorityService;
 
 	@Autowired
 	public UserService(UserRepository userRepository, TokenUtils tokenUtils,
 			AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService,
-			KieSessionService kieSession) {
+			KieSessionService kieSession, AuthorityService authorityService) {
 		this.userRepository = userRepository;
 		this.tokenUtils = tokenUtils;
 		this.authenticationManager = authenticationManager;
 		this.userDetailsService = userDetailsService;
 		this.kieSession = kieSession;
+		this.authorityService = authorityService;
 	}
 
 	public User findByUsername(String username) {
@@ -135,5 +140,24 @@ public class UserService {
 		user.setKey(null);
 		userRepository.save(user);
 		kieSession.removeLoginEvents(user.getId());
+	}
+
+	public void register(UserDTO userDTO) throws UserException {
+		User user = findByUsername(userDTO.getUsername());
+		if (user != null) {
+			throw new UserException("Username is already taken! Please try again.", "username", "Invalid username");
+		}
+		JobSeeker js = new JobSeeker();
+		js.setUsername(userDTO.getUsername());
+		js.setName(userDTO.getName());
+		js.setSurname(userDTO.getSurname());
+		js.setPassword(userDetailsService.encodePassword(userDTO.getPassword()));
+		js.setRole("USER");
+		ArrayList<Authority> auth = new ArrayList<>();
+		auth.add(authorityService.findByName("ROLE_USER"));
+		js.setAuthorities(auth);
+		js.setEnabled(true); //TODO: account activation mail
+		
+		save(js);
 	}
 }
