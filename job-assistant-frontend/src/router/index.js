@@ -4,6 +4,9 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import HomeAdminView from '../views/admin/HomeAdminView.vue'
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
+import AccountView from '../views/jobseeker/AccountView.vue'
+import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
+import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,24 @@ const routes = [
         component: HomeJobSeekerView,
         name: "HomeJobSeekerView",
         path: "/home",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: AccountView,
+        name: "AccountView",
+        path: "/account",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: JobPositionRequestView,
+        name: "JobPositionRequestView",
+        path: "/job-position-request",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: JobOfferRequestView,
+        name: "JobOfferRequestView",
+        path: "/job-offer-request",
         beforeEnter: guardRouteJobSeeker
       },
     ]

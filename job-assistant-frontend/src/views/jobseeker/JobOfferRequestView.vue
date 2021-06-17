@@ -1,12 +1,12 @@
 <<template>
-  <v-container fluid fill-height>
-      Hello JobSeeker!
+  <v-container fill-height fluid>
+      Offer request view
   </v-container>
 </template>
 
 <script>
 export default {
-  name: "HomeJobSeekerView",
+  name: "JobOfferRequestView",
 };
 </script>
 
