@@ -1,24 +1,59 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/auth/LoginView.vue'
+import HomeAdminView from '../views/admin/HomeAdminView.vue'
+import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    component: LoginView,
+    name: "LoginView",
+    path: "/login",
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: HomeView,
+    path: "/",
+    beforeEnter: guardRouteLoggedIn,
+    children: [
+      {
+        component: HomeAdminView,
+        name: "HomeAdminView",
+        path: "/home",
+        beforeEnter: guardRouteAdmin
+      },
+      {
+        component: HomeJobSeekerView,
+        name: "HomeJobSeekerView",
+        path: "/home",
+        beforeEnter: guardRouteJobSeeker
+      },
+    ]
   }
+
 ]
+
+
+function guardRouteLoggedIn(to, from, next) {
+  let user = JSON.parse(localStorage.getItem("user"));
+  if (!user || user["token"] === undefined) next("/login");
+  else next(); // allow to enter the route
+}
+
+function guardRouteAdmin(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if(user['role'] === 'ADMIN')
+        next();
+}
+
+function guardRouteJobSeeker(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if(user['role'] === 'USER')
+        next();
+}
+
 
 const router = new VueRouter({
   mode: 'history',

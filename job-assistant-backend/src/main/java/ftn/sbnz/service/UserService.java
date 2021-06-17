@@ -115,7 +115,7 @@ public class UserService {
 		int expiresIn = tokenUtils.getExpiredIn();
 
 		return new UserTokenStateDTO(user.getId(), jwt, expiresIn, user.getUsername(), user.getName(),
-				user.getSurname());
+				user.getSurname(), user.getRole());
 	}
 
 	private void generateUserAccesToken(User user) {
