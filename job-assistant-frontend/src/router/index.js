@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import HomeAdminView from '../views/admin/HomeAdminView.vue'
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
@@ -13,31 +13,47 @@ const routes = [
     name: "LoginView",
     path: "/login",
   },
-  // popraviti ovo da bude ista ruta, samo da zavisi od role
   {
-    component: HomeAdminView,
-    name: "HomeAdminView",
-    path: "/home-admin",
-  },
-  {
-    component: HomeJobSeekerView,
-    name: "HomeJobSeekerView",
-    path: "/home-jobseeker",
-  },
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: HomeView,
+    path: "/",
+    beforeEnter: guardRouteLoggedIn,
+    children: [
+      {
+        component: HomeAdminView,
+        name: "HomeAdminView",
+        path: "/home",
+        beforeEnter: guardRouteAdmin
+      },
+      {
+        component: HomeJobSeekerView,
+        name: "HomeJobSeekerView",
+        path: "/home",
+        beforeEnter: guardRouteJobSeeker
+      },
+    ]
   }
+
 ]
+
+
+function guardRouteLoggedIn(to, from, next) {
+  let user = JSON.parse(localStorage.getItem("user"));
+  if (!user || user["token"] === undefined) next("/login");
+  else next(); // allow to enter the route
+}
+
+function guardRouteAdmin(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if(user['role'] === 'ADMIN')
+        next();
+}
+
+function guardRouteJobSeeker(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if(user['role'] === 'USER')
+        next();
+}
+
 
 const router = new VueRouter({
   mode: 'history',
