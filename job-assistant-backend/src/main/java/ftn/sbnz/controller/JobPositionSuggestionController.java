@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,14 @@ public class JobPositionSuggestionController {
 		JobPositionSuggestionDTO dto = service.create(jobSeeker);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
-	
+
+	@GetMapping("/last")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<Object> lastSuggestion() throws Exception {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
+		JobPositionSuggestionDTO dto = service.getLastSuggestion(jobSeeker);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 	
 }
