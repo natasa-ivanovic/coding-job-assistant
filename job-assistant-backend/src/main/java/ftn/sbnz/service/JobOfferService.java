@@ -2,10 +2,13 @@ package ftn.sbnz.service;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ftn.sbnz.dto.job_offer.JobOfferDTO;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.JobSeekerRanking;
@@ -69,6 +72,14 @@ public class JobOfferService {
 				return;
 			}
 		}
-
+	}
+	
+	public List<JobOfferDTO> getAll() {
+		List<JobOffer> offers = repository.findAll();
+		return offers.stream().map(this::toDTO).collect(Collectors.toList());
+	}
+	
+	private JobOfferDTO toDTO (JobOffer jo) {
+		return new JobOfferDTO(jo);
 	}
 }

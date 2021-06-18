@@ -2,11 +2,13 @@ package ftn.sbnz.model.job_offer;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -66,13 +68,16 @@ public class JobOfferReview {
 	@NonNull
 	private Timestamp date;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@JoinColumn(name = "company_id", nullable = false, unique = false) 
 	private Company company;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@JoinColumn(name = "job_offer_id", nullable = false, unique = false) 
 	private JobOffer jobOffer;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+	@JoinColumn(name = "poster_id", nullable = false, unique = false) 
 	private JobSeeker poster;
 	
 	public JobOfferReview(JobOfferReviewDTO dto, JobOffer offer, JobSeeker user, Timestamp time) {
