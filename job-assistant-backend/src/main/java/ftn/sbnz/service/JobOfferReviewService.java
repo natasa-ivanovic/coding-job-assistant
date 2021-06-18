@@ -42,8 +42,8 @@ public class JobOfferReviewService {
 		JobOfferReview review = new JobOfferReview(dto, offer, dbJobSeeker, new Timestamp(rightNow.getTimeInMillis()));
 		JobOfferReview created = repository.save(review);
 		
-		dbJobSeeker.getReviews().add(created);
-		userService.save(dbJobSeeker);
+//		dbJobSeeker.getReviews().add(created);
+//		userService.save(dbJobSeeker);
 	}
 	
 	public void approve(Long id) throws Exception {

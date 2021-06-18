@@ -9,6 +9,8 @@ import AccountView from '../views/jobseeker/AccountView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
 import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
 import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
+import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
+import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
 
 Vue.use(VueRouter)
 
@@ -49,13 +51,25 @@ const routes = [
       {
         component: JobPositionRequestView,
         name: "JobPositionRequestView",
-        path: "/job-position-request",
+        path: "/job-position-requests",
         beforeEnter: guardRouteJobSeeker
       },
       {
         component: JobOfferRequestView,
         name: "JobOfferRequestView",
-        path: "/job-offer-request",
+        path: "/job-offer-requests",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: JobPositionListView,
+        name: "JobPositionListView",
+        path: "/job-positions",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: JobOfferListView,
+        name: "JobOfferListView",
+        path: "/job-offers",
         beforeEnter: guardRouteJobSeeker
       },
       {

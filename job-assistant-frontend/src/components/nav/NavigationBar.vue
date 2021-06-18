@@ -60,21 +60,73 @@
           </v-list-item>
         </router-link>
         <v-divider></v-divider>
-        <router-link
-          :to="{ name: 'JobPositionRequestView' }"
-          v-slot="{ navigate }"
-        >
-          <v-list-item @click="navigate">
-            <v-list-item-icon>
-              <v-icon>mdi-list-status</v-icon>
-            </v-list-item-icon>
+
+
+        <v-list-group prepend-icon="mdi-school">
+          <template v-slot:activator> 
             <v-list-item-content>
-              <v-list-item-title>Job positions</v-list-item-title>
+              <v-list-item-content>
+                <v-list-item-title>Job positions</v-list-item-title>
+              </v-list-item-content>
             </v-list-item-content>
-          </v-list-item>
-        </router-link>
+          </template>
+
+          <router-link
+            :to="{ name: 'JobPositionRequestView' }"
+            v-slot="{ navigate }"
+          >
+            <v-list-item @click="navigate">
+              <v-list-item-icon>
+                <v-icon>mdi-check</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>My recommendations</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
+
+          <router-link
+            :to="{ name: 'JobPositionListView' }"
+            v-slot="{ navigate }"
+          >
+            <v-list-item @click="navigate">
+              <v-list-item-icon>
+                <v-icon>mdi-list-status</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>View all positions</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
+        </v-list-group>
+
+
+        <v-list-group prepend-icon="mdi-briefcase">
+          <template v-slot:activator> 
+            <v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>Job offers</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item-content>
+          </template>
+
+          <router-link
+            :to="{ name: 'JobOfferRequestView' }"
+            v-slot="{ navigate }"
+          >
+            <v-list-item @click="navigate">
+              <v-list-item-icon>
+                <v-icon>mdi-check</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>My recommendations</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
+
+
         <router-link
-          :to="{ name: 'JobOfferRequestView' }"
+          :to="{ name: 'JobOfferListView' }"
           v-slot="{ navigate }"
         >
           <v-list-item @click="navigate">
@@ -82,10 +134,11 @@
               <v-icon>mdi-format-list-text</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>Job offers</v-list-item-title>
+              <v-list-item-title>View all offers</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
+        </v-list-group>
       </v-list-item-group>
     </v-list>
   </v-container>

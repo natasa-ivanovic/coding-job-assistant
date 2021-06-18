@@ -1,0 +1,46 @@
+package ftn.sbnz.dto.job_offer;
+
+import java.util.Date;
+
+import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferReview;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class JobOfferDTO {
+
+	private Long id;
+	private SeniorityLevel seniority;
+	private MedalRank medal;
+	private Date datePosted;
+	private String companyName;
+	private String companyId;
+	private String positionName;
+	private String positionId;
+	private Float ranking;
+	
+	public JobOfferDTO(JobOffer jo) {
+		this.id = jo.getId();
+		this.seniority = jo.getSeniority();
+		this.medal = jo.getMedal();
+		this.datePosted = jo.getDatePosted();
+		this.companyName = jo.getCompany().getName();
+		this.companyId = jo.getCompany().getId().toString();
+		this.positionName = jo.getPosition().getTitle();
+		this.positionId = jo.getPosition().getId().toString();
+		int totalScore = 0;
+		for (JobOfferReview jor : jo.getReviews()) {
+			if (jor.getStatus().equals(ReviewStatus.APPROVED))
+				totalScore += jor.getRating();
+		}
+		if (jo.getReviews().size() == 0)
+			this.ranking = 0f;
+		else
+			this.ranking = (float) (totalScore) / (float) (jo.getReviews().size());
+	}
+}

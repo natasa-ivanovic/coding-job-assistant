@@ -68,7 +68,7 @@ public class JobSeeker extends User{
 	@OneToMany//(mappedBy = "jobSeeker")
 	private Set<WorkingExperience> workingExperience = new HashSet<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "poster")
 	private Set<JobOfferReview> reviews = new HashSet<>();
 	
 	@OneToMany

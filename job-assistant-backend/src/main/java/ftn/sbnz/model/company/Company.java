@@ -40,6 +40,6 @@ public class Company {
 	@OneToMany(fetch = FetchType.EAGER)
 	private Set<JobOffer> jobOffers;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
 	private Set<JobOfferReview> jobOffersReviews;
 }

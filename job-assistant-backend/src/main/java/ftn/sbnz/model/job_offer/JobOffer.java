@@ -76,7 +76,7 @@ public class JobOffer {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<LanguageImportance> languageImportances = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jobOffer")
 	private Set<JobOfferReview> reviews = new HashSet<>();
 	
 	@OneToMany(fetch = FetchType.EAGER)
