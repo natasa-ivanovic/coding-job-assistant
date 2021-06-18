@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+  <v-card :loading="loading" class="mx-auto my-12" max-width="400">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -9,12 +9,12 @@
     </template>
 
     <v-img
-      height="250"
+      height="150"
       src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg"
     ></v-img>
 
-    <v-card-title>{{jobPosition.title}}</v-card-title>
-    <v-card-subtitle>{{jobPosition.subtitle}}</v-card-subtitle>
+    <v-card-title>{{ jobPosition.title }}</v-card-title>
+    <v-card-subtitle>{{ jobPosition.subtitle }}</v-card-subtitle>
 
     <v-card-text>
       <v-row align="center" class="mx-0">
@@ -27,67 +27,100 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ms-4">4.5 (413)</div>
+        <div class="grey--text ms-4">Very popular</div>
       </v-row>
 
-      <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
-
-      <div>
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating.
+      <div class="mt-6 ml-3 mr-3"> 
+        <v-row v-for="description in formatDescription(jobPosition.description)" :key="description.name">
+          <requirement-rating-component v-bind:data="description" />
+        </v-row>
       </div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-title>Tonight's availability</v-card-title>
+    <v-card-title>Recommended seniority level</v-card-title>
 
     <v-card-text>
       <v-chip-group
-        v-model="selection"
-        active-class="deep-purple accent-4 white--text"
+        v-model="jobPosition.seniority"
+        active-class="blue accent-4 white--text"
         column
       >
-        <v-chip>5:30PM</v-chip>
-
-        <v-chip>7:30PM</v-chip>
-
-        <v-chip>8:00PM</v-chip>
-
-        <v-chip>9:00PM</v-chip>
+        <v-chip class="custom-chip chip-disabled" value="JUNIOR" label
+          >Junior</v-chip
+        >
+        <v-chip class="custom-chip chip-disabled" value="MEDIOR" label
+          >Medior</v-chip
+        >
+        <v-chip class="custom-chip chip-disabled" value="SENIOR" label
+          >Senior</v-chip
+        >
       </v-chip-group>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text @click="view"> Details </v-btn>
+      <v-btn class="ml-2" color="black lighten-2" outlined @click="view">
+        View details
+      </v-btn>
+      <v-spacer />
+      <v-btn class="mr-2" color="black lighten-2" outlined @click="view">
+        View offers
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import RequirementRatingComponent from '../rating/RequirementRatingComponent.vue'
+
 export default {
   name: "JobPositionCard",
-  data: () => ({
-    loading: false,
-    selection: 1,
-  }),
+  components: {
+    RequirementRatingComponent
+  },
+  data() {
+    return {
+      loading: false,
+    };
+  },
   props: {
     jobPosition: Object,
-    // "id": 1,
-    // "rating": 79,
-    // "description": "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-    // "title": "Frontend Developer",
-    // "subtitle": "JavaScript",
-    // "seniority": "JUNIOR",
-    // "jobPositionId": 2
   },
   methods: {
     view: () => {
       console.log(view);
+    },
+    getIcon: function (val) {
+      if (val == this.userProf) return this.iconUser;
+      else return this.iconJob;
+    },
+    formatDescription: function (desc) {
+      const list = [];
+      desc.split("\n").forEach((el) => {
+        if (el.length == 0)
+          return;
+        const name = el.split(" (")[0];
+        const value = el.split(" (")[1].replace(")", "");
+        list.push({ name, value });
+      });
+      if (list.length > 5)
+        return list.splice(0, 5);
+      else 
+        return list;
     },
   },
 };
 </script>
 
 <style scoped>
+.custom-chip {
+  flex: 1;
+  justify-content: center;
+}
+
+.chip-disabled {
+  pointer-events: none;
+  user-select: none;
+}
 </style>
