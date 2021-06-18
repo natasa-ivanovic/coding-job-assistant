@@ -43,7 +43,7 @@
     </v-row>
 
     <v-dialog v-model="reviewDialog" max-width="600px">
-      <offer-review-form v-bind:offerId="reviewedOffer" />
+      <offer-review-form v-bind:offerId="reviewedOffer" v-bind:enabled.sync="reviewDialog" />
     </v-dialog>
   </v-container>
 </template>
