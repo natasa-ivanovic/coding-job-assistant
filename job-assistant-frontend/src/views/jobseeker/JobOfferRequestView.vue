@@ -4,7 +4,7 @@
       <v-col cols="8">
         <v-card>
           <v-card-title>
-            <v-col> 
+            <v-col>
               Job offers
             </v-col>
             <v-col>
@@ -18,8 +18,25 @@
             </v-col>
           </v-card-title>
           <v-card-text>
+            <v-btn
+              v-if="alert"
+              class="success"
+              block
+              @click="requestSuggestions()"
+              >Request recommendations</v-btn
+            >
+            <v-alert v-if="alert" type="info" class="mt-5">
+              No job offer recommendations in recent memory! Please request a
+              new set of recommendations.
+            </v-alert>
             <v-row>
-              <v-col cols="12" sm="12" md="4" v-for="jp in jobOffers" :key="jp.id">
+              <v-col
+                cols="12"
+                sm="12"
+                md="4"
+                v-for="jp in jobSuggestion['offerRatings']"
+                :key="jp.id"
+              >
                 <job-offer-card v-bind:jobOffer="jp" />
               </v-col>
             </v-row>
@@ -27,56 +44,57 @@
         </v-card>
       </v-col>
     </v-row>
-
   </v-container>
 </template>
 
 <script>
 import JobOfferCard from "../../components/job-offers/JobOfferCard.vue";
 
-const apiURL = "/api/job-offer-suggestion"
+const apiURL = "/api/job-offer-suggestion";
 
 export default {
   components: {
     JobOfferCard,
   },
   name: "JobOfferRequestView",
-  // private Long id;
-	// private String position;
-	// private String company;
-	// private int rating;
-	// private String description;
-	// private String category;
-	// private Long jobOfferId;
   data() {
     return {
       search: "",
-      jobOffers: [
-        {
-          id: 1,
-          rating: 69,
-          description:
-            "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-          category: "category",
-          company: "company",
-          position: "Frontend Developer",
-          jobOfferId: "1",
-          seniority: "JUNIOR",
-        },
-      ],
+      jobSuggestion: Object,
+      alert: false,
+  //     private Long id;
+	// private Timestamp date;
+	// private List<JobOfferRatingDTO> offerRatings;
     };
   },
   mounted() {
-    this.axios.get(apiURL)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
+    this.axios
+      .get(apiURL)
+      .then((response) => {
+        this.alert = false;
+        console.log(response.data);
+        this.jobSuggestion = response.data;
+      })
+      .catch((error) => {
+        this.alert = true;
+        console.log(error);
+      });
+  },
+  methods: {
+    requestSuggestions() {
+      this.axios
+        .get(apiURL + "/request")
+        .then((response) => {
+          this.alert = false;
+          this.jobSuggestion = response.date;
+          console.log(this.jobSuggestion);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -32,7 +32,7 @@ public class JobOfferSuggestionController {
 		this.service = service;
 	}
 	
-	@PostMapping
+	@GetMapping("/request")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<Object> requestSuggestion() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -13,11 +13,8 @@
       src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg"
     ></v-img>
 
-    <v-card-title>{{jobOffer.category}}</v-card-title>
+    <v-card-title>{{jobOffer.position}}</v-card-title>
     <v-card-subtitle>{{jobOffer.company}}</v-card-subtitle>
-
-    <v-card-title>Pozicija</v-card-title>
-    <v-card-subtitle>Kompanija</v-card-subtitle>
 
     <!-- <v-card-text>
       <v-row align="center" class="mx-0">
@@ -76,11 +73,13 @@ export default {
   }),
   props: {
     jobOffer: Object,
-    // job position title
-    // company name
-    // date posted
-    // seniority
-    // medal rank
+    // private Long id;
+  // private String position;
+  // private String company;
+  // private int rating;
+  // private String description;
+  // private String category;
+  // private Long jobOfferId;
   },
   methods: {
     view: () => {
