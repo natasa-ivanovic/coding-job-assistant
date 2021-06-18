@@ -25,4 +25,15 @@ public class JobOfferSuggestionDTO {
 			this.offerRatings.add(new JobOfferRatingDTO(d));			
 		}
 	}
+	
+	public JobOfferSuggestionDTO(List<JobOfferSuggestion> suggestions) {
+		for (JobOfferSuggestion jos: suggestions) {
+			this.id = jos.getId();
+			this.date = jos.getDate();
+			this.offerRatings = new ArrayList<>();
+			for (JobOfferRating d : jos.getOfferRatings()) {
+				this.offerRatings.add(new JobOfferRatingDTO(d));			
+			}
+		}
+	}
 }

@@ -2,6 +2,8 @@ package ftn.sbnz.service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,22 @@ public class JobOfferSuggestionService {
 		dbJobSeeker.getOfferSuggestions().add(created);
 		userService.save(dbJobSeeker);
 		return new JobOfferSuggestionDTO(created);
+	}
+	
+	public JobOfferSuggestionDTO getSuggestion(JobSeeker js) throws Exception {
+		List<JobOfferSuggestion> suggestions = repository.findAllByJobSeeker(js);
+		JobOfferSuggestion suggestion = getLatestJobOfferSuggestion(suggestions);
+		return new JobOfferSuggestionDTO(suggestion);
+	}
+	
+	private JobOfferSuggestion getLatestJobOfferSuggestion(List<JobOfferSuggestion> jos) throws Exception {
+		if (jos.size() > 0) {
+			jos = jos.stream()
+					.sorted((item1, item2) -> Long.compare(item2.getDate().getTime(), item1.getDate().getTime()))
+					.collect(Collectors.toList());
+			return jos.get(0);			
+		}
+		throw new Exception("No job offer suggestions!");
 	}
 
 }

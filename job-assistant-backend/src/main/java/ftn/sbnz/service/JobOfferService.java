@@ -26,7 +26,8 @@ public class JobOfferService {
 
 	@Autowired
 	public JobOfferService(JobOfferRepository repository, JobSeekerRepository jobSeekerRepository,
-			JobSeekerRankingRepository jobSeekerRankingRepository, KieSessionService kieSession) {
+			JobSeekerRankingRepository jobSeekerRankingRepository,
+			KieSessionService kieSession) {
 		this.repository = repository;
 		this.jobSeekerRepository = jobSeekerRepository;
 		this.jobSeekerRankingRepository = jobSeekerRankingRepository;
@@ -82,4 +83,6 @@ public class JobOfferService {
 	private JobOfferDTO toDTO (JobOffer jo) {
 		return new JobOfferDTO(jo);
 	}
+
+	
 }
