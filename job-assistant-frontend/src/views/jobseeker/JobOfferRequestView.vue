@@ -98,7 +98,7 @@ export default {
         .get(apiURL + "/request")
         .then((response) => {
           this.alert = false;
-          this.jobSuggestion = response.date;
+          this.jobSuggestion = response.data;
           console.log(this.jobSuggestion);
         })
         .catch((error) => {

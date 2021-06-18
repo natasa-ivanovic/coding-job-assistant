@@ -8,6 +8,7 @@ import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 import AccountView from '../views/jobseeker/AccountView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
 import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
+import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
 
 Vue.use(VueRouter)
 
@@ -57,11 +58,16 @@ const routes = [
         path: "/job-offer-request",
         beforeEnter: guardRouteJobSeeker
       },
+      {
+        component: JobOfferStatisticView,
+        name: "JobOfferStatisticView",
+        path: "/statistic/:id",
+        props: true,
+        beforeEnter: guardRouteJobSeeker
+      }
     ]
   }
-
 ]
-
 
 function guardRouteLoggedIn(to, from, next) {
   let user = JSON.parse(localStorage.getItem("user"));
