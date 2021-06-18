@@ -17,10 +17,16 @@
               ></v-text-field>
             </v-col>
           </v-card-title>
+          <v-row class="ml-7 mb-3" v-if="lastDate">
+            Here are your suggestions from {{new Date(lastDate).toDateString()}}
+          </v-row>
+          <v-row class="ml-5">
+            <v-btn color="primary" class="mx-2" @click="requestNewPrediction">Request recommendations</v-btn>
+          </v-row>
           <v-card-text>
             <v-row v-if="!loaded">
               <v-col cols="12">
-                <v-alert type="warning">
+                <v-alert class="ml-3 mr-3" type="info">
                   No job position recommendations in recent memory! Please request a new set of recommendations.
                 </v-alert>
               </v-col>
@@ -53,6 +59,7 @@ export default {
     return {
       loaded: false,
       search: "",
+      lastDate: null,
       jobPositions: [
         // {
         //   id: 1,
@@ -106,6 +113,7 @@ export default {
         .get(lastURL)
         .then((response) => {
           this.jobPositions = response.data.positionRatings;
+          this.lastDate = response.data.date;
           console.log(response.data.date);
           this.loaded = true;
         })
@@ -118,6 +126,7 @@ export default {
         .post(requestURL)
         .then((response) => {
           this.jobPositions = response.data.positionRatings;
+          this.lastDate = response.data.date;
           console.log(response.data.date);
           this.loaded = true;
         })
