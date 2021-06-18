@@ -1,6 +1,8 @@
 package ftn.sbnz.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,5 +39,7 @@ public class JobOfferController {
 		service.follow(Long.parseLong(jobOfferId), jobSeeker.getId());
 		return new ResponseEntity<>("Success", HttpStatus.OK);
 	}
+	
+	
 
 }
