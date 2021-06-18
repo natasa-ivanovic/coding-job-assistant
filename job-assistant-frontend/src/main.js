@@ -20,32 +20,21 @@ Object.defineProperty(Vue.prototype, '$role', {
   }
 })
 
-Vue.mixin({
-  data: function() {
-    return {
-      get user() {
-        return "Can't change me!";
-      }
-    }
-  }
-})
-
-
 // axios config
 Vue.use(VueAxios, Axios);
 
 // interceptor ako zatreba
-Vue.axios.interceptors.response.use(undefined, function (error) {
-  if (error) {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        localStorage.clear();
-        return router.push('/login');
-    }
-    return Promise.reject(error);
-  }
-})
+// Vue.axios.interceptors.response.use(undefined, function (error) {
+//   if (error) {
+//     const originalRequest = error.config;
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//         originalRequest._retry = true;
+//         localStorage.clear();
+//         return router.push('/login');
+//     }
+//     return Promise.reject(error);
+//   }
+// })
 
 if (localStorage.getItem('authKey') != null) {
   Vue.axios.defaults.headers['Authorization'] = localStorage.getItem('authKey');
