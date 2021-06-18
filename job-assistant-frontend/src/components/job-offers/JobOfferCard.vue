@@ -1,5 +1,10 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+  <v-card
+    elevation="8"
+    :loading="loading"
+    class="mx-auto my-12"
+    max-width="374"
+  >
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -10,13 +15,15 @@
 
     <v-img
       height="250"
-      src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg"
+      src="https://image.freepik.com/free-vector/team-leader-teamwork-concept_74855-6671.jpg"
     ></v-img>
 
-    <v-card-title>{{jobOffer.position}}</v-card-title>
-    <v-card-subtitle>{{jobOffer.company}}</v-card-subtitle>
+    <v-card-title>{{ jobOffer.position }}</v-card-title>
+    <v-card-subtitle style="font-size:15px;">{{
+      jobOffer.company
+    }}</v-card-subtitle>
 
-    <!-- <v-card-text>
+    <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
           :value="4.5"
@@ -27,39 +34,34 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ms-4">4.5 (413)</div>
+        <div class="grey--text ms-4">Very popular</div>
       </v-row>
-
-      <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
-
-      <div>
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating.
-      </div>
     </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-title>Tonight's availability</v-card-title>
-
+    <div class="mt-6 ml-4 mr-4" style="text-align:justify">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
+      mi non dolor congue congue. Donec vestibulum nisi lectus.
+    </div>
+    <v-divider class="mx-4 mt-4 mb-4"></v-divider>
     <v-card-text>
-      <v-chip-group
-        v-model="selection"
-        active-class="deep-purple accent-4 white--text"
-        column
-      >
-        <v-chip>5:30PM</v-chip>
-
-        <v-chip>7:30PM</v-chip>
-
-        <v-chip>8:00PM</v-chip>
-
-        <v-chip>9:00PM</v-chip>
-      </v-chip-group>
-    </v-card-text> -->
-
+      <v-row>
+        <v-alert
+          dense
+          :icon="getIconForCategory(jobOffer.category)"
+          :color="getColorForCategory(jobOffer.category)"
+          style="width:100%"
+          class="ml-2 mr-2"
+        >
+          {{ jobOffer.category.split("_").join(" ") }}
+        </v-alert>
+      </v-row>
+    </v-card-text>
+    <div class="ml-4 mr-4" style="text-align:justify">
+      <b>{{ statusDescription(jobOffer.category) }}</b>
+    </div>
     <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text @click="view"> Details </v-btn>
+      <v-btn color="#1A237E" text @click="view"> Details </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn color="#1A237E" text @click="view"> Evaluate </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -74,20 +76,53 @@ export default {
   props: {
     jobOffer: Object,
     // private Long id;
-  // private String position;
-  // private String company;
-  // private int rating;
-  // private String description;
-  // private String category;
-  // private Long jobOfferId;
+    // private String position;
+    // private String company;
+    // private int rating;
+    // private String description;
+    // private String category;
+    // private Long jobOfferId;
   },
   methods: {
     view: () => {
       console.log(view);
     },
+    statusDescription(category) {
+      if (category == "HOT_COMPANY") 
+        return "This offer is recommended because it's company has great reviews and many highly rated job offers.";
+      else if (category == "IMPROVEMENT_NEEDED")
+        return "You have some of the required skills for this job, but you are lacking in profficiency.";
+      else if (category == "LOW_COMPETITION")
+        return "This job doesn't have a lot of followers, so your chances of getting this job are increased.";
+      else if (category == "BEST_MATCH") 
+        return "You have a high chance of getting this job based on the level of your skills.";
+    },
+    getColorForCategory(category) {
+      if (category == "HOT_COMPANY") 
+        return "orange lighten-3";
+      else if (category == "IMPROVEMENT_NEEDED")
+        return "red lighten-3";
+      else if (category == "LOW_COMPETITION")
+        return "blue lighten-3";
+      else if (category == "BEST_MATCH") 
+        return "green lighten-3";
+    },
+    getIconForCategory(category) {
+      if (category == "HOT_COMPANY") 
+        return "mdi-fire";
+      else if (category == "IMPROVEMENT_NEEDED")
+        return "mdi-alert";
+      else if (category == "LOW_COMPETITION")
+        return "mdi-flag-checkered";
+      else if (category == "BEST_MATCH") 
+        return "mdi-check";
+    }
   },
 };
 </script>
 
 <style scoped>
+.description {
+  font-family: "Baloo2", Helvetica, Arial;
+}
 </style>
