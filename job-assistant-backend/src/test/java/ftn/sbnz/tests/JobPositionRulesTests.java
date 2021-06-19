@@ -1,4 +1,4 @@
-package ftn.sbnz;
+package ftn.sbnz.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,7 +16,6 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.job_position.JobPositionRating;
@@ -26,7 +25,6 @@ import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 
 @RunWith(SpringRunner.class)
-@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class JobPositionRulesTests {
 	@Autowired
@@ -52,7 +50,7 @@ public class JobPositionRulesTests {
 		}
 		assertEquals(25, positions.size());
 
-		JobSeeker jobSeeker = jobSeekerRepo.getOne(2L);
+		JobSeeker jobSeeker = jobSeekerRepo.findById(2L).get();
 
 		assertNotNull(jobSeeker);
 
@@ -95,6 +93,8 @@ public class JobPositionRulesTests {
 		assertEquals(209, sortedRatings.get(3).getRating());
 		assertEquals("Backend Developer", sortedRatings.get(3).getTitle());
 		assertEquals("Java", sortedRatings.get(3).getSubtitle());
+		
+		session.dispose();
 	}
 
 	private KieSession setupSession() {
