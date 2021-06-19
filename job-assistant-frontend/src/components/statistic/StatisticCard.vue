@@ -1,52 +1,65 @@
 <template>
   <v-row align="center" justify="center">
     <v-col cols="10">
-      <v-card class="mt-5">
-        <v-card-title style="font-size:30px;">
+      <v-card class="mt-5" height="600px" max-height="700px">
+        <v-card-title style="font-size:30px;" class="description">
           Proficiency Evaluation
         </v-card-title>
-        <div v-if="programming">
-          <v-card-title>Programming languages</v-card-title>
-          <statistic-slider
-            v-for="p in programming"
-            :key="p.id"
-            v-bind:difference="p"
-          ></statistic-slider>
-        </div>
-        <v-divider class="mt-3"></v-divider>
-        <div v-if="technology">
-          <v-card-title>Technology</v-card-title>
-          <statistic-slider
-            v-for="p in technology"
-            :key="p.id"
-            v-bind:difference="p"
-          ></statistic-slider>
-        </div>
-        <v-divider class="mt-3"></v-divider>
-        <div v-if="technology">
-          <v-card-title>Knowledge</v-card-title>
-          <statistic-slider
-            v-for="p in knowledge"
-            :key="p.id"
-            v-bind:difference="p"
-          ></statistic-slider>
-        </div>
-        <v-divider class="mt-3"></v-divider>
-        <div v-if="technology">
-          <v-card-title>Soft skills</v-card-title>
-          <statistic-slider
-            v-for="p in softSkill"
-            :key="p.id"
-            v-bind:difference="p"
-          ></statistic-slider>
-        </div>
-        <div v-if="technology">
-          <v-card-title>Languages</v-card-title>
-          <statistic-slider
-            v-for="p in language"
-            :key="p.id"
-            v-bind:difference="p"
-          ></statistic-slider>
+        <div>
+          <v-tabs v-model="tab" centered slider-color="blue" class="mb-5">
+            <v-tab v-if="programming">Programming languages</v-tab>
+            <v-tab v-if="technology">Technology</v-tab>
+            <v-tab v-if="knowledge">Knowledge</v-tab>
+            <v-tab v-if="softSkill">Soft skills</v-tab>
+            <v-tab v-if="language">Languages</v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <v-tab-item>
+              <div v-if="programming">
+                <statistic-slider
+                  v-for="p in programming"
+                  :key="p.id"
+                  v-bind:difference="p"
+                ></statistic-slider>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <div v-if="technology">
+                <statistic-slider
+                  v-for="p in technology"
+                  :key="p.id"
+                  v-bind:difference="p"
+                ></statistic-slider>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <div v-if="technology">
+                <statistic-slider
+                  v-for="p in knowledge"
+                  :key="p.id"
+                  v-bind:difference="p"
+                ></statistic-slider>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <div v-if="technology">
+                <statistic-slider
+                  v-for="p in softSkill"
+                  :key="p.id"
+                  v-bind:difference="p"
+                ></statistic-slider>
+              </div>
+            </v-tab-item>
+            <v-tab-item>
+              <div v-if="language">
+                <statistic-slider
+                  v-for="p in language"
+                  :key="p.id"
+                  v-bind:difference="p"
+                ></statistic-slider>
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
         </div>
       </v-card>
     </v-col>
@@ -68,6 +81,7 @@ export default {
     language: [],
     date: null,
     jobOffer: Object,
+    tab: 0,
   }),
   props: {
     id: Number,

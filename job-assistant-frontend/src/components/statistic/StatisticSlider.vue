@@ -1,9 +1,9 @@
 <template>
-  <v-row class="mr-5 ml-5 mt-5">
+  <v-row class="mr-5 ml-5 mt-9">
     <v-col cols="2">
       <h3>{{ difference.subject }}</h3>
     </v-col>
-    <v-col cols="10">
+    <v-col cols="9">
       <v-range-slider
         :tick-labels="labels"
         :value="[
@@ -23,6 +23,9 @@
           </v-icon>
         </template>
       </v-range-slider>
+    </v-col>
+    <v-col cols="1">
+      <v-btn :disabled="improveSkillDisabled()" class="primary">Improve</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -57,6 +60,17 @@ export default {
       else if (proficiency == "EXCELLENT") return 4;
       else if (proficiency == "EXPERT") return 5;
     },
+    improveSkillDisabled: function() {
+      let user = this.getValue(this.difference.userProficiency);
+      let job = this.getValue(this.difference.jobOfferProficiency);
+      if (user < job)
+        return false;
+      else
+        return true;
+    },
+    improveSkill: function() {
+      
+    }
   },
 };
 </script>
