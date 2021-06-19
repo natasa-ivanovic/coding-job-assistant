@@ -1,5 +1,7 @@
 package ftn.sbnz.events;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import org.kie.api.definition.type.Expires;
@@ -25,6 +27,6 @@ public class ReviewDeclinedEvent {
     public ReviewDeclinedEvent(Long jobSeekerId) {
     	super();
     	this.jobSeekerId = jobSeekerId;
-    	this.date = new Date();   	
+    	this.date = Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(2))); 	
     }
 }

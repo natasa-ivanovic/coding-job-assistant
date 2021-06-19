@@ -1,5 +1,7 @@
 package ftn.sbnz.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,5 +54,12 @@ public class JobOfferReviewController {
 	public ResponseEntity<Object> declineReview(@PathVariable(name = "id") Long id) throws Exception {
 		service.decline(id);
 		return new ResponseEntity<>("Successfully declined review", HttpStatus.OK);
+	}
+	
+	@GetMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<List<JobOfferReviewDTO>> getAllReviews() throws Exception {
+		List<JobOfferReviewDTO> reviews = service.getAll();
+		return new ResponseEntity<>(reviews, HttpStatus.OK);
 	}
 }

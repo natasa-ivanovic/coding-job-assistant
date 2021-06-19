@@ -6,7 +6,7 @@ import org.kie.api.definition.type.Role;
 import lombok.Data;
 
 @Role(Role.Type.EVENT)
-@Expires("5m")
+@Expires("1m")
 @Data
 public class UserLoginStatusEvent {
 	private Long userId;

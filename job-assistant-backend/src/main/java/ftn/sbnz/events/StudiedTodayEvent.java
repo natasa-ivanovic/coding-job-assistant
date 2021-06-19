@@ -25,8 +25,8 @@ public class StudiedTodayEvent {
 	public StudiedTodayEvent(Long jobSeekerId) {
 		this.jobSeekerId = jobSeekerId;
 		LocalDateTime now = LocalDateTime.now();
-    	this.date = Date.from(now.toInstant(ZoneOffset.UTC));
+    	this.date = Date.from(now.toInstant(ZoneOffset.ofHours(2)));
     	LocalDateTime end = now.plusSeconds(10);
-    	this.endDate = Date.from(end.toInstant(ZoneOffset.UTC));
+    	this.endDate = Date.from(end.toInstant(ZoneOffset.ofHours(2)));
 	}
 }
