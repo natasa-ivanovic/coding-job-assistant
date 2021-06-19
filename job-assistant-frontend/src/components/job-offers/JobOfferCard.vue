@@ -63,14 +63,33 @@
       <v-spacer></v-spacer>
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
+    <v-card-actions>
+      <v-btn v-if="!jobOffer.following" block class="primary" @click="follow()"
+        >Follow</v-btn
+      >
+      <v-alert
+        v-else
+        outlined
+        color="#1A237E"
+        dense
+        class="ml-2 mr-2 mb-0"
+        style="width: 100%; height:35.99px; text-align:center"
+      >
+        <b>YOUR POSITION:
+        {{ jobOffer.ranking }}</b>
+      </v-alert>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+const apiURL = "/api/job-offer/follow/";
+
 export default {
   name: "JobOfferCard",
   data: () => ({
     loading: false,
+    position: "",
   }),
   props: {
     jobOffer: Object,
@@ -87,38 +106,44 @@ export default {
       console.log(view);
     },
     statusDescription(category) {
-      if (category == "HOT_COMPANY") 
+      if (category == "HOT_COMPANY")
         return "This offer is recommended because it's company has great reviews and many highly rated job offers.";
       else if (category == "IMPROVEMENT_NEEDED")
         return "You have some of the required skills for this job, but you are lacking in profficiency.";
       else if (category == "LOW_COMPETITION")
         return "This job doesn't have a lot of followers, so your chances of getting this job are increased.";
-      else if (category == "BEST_MATCH") 
+      else if (category == "BEST_MATCH")
         return "You have a high chance of getting this job based on the level of your skills.";
     },
     getColorForCategory(category) {
-      if (category == "HOT_COMPANY") 
-        return "orange lighten-3";
-      else if (category == "IMPROVEMENT_NEEDED")
-        return "red lighten-3";
-      else if (category == "LOW_COMPETITION")
-        return "blue lighten-3";
-      else if (category == "BEST_MATCH") 
-        return "green lighten-3";
+      if (category == "HOT_COMPANY") return "orange lighten-3";
+      else if (category == "IMPROVEMENT_NEEDED") return "red lighten-3";
+      else if (category == "LOW_COMPETITION") return "blue lighten-3";
+      else if (category == "BEST_MATCH") return "green lighten-3";
     },
     getIconForCategory(category) {
-      if (category == "HOT_COMPANY") 
-        return "mdi-fire";
-      else if (category == "IMPROVEMENT_NEEDED")
-        return "mdi-alert";
-      else if (category == "LOW_COMPETITION")
-        return "mdi-flag-checkered";
-      else if (category == "BEST_MATCH") 
-        return "mdi-check";
+      if (category == "HOT_COMPANY") return "mdi-fire";
+      else if (category == "IMPROVEMENT_NEEDED") return "mdi-alert";
+      else if (category == "LOW_COMPETITION") return "mdi-flag-checkered";
+      else if (category == "BEST_MATCH") return "mdi-check";
     },
     showStatistic() {
-      this.$router.push({ name: "JobOfferStatisticView", params: {id: this.jobOffer['id']}});
-    }
+      this.$router.push({
+        name: "JobOfferStatisticView",
+        params: { id: this.jobOffer["id"] },
+      });
+    },
+    follow() {
+      this.axios
+        .post(apiURL + this.jobOffer.id)
+        .then((response) => {
+          this.jobOffer.ranking =  response.data;
+          this.jobOffer.following = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
