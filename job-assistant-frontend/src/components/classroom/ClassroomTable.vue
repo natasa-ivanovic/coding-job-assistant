@@ -28,7 +28,7 @@
           :headers="materialHeader"
           :items="item.interviewSuggestions"
           item-key="name"
-          class="elevation-0"
+          class="elevation-0 mt-3 mb-3"
           hide-default-footer
         >
           <template v-slot:[`item.url`]="{ item }">
@@ -48,13 +48,6 @@ export default {
   data() {
     return {
       expanded: [],
-      singleExpand: false,
-      //     private Long id;
-      // private SkillProficiency proficiency;
-      // private CVElement cvElement;
-      // private String subject;
-      // private String url;
-      // private String description;
       infoHeader: [
         { text: "Date", value: "dateSuggested" },
         { text: "Position", value: "position" },
@@ -83,7 +76,7 @@ export default {
           .then((response) => {
               item.checked = true;
               console.log(response);
-              alert("You've successfully finished preparing for this job. Continue learning in order to mantain your streak.");
+              alert("You've successfully finished these lessons. Continue learning in order to maintain your daily streak.");
           })
       }
   }
