@@ -33,7 +33,7 @@
             </v-row>
             <v-row v-else>
               <v-col style="flex: 1;" sm="12" md="6" lg="4" v-for="jp in jobPositions" :key="jp.id">
-                <job-position-card v-bind:jobPosition="jp" />
+                <job-position-card v-bind:jobPosition="jp" v-bind:maxRating="maxRating" />
               </v-col>
             </v-row>
           </v-card-text>
@@ -106,6 +106,13 @@ export default {
   },
   mounted() {
     this.getLastRequest();
+  },
+  computed: {
+    maxRating: function() {
+      const allRatings = []
+      this.jobPositions.forEach(jp => allRatings.push(jp.rating))
+      return Math.max(...allRatings);
+    }
   },
   methods: {
     getLastRequest: function () {

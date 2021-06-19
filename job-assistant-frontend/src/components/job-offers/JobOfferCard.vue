@@ -19,14 +19,14 @@
     ></v-img>
 
     <v-card-title>{{ jobOffer.position }}</v-card-title>
-    <v-card-subtitle style="font-size:15px;">{{
+    <v-card-subtitle style="font-size: 15px">{{
       jobOffer.company
     }}</v-card-subtitle>
 
     <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
-          :value="4.5"
+          :value="jobOffer.offerRating"
           color="amber"
           dense
           half-increments
@@ -34,10 +34,10 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ms-4">Very popular</div>
+        <div class="grey--text ms-4">{{ getRatingText() }}</div>
       </v-row>
     </v-card-text>
-    <div class="mt-6 ml-4 mr-4" style="text-align:justify">
+    <div class="mt-6 ml-4 mr-4" style="text-align: justify">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
       mi non dolor congue congue. Donec vestibulum nisi lectus.
     </div>
@@ -48,14 +48,14 @@
           dense
           :icon="getIconForCategory(jobOffer.category)"
           :color="getColorForCategory(jobOffer.category)"
-          style="width:100%"
+          style="width: 100%"
           class="ml-2 mr-2"
         >
           {{ jobOffer.category.split("_").join(" ") }}
         </v-alert>
       </v-row>
     </v-card-text>
-    <div class="ml-4 mr-4" style="text-align:justify">
+    <div class="ml-4 mr-4" style="text-align: justify">
       <b>{{ statusDescription(jobOffer.category) }}</b>
     </div>
     <v-card-actions>
@@ -88,35 +88,38 @@ export default {
       console.log(view);
     },
     statusDescription(category) {
-      if (category == "HOT_COMPANY") 
+      if (category == "HOT_COMPANY")
         return "This offer is recommended because it's company has great reviews and many highly rated job offers.";
       else if (category == "IMPROVEMENT_NEEDED")
         return "You have some of the required skills for this job, but you are lacking in profficiency.";
       else if (category == "LOW_COMPETITION")
         return "This job doesn't have a lot of followers, so your chances of getting this job are increased.";
-      else if (category == "BEST_MATCH") 
+      else if (category == "BEST_MATCH")
         return "You have a high chance of getting this job based on the level of your skills.";
     },
     getColorForCategory(category) {
-      if (category == "HOT_COMPANY") 
-        return "orange lighten-3";
-      else if (category == "IMPROVEMENT_NEEDED")
-        return "red lighten-3";
-      else if (category == "LOW_COMPETITION")
-        return "blue lighten-3";
-      else if (category == "BEST_MATCH") 
-        return "green lighten-3";
+      if (category == "HOT_COMPANY") return "orange lighten-3";
+      else if (category == "IMPROVEMENT_NEEDED") return "red lighten-3";
+      else if (category == "LOW_COMPETITION") return "blue lighten-3";
+      else if (category == "BEST_MATCH") return "green lighten-3";
     },
     getIconForCategory(category) {
-      if (category == "HOT_COMPANY") 
-        return "mdi-fire";
-      else if (category == "IMPROVEMENT_NEEDED")
-        return "mdi-alert";
-      else if (category == "LOW_COMPETITION")
-        return "mdi-flag-checkered";
-      else if (category == "BEST_MATCH") 
-        return "mdi-check";
-    }
+      if (category == "HOT_COMPANY") return "mdi-fire";
+      else if (category == "IMPROVEMENT_NEEDED") return "mdi-alert";
+      else if (category == "LOW_COMPETITION") return "mdi-flag-checkered";
+      else if (category == "BEST_MATCH") return "mdi-check";
+    },
+    getRatingText() {
+      if (this.jobOffer.offerRating >= 4.0) {
+        return "Great reviews!";
+      } else if (this.jobOffer.offerRating >= 3) {
+        return "Average reviews!";
+      } else if (this.jobOffer.offerRating != 0) {
+        return "Bad reviews!";
+      } else {
+        return "No reviews so far!";
+      }
+    },
   },
 };
 </script>

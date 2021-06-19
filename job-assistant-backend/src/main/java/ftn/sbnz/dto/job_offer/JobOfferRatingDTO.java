@@ -15,6 +15,7 @@ public class JobOfferRatingDTO {
 	private String description;
 	private String category;
 	private Long jobOfferId;
+	private float offerRating;
 	
 	public JobOfferRatingDTO(JobOfferRating jobOfferRating) {
 		this.id = jobOfferRating.getId();
@@ -24,6 +25,7 @@ public class JobOfferRatingDTO {
 		this.description = jobOfferRating.getDescription();
 		this.rating = jobOfferRating.getRating();
 		this.category = jobOfferRating.getCategory().name();
+		this.offerRating = jobOfferRating.getJobOffer().getAverageRating();
 	}
 
 }

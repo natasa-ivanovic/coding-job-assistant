@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.knowledge.KnowledgeImportance;
@@ -84,4 +85,19 @@ public class JobOffer {
 	
 	@OneToMany
 	private List<JobOfferStatistic> statistics = new ArrayList<>();
+	
+	public float getAverageRating() {
+		float totalScore = 0;
+		float count = 0;
+		for (JobOfferReview jor : reviews) {
+			if (jor.getStatus().equals(ReviewStatus.APPROVED)) {
+				totalScore += jor.getRating();
+				count++;
+			}
+		}
+		if (count == 0)
+			return 0f;
+		else
+			return totalScore / count;
+	}
 }

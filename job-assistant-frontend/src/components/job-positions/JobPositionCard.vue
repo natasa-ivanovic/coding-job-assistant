@@ -19,7 +19,7 @@
     <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
-          :value="4.5"
+          :value="getRating()"
           color="amber"
           dense
           half-increments
@@ -27,11 +27,14 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ms-4">Very popular</div>
+        <div class="grey--text ms-4">{{ getRatingText() }}</div>
       </v-row>
 
-      <div class="mt-6 ml-3 mr-3"> 
-        <v-row v-for="description in formatDescription(jobPosition.description)" :key="description.name">
+      <div class="mt-6 ml-3 mr-3">
+        <v-row
+          v-for="description in formatDescription(jobPosition.description)"
+          :key="description.name"
+        >
           <requirement-rating-component v-bind:data="description" />
         </v-row>
       </div>
@@ -72,12 +75,12 @@
 </template>
 
 <script>
-import RequirementRatingComponent from '../rating/RequirementRatingComponent.vue'
+import RequirementRatingComponent from "../rating/RequirementRatingComponent.vue";
 
 export default {
   name: "JobPositionCard",
   components: {
-    RequirementRatingComponent
+    RequirementRatingComponent,
   },
   data() {
     return {
@@ -86,6 +89,7 @@ export default {
   },
   props: {
     jobPosition: Object,
+    maxRating: Number,
   },
   methods: {
     view: () => {
@@ -98,16 +102,30 @@ export default {
     formatDescription: function (desc) {
       const list = [];
       desc.split("\n").forEach((el) => {
-        if (el.length == 0)
-          return;
+        if (el.length == 0) return;
         const name = el.split(" (")[0];
         const value = el.split(" (")[1].replace(")", "");
         list.push({ name, value });
       });
-      if (list.length > 5)
-        return list.splice(0, 5);
-      else 
-        return list;
+      if (list.length > 5) return list.splice(0, 5);
+      else return list;
+    },
+    getRating: function () {
+      if (this.maxRating != 0) {
+        const percentage = (this.jobPosition.rating * 100) / this.maxRating
+        return percentage / 20;
+      }
+      else return 0;
+    },
+    getRatingText: function () {
+      const rating = this.getRating();
+      if (rating >= 4.0) {
+        return "Excellent match!"
+      } else if (rating >= 2) {
+        return "Decent match!"
+      } else {
+        return "Potentially useful!"
+      }
     },
   },
 };

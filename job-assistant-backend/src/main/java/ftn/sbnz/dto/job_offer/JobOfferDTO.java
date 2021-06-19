@@ -23,7 +23,7 @@ public class JobOfferDTO {
 	private String positionName;
 	private String positionId;
 	private Float ranking;
-	
+
 	public JobOfferDTO(JobOffer jo) {
 		this.id = jo.getId();
 		this.seniority = jo.getSeniority();
@@ -33,14 +33,6 @@ public class JobOfferDTO {
 		this.companyId = jo.getCompany().getId().toString();
 		this.positionName = jo.getPosition().getTitle();
 		this.positionId = jo.getPosition().getId().toString();
-		int totalScore = 0;
-		for (JobOfferReview jor : jo.getReviews()) {
-			if (jor.getStatus().equals(ReviewStatus.APPROVED))
-				totalScore += jor.getRating();
-		}
-		if (jo.getReviews().size() == 0)
-			this.ranking = 0f;
-		else
-			this.ranking = (float) (totalScore) / (float) (jo.getReviews().size());
+		this.ranking = jo.getAverageRating();
 	}
 }
