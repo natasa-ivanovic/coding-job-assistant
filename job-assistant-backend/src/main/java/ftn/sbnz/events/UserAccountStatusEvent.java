@@ -10,7 +10,7 @@ import org.kie.api.definition.type.Role;
 import lombok.Data;
 
 @Role(Role.Type.EVENT)
-@Expires("5m")
+@Expires("1m")
 @Data
 public class UserAccountStatusEvent {
 	private Long userId;
@@ -21,6 +21,6 @@ public class UserAccountStatusEvent {
 	public UserAccountStatusEvent(Long id) {
 		this.userId = id;
     	LocalDateTime now = LocalDateTime.now();
-    	this.eventTime = Date.from(now.toInstant(ZoneOffset.UTC));
+    	this.eventTime = Date.from(now.toInstant(ZoneOffset.ofHours(2)));
 	}
 }

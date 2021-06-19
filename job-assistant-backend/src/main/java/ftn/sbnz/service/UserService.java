@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import ftn.sbnz.dto.UserDTO;
 import ftn.sbnz.dto.UserTokenStateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
+import ftn.sbnz.events.UserAccountStatusEvent;
 import ftn.sbnz.events.UserLoginStatusEvent;
 import ftn.sbnz.exception.UserException;
 import ftn.sbnz.model.auth.Authority;
@@ -59,7 +60,7 @@ public class UserService {
 		this.userRepository.save(dbJobSeeker);
 	}
 
-	public UserTokenStateDTO login(String username, String password) throws UserException {
+	public UserTokenStateDTO login(String username, String password) throws Exception {
 		User existUser = null;
 		try {
 			existUser = getOne(username);
@@ -73,6 +74,10 @@ public class UserService {
 
 		if (existUser.getKey() != null && existUser.getRole().equals("USER")) {
 			throw new DisabledException("Your password hasn't been reset yet. Please check your email!");
+		}
+		
+		if (userBanned(existUser.getId())) {
+			throw new Exception("User has been banned for posting too many malicious reviews!");
 		}
 
 		UserTokenStateDTO token = generateToken(username, password, existUser);
@@ -159,5 +164,13 @@ public class UserService {
 		js.setEnabled(true); //TODO: account activation mail
 		
 		save(js);
+	}
+	
+	private boolean userBanned(Long jobSeekerId) {
+		UserAccountStatusEvent fact = new UserAccountStatusEvent(jobSeekerId);
+		kieSession.insert(fact);
+		kieSession.setAgendaFocus("user-account-status-check");
+		kieSession.fireAllRules();
+		return fact.isBanned();
 	}
 }

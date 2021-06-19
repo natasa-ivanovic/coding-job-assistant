@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import RegisterView from '../views/auth/RegisterView.vue'
+
 import HomeAdminView from '../views/admin/HomeAdminView.vue'
+import JobOfferReviewListView from '../views/admin/JobOfferReviewListView.vue'
+
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 import AccountView from '../views/jobseeker/AccountView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
@@ -30,12 +33,20 @@ const routes = [
     path: "/",
     beforeEnter: guardRouteLoggedIn,
     children: [
+      // admin routes      
       {
         component: HomeAdminView,
         name: "HomeAdminView",
         path: "/home",
         beforeEnter: guardRouteAdmin
       },
+      {
+        component: JobOfferReviewListView,
+        name: "JobOfferReviewListView",
+        path: "/job-offer-reviews",
+        beforeEnter: guardRouteAdmin
+      },
+      // jobseeker routes
       {
         component: HomeJobSeekerView,
         name: "HomeJobSeekerView",

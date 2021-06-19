@@ -12,15 +12,19 @@ import ftn.sbnz.events.UserAccountStatusEvent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
+import java.util.Date;
 
 
-rule "ReviewDeclinedEvent added - review declined"
+rule "Review declined - ReviewDeclinedEvent added"
     agenda-group "job-offer-review-added"
     when
-        $jobOfferReview: JobOfferReview (status == ReviewStatus.DECLINED, $user: poster)
+        $jobOfferReview: JobOfferReview (status == ReviewStatus.DECLINED, $user: poster, $date: date.getTime()) and
+        Number(intValue == 0) from accumulate 
+        					  	   (MaliciousReviewerEvent($user.id == jobSeekerId, $date before endDate), count(1))
     then
         System.out.println("Review from user with username " + $user.getUsername() + " review declined! New ReviewDeclinedEvent added.");
         ReviewDeclinedEvent event = new ReviewDeclinedEvent($user.getId());
@@ -28,15 +32,37 @@ rule "ReviewDeclinedEvent added - review declined"
         delete($jobOfferReview);
 end
 
+rule "Review declined - MaliciousReviewer in progress, no ReviewDeclineEvent added"
+    agenda-group "job-offer-review-added"
+    when
+        $jobOfferReview: JobOfferReview (status == ReviewStatus.DECLINED, $user: poster, $date: date.getTime()) and
+        Number(intValue >= 1) from accumulate 
+        					  	   (MaliciousReviewerEvent ($user.id == jobSeekerId, $date before endDate), count(1))
+    then
+        System.out.println("Review from user with username " + $user.getUsername() + " review declined! No ReviewDeclinedEvent, active MaliciousUser.");
+        delete($jobOfferReview);
+end
+
 rule "MaliciousReviewerEvent added - 3 reviews declined in 10 days"
     agenda-group "job-offer-review-added"
     when
         $user: JobSeeker($id: id) and
-        $eventCounter: Number(intValue > 2) from accumulate (ReviewDeclinedEvent ($jobSeekerId: jobSeekerId, $jobSeekerId == $id) over window:time( 15s ), count(1))
+        $eventCounter: Number(intValue > 2) from accumulate (ReviewDeclinedEvent ($jobSeekerId: jobSeekerId, $jobSeekerId == $id) over window:time( 5d ), count(1))
     then
         System.out.println($eventCounter + " ReviewDeclinedEvents from user with username " + $user.getUsername() + "! New MaliciousReviewerEvent added.");
         MaliciousReviewerEvent event = new MaliciousReviewerEvent($user.getId());
         insert(event);
+end
+
+rule "MaliciousReviewerEvent added - delete all ReviewDeclinedEvents before it"
+    agenda-group "job-offer-review-added"
+    when
+        $user: JobSeeker($id: id) and
+        $mre: MaliciousReviewerEvent(jobSeekerId == $id, $startDate: startDate) and
+        $rde: ReviewDeclinedEvent (jobSeekerId == $id, $date: date, this before $startDate)
+    then
+        System.out.println("ReviewDeclinedEvent removed because of new MaliciousReviewerEvent.");
+        delete($rde);
 end
 
 rule "Disable user - MaliciousReviewerEvent happened 3 times in last 90 days"

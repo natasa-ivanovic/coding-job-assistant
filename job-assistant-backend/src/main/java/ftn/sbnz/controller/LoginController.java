@@ -31,7 +31,7 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public ResponseEntity<UserTokenStateDTO> login(@RequestBody JwtAuthenticationRequest authenticationRequest)
-			throws UserException {
+			throws Exception {
 		String username = authenticationRequest.getUsername();
 		String password = authenticationRequest.getPassword();
 		UserTokenStateDTO token = userService.login(username, password);

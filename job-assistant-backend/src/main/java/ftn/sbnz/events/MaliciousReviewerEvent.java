@@ -32,9 +32,9 @@ public class MaliciousReviewerEvent {
     	super();
     	this.jobSeekerId = jobSeekerId;
     	LocalDateTime now = LocalDateTime.now();
-    	this.startDate = Date.from(now.toInstant(ZoneOffset.UTC));
-    	LocalDateTime end = now.plusSeconds(15);
-    	this.endDate = Date.from(end.toInstant(ZoneOffset.UTC));
+    	this.startDate = Date.from(now.toInstant(ZoneOffset.ofHours(2)).plusSeconds(1));
+    	LocalDateTime end = now.plusMinutes(1);
+    	this.endDate = Date.from(end.toInstant(ZoneOffset.ofHours(2)));
     	this.active = true;
     }
 }
