@@ -150,6 +150,18 @@
         </router-link>
         </v-list-group>
       </v-list-item-group>
+
+      <v-divider></v-divider>
+      <router-link :to="{ name: 'ClassroomView' }" v-slot="{ navigate }">
+        <v-list-item @click="navigate">
+          <v-list-item-icon>
+            <v-icon>mdi-book-open-variant</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Classroom</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
     </v-list>
   </v-container>
 </template>

@@ -14,6 +14,7 @@ import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
 import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
 import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
 import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
+import ClassroomView from '../views/classroom/ClassroomView.vue'
 
 Vue.use(VueRouter)
 
@@ -88,6 +89,12 @@ const routes = [
         name: "JobOfferStatisticView",
         path: "/statistic/:id",
         props: true,
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: ClassroomView,
+        name: "ClassroomView",
+        path: "/classroom",
         beforeEnter: guardRouteJobSeeker
       }
     ]
