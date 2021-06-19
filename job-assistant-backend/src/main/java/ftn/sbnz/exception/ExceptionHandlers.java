@@ -14,7 +14,6 @@ public class ExceptionHandlers {
 	public ResponseEntity<ErrorMessage> loginExceptionHandler(UserException ex, WebRequest request) {
 		ErrorMessage message = new ErrorMessage(ex.getMessage());
 		message.getErrors().put(ex.getCauseField(), ex.getCauseMessage());
-		ex.printStackTrace();
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 		
