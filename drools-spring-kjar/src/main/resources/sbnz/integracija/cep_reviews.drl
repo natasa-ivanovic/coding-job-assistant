@@ -69,7 +69,7 @@ rule "Disable user - MaliciousReviewerEvent happened 3 times in last 90 days"
     agenda-group "job-offer-review-added"
     when
         $user: JobSeeker($id: id) and
-        $eventCounter: Number(intValue > 2) from accumulate (MaliciousReviewerEvent ($jobSeekerId: jobSeekerId, $jobSeekerId == $id) over window:time( 90d ), count(1))
+        $eventCounter: Number(intValue > 1) from accumulate (MaliciousReviewerEvent ($jobSeekerId: jobSeekerId, $jobSeekerId == $id) over window:time( 90d ), count(1))
     then
         System.out.println($eventCounter + " MaliciousReviewerEvents from user with username " + $user.getUsername() + "! User suspended for 120 days!");
         DisabledUserEvent event = new DisabledUserEvent($user.getId());

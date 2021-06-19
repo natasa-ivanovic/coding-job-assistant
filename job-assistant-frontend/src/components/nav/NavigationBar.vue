@@ -59,7 +59,7 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link :to="{ name: 'AccountView' }" v-slot="{ navigate }">
+        <!-- <router-link :to="{ name: 'AccountView' }" v-slot="{ navigate }">
           <v-list-item @click="navigate">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
@@ -68,7 +68,7 @@
               <v-list-item-title>My account</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </router-link>
+        </router-link> -->
         <v-divider></v-divider>
 
 
