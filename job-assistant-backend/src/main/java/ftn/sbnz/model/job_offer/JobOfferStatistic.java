@@ -15,14 +15,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.sbnz.model.user.JobSeeker;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "job_offer_statistic")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class JobOfferStatistic {

@@ -7,6 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import ftn.sbnz.tests.CEPAccountStatusTests;
 import ftn.sbnz.tests.CEPReviewsTests;
+import ftn.sbnz.tests.CEPUserStudyTest;
 import ftn.sbnz.tests.CompanyStatusRulesTests;
 import ftn.sbnz.tests.JobOfferRulesTests;
 import ftn.sbnz.tests.JobOfferStatisticTest;
@@ -21,9 +22,10 @@ import ftn.sbnz.tests.JobPositionRulesTests;
 	CEPAccountStatusTests.class,
 	JobOfferRulesTests.class,
 	JobOfferStatisticTest.class,
-	JobOffersStatusRulesTest.class
+	JobOffersStatusRulesTest.class,
+	CEPUserStudyTest.class
 })
 @TestPropertySource("classpath:application.properties")
 class JobAssistantApplicationTests {
-
+	
 }

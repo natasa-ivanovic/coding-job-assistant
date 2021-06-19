@@ -15,11 +15,15 @@ import javax.persistence.Table;
 import ftn.sbnz.model.enums.CVElement;
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "job_offer_difference")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class JobOfferDifference {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

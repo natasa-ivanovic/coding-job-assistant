@@ -33,7 +33,7 @@ public class JobOfferStatisticTest {
 	private JobOfferRepository jobOfferRepo;
 
 	@Test
-	public void jobOfferRequest() {
+	public void statisticRequest() {
 		KieSession session = setupSession();
 
 		List<JobSeeker> jobSeekers = jobSeekerRepo.findAll();
@@ -54,7 +54,7 @@ public class JobOfferStatisticTest {
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferStatistic statistic = new JobOfferStatistic(new Timestamp(rightNow.getTimeInMillis()));
 		statistic.setJobOffer(offers.get(0));
-		statistic.setJobSeeker(jobSeekers.get(0));
+		statistic.setJobSeeker(jobSeeker);
 		
 		session.insert(statistic);
 		session.getAgenda().getAgendaGroup("job-seeker-statistic").setFocus();
