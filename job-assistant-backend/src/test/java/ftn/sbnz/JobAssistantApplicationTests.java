@@ -9,6 +9,7 @@ import ftn.sbnz.tests.CEPAccountStatusTests;
 import ftn.sbnz.tests.CEPLoginTests;
 import ftn.sbnz.tests.CEPReviewsTests;
 import ftn.sbnz.tests.CompanyStatusRulesTests;
+import ftn.sbnz.tests.JobOfferRulesTests;
 import ftn.sbnz.tests.JobPositionRulesTests;
 
 @RunWith(Suite.class)
@@ -16,7 +17,8 @@ import ftn.sbnz.tests.JobPositionRulesTests;
 	JobPositionRulesTests.class,
 	CompanyStatusRulesTests.class,
 	CEPReviewsTests.class,
-	CEPAccountStatusTests.class
+	CEPAccountStatusTests.class,
+	JobOfferRulesTests.class
 })
 @TestPropertySource("classpath:application.properties")
 class JobAssistantApplicationTests {
