@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -50,22 +51,22 @@ public class JobSeeker extends User{
 	@Column(name = "continuous_learning")
 	private boolean continuousLearning;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<TechnologyProficiency> technologyProficiencies = new HashSet<>();
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<SoftSkillProficiency> softSkillProficiencies = new HashSet<>();
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<ProgrammingProficiency> programmingProficiencies = new HashSet<>();
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<LanguageProficiency> languageProficiencies = new HashSet<>();
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<KnowledgeProficiency> knowledgeProficiencies = new HashSet<>();
 	
-	@OneToMany//(mappedBy = "jobSeeker")
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<WorkingExperience> workingExperience = new HashSet<>();
 	
 	@OneToMany(mappedBy = "poster")
