@@ -11,6 +11,7 @@ import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 import AccountView from '../views/jobseeker/AccountView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
 import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
+import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
 import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
 import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
 
@@ -82,11 +83,16 @@ const routes = [
         path: "/job-offers",
         beforeEnter: guardRouteJobSeeker
       },
+      {
+        component: JobOfferStatisticView,
+        name: "JobOfferStatisticView",
+        path: "/statistic/:id",
+        props: true,
+        beforeEnter: guardRouteJobSeeker
+      }
     ]
   }
-
 ]
-
 
 function guardRouteLoggedIn(to, from, next) {
   let user = JSON.parse(localStorage.getItem("user"));

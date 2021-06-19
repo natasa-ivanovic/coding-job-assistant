@@ -19,16 +19,21 @@
           </v-card-title>
           <v-card-text v-if="lastDate">
             <v-row>
-              <v-alert icon="mdi-calendar" outlined  color="#546E7A" dense class="ml-6 mr-6" style="width: 100%;">
-                Here are your suggestions from date: {{new Date(lastDate).toDateString()}}.
+              <v-alert
+                icon="mdi-calendar"
+                outlined
+                color="#546E7A"
+                dense
+                class="ml-6 mr-6"
+                style="width: 100%;"
+              >
+                Here are your suggestions from date:
+                {{ new Date(lastDate).toDateString() }}.
               </v-alert>
             </v-row>
           </v-card-text>
-          <v-row  class="ml-5">
-            <v-btn
-              color="primary"
-              class="mx-2"
-              @click="requestSuggestions()"
+          <v-row class="ml-5">
+            <v-btn color="primary" class="mx-2" @click="requestSuggestions()"
               >Request recommendations</v-btn
             >
           </v-row>
@@ -36,14 +41,17 @@
             <v-row v-if="alert">
               <v-col cols="12">
                 <v-alert type="info" class="ml-3 mr-3">
-                  No job offer recommendations in recent memory! Please request a
-                  new set of recommendations.
+                  No job offer recommendations in recent memory! Please request
+                  a new set of recommendations.
                 </v-alert>
               </v-col>
             </v-row>
             <v-row v-else>
               <v-col
-                style="flex: 1;" sm="12" md="6" lg="4"
+                style="flex: 1;"
+                sm="12"
+                md="6"
+                lg="4"
                 v-for="jo in jobOffers"
                 :key="jo.id"
               >
@@ -73,9 +81,9 @@ export default {
       jobOffers: [],
       alert: false,
       lastDate: null,
-  // private Long id;
-	// private Timestamp date;
-	// private List<JobOfferRatingDTO> offerRatings;
+      // private Long id;
+      // private Timestamp date;
+      // private List<JobOfferRatingDTO> offerRatings;
     };
   },
   mounted() {
@@ -98,8 +106,8 @@ export default {
         .get(apiURL + "/request")
         .then((response) => {
           this.alert = false;
-          this.jobSuggestion = response.date;
-          console.log(this.jobSuggestion);
+          this.jobOffers = response.data.offerRatings;
+          this.lastDate = response.data.date;
         })
         .catch((error) => {
           alert(error);

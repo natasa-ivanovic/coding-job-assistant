@@ -61,7 +61,7 @@
     <v-card-actions>
       <v-btn color="#1A237E" text @click="view"> Details </v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="#1A237E" text @click="view"> Evaluate </v-btn>
+      <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -71,7 +71,6 @@ export default {
   name: "JobOfferCard",
   data: () => ({
     loading: false,
-    selection: 1,
   }),
   props: {
     jobOffer: Object,
@@ -119,6 +118,12 @@ export default {
       } else {
         return "No reviews so far!";
       }
+    },
+    showStatistic() {
+      this.$router.push({
+        name: "JobOfferStatisticView",
+        params: { id: this.jobOffer["id"] },
+      });
     },
   },
 };
