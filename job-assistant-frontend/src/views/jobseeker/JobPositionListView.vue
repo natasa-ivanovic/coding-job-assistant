@@ -18,7 +18,7 @@
           <v-data-table :headers="headers" :items="positions" :search="search">
             <template v-slot:[`item.actions`]="{ item }">
               <v-btn icon small @click="viewDetails(item)">
-                <v-icon>mdi-details</v-icon>
+                <v-icon>mdi-menu</v-icon>
               </v-btn>
             </template>
           </v-data-table>
@@ -39,20 +39,15 @@ export default {
     return {
       search: "",
       headers: [
-        { text: "Job position", value: "positionName" },
-        { text: "Company", value: "companyName" },
-        { text: "Seniority", value: "seniority" },
-        { text: "Posted on", value: "datePosted" },
-        { text: "Ranking", value: "ranking" },
-        { text: "Medal", value: "medal" },
-        { text: "Actions", value: "actions", align: "right" },
+        { text: "Title", value: "title" },
+        { text: "Details", value: "actions", align: "right" },
       ],
       positions: [],
     };
   },
 
   mounted() {
-    // this.getPositions();
+    this.getPositions();
   },
 
   methods: {
