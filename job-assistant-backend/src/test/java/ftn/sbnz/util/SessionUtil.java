@@ -2,12 +2,10 @@ package ftn.sbnz.util;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.drools.core.ObjectFilter;
 import org.kie.api.runtime.KieSession;
 
-import ftn.sbnz.events.ReviewDeclinedEvent;
 import ftn.sbnz.model.company.Company;
 
 public class SessionUtil {

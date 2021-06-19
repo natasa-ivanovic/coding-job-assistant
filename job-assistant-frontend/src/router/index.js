@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import RegisterView from '../views/auth/RegisterView.vue'
+import ResetPasswordView from '../views/auth/ResetPasswordView.vue'
 
 import HomeAdminView from '../views/admin/HomeAdminView.vue'
 import JobOfferReviewListView from '../views/admin/JobOfferReviewListView.vue'
@@ -28,6 +29,12 @@ const routes = [
     component: RegisterView,
     name: "RegisterView",
     path: "/register",
+  },
+  {
+    component: ResetPasswordView,
+    name: "ResetPasswordView",
+    path: "/reset-password/:key",
+    props: true
   },
   {
     component: HomeView,

@@ -16,7 +16,8 @@ import ftn.sbnz.tests.JobPositionRulesTests;
 	JobPositionRulesTests.class,
 	CompanyStatusRulesTests.class,
 	CEPReviewsTests.class,
-	CEPAccountStatusTests.class
+	CEPAccountStatusTests.class,
+	CEPLoginTests.class
 })
 @TestPropertySource("classpath:application.properties")
 class JobAssistantApplicationTests {

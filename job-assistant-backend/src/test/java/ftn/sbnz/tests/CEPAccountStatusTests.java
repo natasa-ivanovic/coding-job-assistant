@@ -3,9 +3,7 @@ package ftn.sbnz.tests;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import org.drools.core.time.SessionPseudoClock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
@@ -17,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ftn.sbnz.events.InvalidLoginEvent;
-import ftn.sbnz.events.UserLoginStatusEvent;
+import ftn.sbnz.events.DisabledUserEvent;
+import ftn.sbnz.events.MaliciousReviewerEvent;
+import ftn.sbnz.events.UserAccountStatusEvent;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 
@@ -30,9 +29,8 @@ public class CEPAccountStatusTests {
 	private JobSeekerRepository jobSeekerRepo;
 	
 	@Test 
-	public void invalidPasswordThreeTimes() {
+	public void userBanned() {
 		KieSession session = setupSession();
-		SessionPseudoClock clock = session.getSessionClock();
 
 		List<JobSeeker> seekers = jobSeekerRepo.findAll();
 		for (JobSeeker js : seekers) {
@@ -40,32 +38,22 @@ public class CEPAccountStatusTests {
 		}
 
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
-		
-		
-		for (int i = 0 ; i != 2; i++) {
-			InvalidLoginEvent event = new InvalidLoginEvent(js.getId());
-			session.insert(event);
-			session.getAgenda().getAgendaGroup("user-login-check").setFocus();
-			int firedRules = session.fireAllRules();
-			assertEquals(0, firedRules);
-			clock.advanceTime(5, TimeUnit.MINUTES);
-		}
-
-		UserLoginStatusEvent loginEvent = new UserLoginStatusEvent(js.getId());
-		InvalidLoginEvent event = new InvalidLoginEvent(js.getId());
+		DisabledUserEvent event = new DisabledUserEvent(js.getId());
 		session.insert(event);
-		session.insert(loginEvent);
-		session.getAgenda().getAgendaGroup("user-login-check").setFocus();
+		UserAccountStatusEvent statusEvent = new UserAccountStatusEvent(js.getId());		
+		session.insert(statusEvent);	
+		
+		session.getAgenda().getAgendaGroup("user-account-status-check").setFocus();
 		int firedRules = session.fireAllRules();
 		assertEquals(1, firedRules);
 		
-		assertEquals(false, loginEvent.isAllowed());
+		assertEquals(true, statusEvent.isBanned());
+		assertEquals(false, statusEvent.isAllowed());
 	}
 
 	@Test 
-	public void invalidPasswordTwoTimes() {
+	public void userReviewNotAllowed() {
 		KieSession session = setupSession();
-		SessionPseudoClock clock = session.getSessionClock();
 
 		List<JobSeeker> seekers = jobSeekerRepo.findAll();
 		for (JobSeeker js : seekers) {
@@ -73,24 +61,41 @@ public class CEPAccountStatusTests {
 		}
 
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
-		
-		
-		for (int i = 0 ; i != 2; i++) {
-			InvalidLoginEvent event = new InvalidLoginEvent(js.getId());
-			session.insert(event);
-			session.getAgenda().getAgendaGroup("user-login-check").setFocus();
-			int firedRules = session.fireAllRules();
-			assertEquals(0, firedRules);
-			clock.advanceTime(5, TimeUnit.MINUTES);
-		}
 
-		UserLoginStatusEvent loginEvent = new UserLoginStatusEvent(js.getId());
-		session.insert(loginEvent);
-		session.getAgenda().getAgendaGroup("user-login-check").setFocus();
+		MaliciousReviewerEvent event = new MaliciousReviewerEvent(js.getId());
+		session.insert(event);
+		UserAccountStatusEvent statusEvent = new UserAccountStatusEvent(js.getId());	
+		session.insert(statusEvent);
+
+		session.getAgenda().getAgendaGroup("user-account-status-check").setFocus();
 		int firedRules = session.fireAllRules();
 		assertEquals(1, firedRules);
 		
-		assertEquals(true, loginEvent.isAllowed());
+		assertEquals(false, statusEvent.isBanned());
+		assertEquals(false, statusEvent.isAllowed());
+	}
+	
+
+	@Test 
+	public void userAllowed() {
+		KieSession session = setupSession();
+
+		List<JobSeeker> seekers = jobSeekerRepo.findAll();
+		for (JobSeeker js : seekers) {
+			session.insert(js);
+		}
+
+		JobSeeker js = jobSeekerRepo.findById(2L).get();
+
+		UserAccountStatusEvent statusEvent = new UserAccountStatusEvent(js.getId());	
+		session.insert(statusEvent);
+
+		session.getAgenda().getAgendaGroup("user-account-status-check").setFocus();
+		int firedRules = session.fireAllRules();
+		assertEquals(1, firedRules);
+		
+		assertEquals(false, statusEvent.isBanned());
+		assertEquals(true, statusEvent.isAllowed());
 	}
 	
 	private KieSession setupSession() {
