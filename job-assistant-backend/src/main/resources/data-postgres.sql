@@ -780,6 +780,25 @@ insert into interview_suggestions (proficiency, cv_element, subject, url, descri
 insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Angular', 'excellent url', 'excellent description'); -- excellent
 insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Angular', 'expert url', 'expert description'); -- expert
 
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 1, 'Maven', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 1, 'Maven', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 1, 'Maven', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 1, 'Maven', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 1, 'Maven', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 2, 'Object oriented programming', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 2, 'Object oriented programming', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 2, 'Object oriented programming', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 2, 'Object oriented programming', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 2, 'Object oriented programming', 'expert url', 'expert description'); -- expert
+
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (1, 2, 'Design patterns', 'basic url', 'basic description'); -- basic
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (2, 2, 'Design patterns', 'good url', 'good description'); -- good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (3, 2, 'Design patterns', 'very good url', 'very good description'); -- very good
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (4, 2, 'Design patterns', 'excellent url', 'excellent description'); -- excellent
+insert into interview_suggestions (proficiency, cv_element, subject, url, description) values (5, 2, 'Design patterns', 'expert url', 'expert description'); -- expert
+
+
 ----------------------- users proficiencies -------------------------------
 -- user with id 2 - 'Job Seeker'
 

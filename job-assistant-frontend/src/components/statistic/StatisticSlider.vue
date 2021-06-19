@@ -25,12 +25,14 @@
       </v-range-slider>
     </v-col>
     <v-col cols="1">
-      <v-btn :disabled="improveSkillDisabled()" class="primary">Improve</v-btn>
+      <v-btn :disabled="disableBtn" @click="improveSkill()" class="primary">Improve</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script>
+const apiURL = "/api/interview-suggestion/";
+
 export default {
   name: "StatisticCard",
   data: () => ({
@@ -42,9 +44,13 @@ export default {
       "EXCELLENT",
       "EXPERT",
     ],
+    disableBtn: false
   }),
   props: {
     difference: Object,
+  },
+  mounted() {
+    this.improveSkillDisabled();
   },
   methods: {
     getIcon: function(val) {
@@ -64,12 +70,20 @@ export default {
       let user = this.getValue(this.difference.userProficiency);
       let job = this.getValue(this.difference.jobOfferProficiency);
       if (user < job)
-        return false;
+        this.disableBtn = false;
       else
-        return true;
+        this.disableBtn = true;
     },
     improveSkill: function() {
-      
+      this.axios.post(apiURL + this.difference.id)
+      .then((response) => {
+        this.disableBtn = true;
+        console.log(response);
+        alert("Your materials are ready! Check out the classroom!");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      })
     }
   },
 };
