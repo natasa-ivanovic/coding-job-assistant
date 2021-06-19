@@ -40,7 +40,7 @@ public class JobOfferRulesTests {
 	private JobPositionRepository jobPositionRepo;
 
 	@Test
-	public void jobPositionsRequest() {
+	public void jobOfferRequest() {
 		KieSession session = setupSession();
 
 		List<JobSeeker> jobSeekers = jobSeekerRepo.findAll();

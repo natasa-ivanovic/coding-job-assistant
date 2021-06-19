@@ -2,13 +2,12 @@ package ftn.sbnz.util;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.drools.core.ObjectFilter;
 import org.kie.api.runtime.KieSession;
 
-import ftn.sbnz.events.ReviewDeclinedEvent;
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOffer;
 
 public class SessionUtil {
 	
@@ -38,4 +37,18 @@ public class SessionUtil {
 		}
 		return companyDb;
 	}	
+	
+	public static JobOffer getOfferFromSession(JobOffer offerDb, KieSession session) {
+        Collection<Object> companies = getObjectsFromSession(JobOffer.class, session);
+        for (Iterator<Object> it = companies.iterator(); it.hasNext();) {
+            JobOffer c = (JobOffer) it.next();
+            if (offerDb.getId() == c.getId()) {
+                if (!offerDb.getMedal().equals(c.getMedal())) {
+                    offerDb.setMedal(c.getMedal());;
+                }
+                return offerDb;
+            }
+        }
+        return offerDb;
+    } 
 }
