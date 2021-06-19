@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class InterviewSuggestionStatusDTO {
 	
 	private Long id;
-	private boolean checked;
+//	private boolean checked;
 	private Date dateSuggested;
 	private Date dateChecked;
 	private List<InterviewSuggestionDTO> interviewSuggestions;
@@ -29,7 +29,6 @@ public class InterviewSuggestionStatusDTO {
 	
 	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status, JobOffer jo) {
 		this.id = status.getId();
-		this.checked = status.isChecked();
 		this.dateSuggested = status.getDateSuggested();
 		this.dateChecked = status.getDateChecked();
 		this.position = jo.getPosition().getTitle();
@@ -43,7 +42,6 @@ public class InterviewSuggestionStatusDTO {
 	
 	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status) {
 		this.id = status.getId();
-		this.checked = status.isChecked();
 		this.dateSuggested = status.getDateSuggested();
 		this.dateChecked = status.getDateChecked();
 		this.interviewSuggestions = new ArrayList<>();

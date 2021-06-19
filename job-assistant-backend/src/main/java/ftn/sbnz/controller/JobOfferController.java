@@ -34,11 +34,11 @@ public class JobOfferController {
 	
 	@PostMapping("/follow/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> follow(@PathVariable("id") String jobOfferId) {
+	public ResponseEntity<Object> follow(@PathVariable("id") String jobOfferRatingId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
-		service.follow(Long.parseLong(jobOfferId), jobSeeker.getId());
-		return new ResponseEntity<>("Success", HttpStatus.OK);
+		String position = service.follow(Long.parseLong(jobOfferRatingId), jobSeeker.getId());
+		return new ResponseEntity<>(position, HttpStatus.OK);
 	}
 	
 	@GetMapping

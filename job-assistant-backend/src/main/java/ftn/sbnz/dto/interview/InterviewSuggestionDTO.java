@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class InterviewSuggestionDTO {
 	
 	private Long id;
+	private boolean checked;
 	private SkillProficiency proficiency;
 	private CVElement cvElement;
 	private String subject;

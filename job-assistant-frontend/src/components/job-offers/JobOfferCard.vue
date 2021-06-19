@@ -63,14 +63,33 @@
       <v-spacer></v-spacer>
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
+    <v-card-actions>
+      <v-btn v-if="!jobOffer.following" block class="primary" @click="follow()"
+        >Follow</v-btn
+      >
+      <v-alert
+        v-else
+        outlined
+        color="#1A237E"
+        dense
+        class="ml-2 mr-2 mb-0"
+        style="width: 100%; height:35.99px; text-align:center"
+      >
+        <b>YOUR POSITION:
+        {{ jobOffer.ranking }}</b>
+      </v-alert>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+const apiURL = "/api/job-offer/follow/";
+
 export default {
   name: "JobOfferCard",
   data: () => ({
     loading: false,
+    position: "",
   }),
   props: {
     jobOffer: Object,
@@ -124,6 +143,17 @@ export default {
         name: "JobOfferStatisticView",
         params: { id: this.jobOffer["id"] },
       });
+    },
+    follow() {
+      this.axios
+        .post(apiURL + this.jobOffer.id)
+        .then((response) => {
+          this.jobOffer.ranking =  response.data;
+          this.jobOffer.following = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
