@@ -65,7 +65,7 @@ rule "MaliciousReviewerEvent added - delete all ReviewDeclinedEvents before it"
         delete($rde);
 end
 
-rule "Disable user - MaliciousReviewerEvent happened 3 times in last 90 days"
+rule "Disable user - MaliciousReviewerEvent happened 2 times in last 90 days"
     agenda-group "job-offer-review-added"
     when
         $user: JobSeeker($id: id) and

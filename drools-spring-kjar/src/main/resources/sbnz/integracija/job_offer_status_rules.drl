@@ -20,7 +20,7 @@ rule "Job Offer Status - BRONZE"
         and
         $company: Company(id == $companyId, medal.getValue() >= 1)
         and
-        Number(intValue >= 5) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
+        Number(intValue >= 1) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
     then
         modify($jobOffer) {
             setMedal(MedalRank.BRONZE)
@@ -38,7 +38,7 @@ rule "Job Offer Status - SILVER"
         and
         $company: Company(id == $companyId, medal.getValue() >= 2)
         and
-        Number(intValue >= 15) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
+        Number(intValue >= 2) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
     then
         modify($jobOffer) {
             setMedal(MedalRank.SILVER)
@@ -56,7 +56,7 @@ rule "Job Offer Status - GOLD"
         and
         $company: Company(id == $companyId, medal.getValue() == 3)
         and
-        Number(intValue >= 30) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
+        Number(intValue >= 3) from accumulate (JobSeekerRanking(jobOffer.getId() == $offerId), count(1))
     then
         modify($jobOffer) {
             setMedal(MedalRank.GOLD)

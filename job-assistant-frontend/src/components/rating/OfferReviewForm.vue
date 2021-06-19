@@ -18,7 +18,7 @@
             <v-checkbox v-model="review.jobOffered" label="Job offered" />
           </v-col>
           <v-col class="review-font">
-            <v-checkbox v-model="review.recommend" label="Recommends company" />
+            <v-checkbox v-model="review.recommends" label="Recommends company" />
           </v-col>
         </v-row>
         <v-row>
@@ -87,11 +87,11 @@ export default {
     return {
       review: {
         rating: 5,
-        content: "",
-        salary: 0,
-        hired: false,
-        jobOffered: false,
-        recommend: false,
+        content: "Test description",
+        salary: 1000,
+        hired: true,
+        jobOffered: true,
+        recommends: true,
         interviewComplexity: 1,
         // FOR TESTING PURPOSES
         ratedUseful: 15,
