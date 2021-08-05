@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "job_offer_statistic")
+@Table(name = "job_offer_statistics")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,20 +37,8 @@ public class JobOfferStatistic {
 	private Timestamp date;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> programmingDifferences = new ArrayList<>();
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> technologyDifferences = new ArrayList<>();
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> knowledgeDifferences = new ArrayList<>();
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> softSkillDifferences = new ArrayList<>();
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> languageDifferences = new ArrayList<>();
-	
+	private List<JobOfferDifference> differences;
+		
 	@ManyToOne
 	private JobOffer jobOffer;
 	

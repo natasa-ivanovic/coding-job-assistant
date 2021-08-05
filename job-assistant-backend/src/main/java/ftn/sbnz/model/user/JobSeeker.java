@@ -1,9 +1,6 @@
 package ftn.sbnz.model.user;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -12,17 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import ftn.sbnz.model.company.CompanyReview;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
 import ftn.sbnz.model.enums.EducationLevel;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.job_offer.JobOfferSuggestion;
 import ftn.sbnz.model.job_position.JobPositionSuggestion;
-import ftn.sbnz.model.knowledge.KnowledgeProficiency;
-import ftn.sbnz.model.language.LanguageProficiency;
-import ftn.sbnz.model.programming_language.ProgrammingProficiency;
-import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
-import ftn.sbnz.model.technology.TechnologyProficiency;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,39 +44,29 @@ public class JobSeeker extends User{
 	@Column(name = "continuous_learning")
 	private boolean continuousLearning;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<TechnologyProficiency> technologyProficiencies = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<SoftSkillProficiency> softSkillProficiencies = new HashSet<>();
+	// nekada je bilo eager
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<CVElementProficiency> proficiencies;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<ProgrammingProficiency> programmingProficiencies = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<LanguageProficiency> languageProficiencies = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<KnowledgeProficiency> knowledgeProficiencies = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<WorkingExperience> workingExperience = new HashSet<>();
+	// nekada je bilo eager
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<WorkingExperience> workingExperience;
 	
 	@OneToMany(mappedBy = "poster")
-	private Set<JobOfferReview> reviews = new HashSet<>();
+	private List<CompanyReview> reviews;
 	
 	@OneToMany
-	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();
+	private List<JobOfferSuggestion> offerSuggestions;
 	
 	@OneToMany
-	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
+	private List<JobPositionSuggestion> positionSuggestions;
 	
 	@OneToMany
-	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
+	private List<JobSeekerRanking> offerRankings;
 	
 	@OneToMany
-	private List<JobOfferStatistic> statistics = new ArrayList<>();
+	private List<JobOfferStatistic> statistics;
 	
 	@OneToMany
-	private List<InterviewSuggestionStatus> interviewSuggestions = new ArrayList<>();
+	private List<InterviewSuggestionStatus> interviewSuggestions;
 }

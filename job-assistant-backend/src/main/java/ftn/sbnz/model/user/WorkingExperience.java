@@ -1,7 +1,6 @@
 package ftn.sbnz.model.user;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +11,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ftn.sbnz.model.cv_element.CVElement;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.knowledge.Knowledge;
-import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-import ftn.sbnz.model.technology.Technology;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -42,14 +39,8 @@ public class WorkingExperience {
 	private SeniorityLevel seniority;
 		
 	@ManyToMany
-	private Set<Technology> technologies = new HashSet<>();
-	
-	@ManyToMany
-	private Set<ProgrammingLanguage> progLanguages = new HashSet<>();
-	
-	@ManyToMany
-	private Set<Knowledge> knowledge = new HashSet<>();
-	
+	private List<CVElement> cvElements;
+		
 	@ManyToOne
 	private JobPosition position;
 	

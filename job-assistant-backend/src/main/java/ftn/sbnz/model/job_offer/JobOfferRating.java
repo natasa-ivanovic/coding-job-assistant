@@ -46,7 +46,7 @@ public class JobOfferRating {
 	private JobOffer jobOffer;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<InterviewSuggestion> interviewSuggestions;
+	private List<InterviewSuggestion> interviewSuggestions;
 
 	@OneToMany
 	private List<JobOfferStatistic> statistic = new ArrayList<>();

@@ -2,9 +2,7 @@ package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,15 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.company.CompanyReview;
+import ftn.sbnz.model.cv_element.CVElementImportance;
 import ftn.sbnz.model.enums.MedalRank;
-import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.knowledge.KnowledgeImportance;
-import ftn.sbnz.model.language.LanguageImportance;
-import ftn.sbnz.model.programming_language.ProgrammingImportance;
-import ftn.sbnz.model.soft_skill.SoftSkillImportance;
-import ftn.sbnz.model.technology.TechnologyImportance;
 import ftn.sbnz.model.user.JobSeekerRanking;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,7 +41,7 @@ public class JobOffer {
 	@NonNull
 	private SeniorityLevel seniority;
 
-	@Column(name = "rank", unique = false, nullable = false)
+	@Column(name = "medal", unique = false, nullable = false)
 	@NonNull
 	private MedalRank medal;
 	
@@ -61,43 +55,14 @@ public class JobOffer {
 	@ManyToOne
 	private JobPosition position;
 	
+	@ManyToMany
+	private List<CVElementImportance> cvElementImportances;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<ProgrammingImportance> programmingImportances = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<KnowledgeImportance> knowledgeImportances = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<TechnologyImportance> technologyImportances = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<SoftSkillImportance> softSkillImportances = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<LanguageImportance> languageImportances = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jobOffer")
-	private Set<JobOfferReview> reviews = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<JobSeekerRanking> rankings = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<JobSeekerRanking> rankings;
 	
 	@OneToMany
 	private List<JobOfferStatistic> statistics = new ArrayList<>();
 	
-	public float getAverageRating() {
-		float totalScore = 0;
-		float count = 0;
-		for (JobOfferReview jor : reviews) {
-			if (jor.getStatus().equals(ReviewStatus.APPROVED)) {
-				totalScore += jor.getRating();
-				count++;
-			}
-		}
-		if (count == 0)
-			return 0f;
-		else
-			return totalScore / count;
-	}
+	
 }

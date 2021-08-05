@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.enums.CVElement;
+import ftn.sbnz.model.enums.CVElementType;
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "job_offer_difference")
+@Table(name = "job_offer_differences")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,8 +38,8 @@ public class JobOfferDifference {
 	@Column(name = "job_offer_proficiency", unique = false, nullable = false)
 	private SkillProficiency jobOfferProficiency;
 	
-	@Column(name = "cv_element")
-	private CVElement cvElement;
+	@Column(name = "cv_element_type")
+	private CVElementType cvElementType;
 	
 	@ManyToOne
 	private JobOfferStatistic statistic; 

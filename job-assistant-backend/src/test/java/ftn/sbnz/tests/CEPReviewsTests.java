@@ -25,8 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ftn.sbnz.events.DisabledUserEvent;
 import ftn.sbnz.events.MaliciousReviewerEvent;
 import ftn.sbnz.events.ReviewDeclinedEvent;
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.ReviewStatus;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.util.SessionUtil;
@@ -49,7 +49,7 @@ public class CEPReviewsTests {
 
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
 
-		JobOfferReview review1 = createBadReview(js);
+		CompanyReview review1 = createBadReview(js);
 
 		session.insert(review1);
 
@@ -78,7 +78,7 @@ public class CEPReviewsTests {
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
 
 		for (int i = 0; i != 2; i++) {
-			JobOfferReview review = createBadReview(js);
+			CompanyReview review = createBadReview(js);
 			session.insert(review);
 			session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
 			int firedRules = session.fireAllRules();
@@ -86,7 +86,7 @@ public class CEPReviewsTests {
 
 			clock.advanceTime(10, TimeUnit.SECONDS);
 		}
-		JobOfferReview review = createBadReview(js);
+		CompanyReview review = createBadReview(js);
 		session.insert(review);
 		session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
 		int firedRules = session.fireAllRules();
@@ -114,14 +114,14 @@ public class CEPReviewsTests {
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
 
 		for (int i = 0; i != 2; i++) {
-			JobOfferReview review = createBadReview(js);
+			CompanyReview review = createBadReview(js);
 			review.setDate(new Timestamp(clock.getCurrentTime()));
 			session.insert(review);
 			session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
 			int firedRules = session.fireAllRules();
 			assertEquals(1, firedRules);
 		}
-		JobOfferReview review = createBadReview(js);
+		CompanyReview review = createBadReview(js);
 		review.setDate(new Timestamp(clock.getCurrentTime()));
 		session.insert(review);
 		session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
@@ -169,7 +169,7 @@ public class CEPReviewsTests {
 		JobSeeker js = jobSeekerRepo.findById(2L).get();
 
 		for (int i = 0; i != 2; i++) {
-			JobOfferReview review = createBadReview(js);
+			CompanyReview review = createBadReview(js);
 			session.insert(review);
 			session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
 			int firedRules = session.fireAllRules();
@@ -177,7 +177,7 @@ public class CEPReviewsTests {
 
 			clock.advanceTime(10, TimeUnit.SECONDS);
 		}
-		JobOfferReview review = createBadReview(js);
+		CompanyReview review = createBadReview(js);
 		session.insert(review);
 		session.getAgenda().getAgendaGroup("job-offer-review-added").setFocus();
 		int firedRules = session.fireAllRules();
@@ -203,8 +203,8 @@ public class CEPReviewsTests {
 		assertEquals(0, events.size());
 	}
 
-	private JobOfferReview createBadReview(JobSeeker js) {
-		JobOfferReview review = new JobOfferReview();
+	private CompanyReview createBadReview(JobSeeker js) {
+		CompanyReview review = new CompanyReview();
 		Calendar rightNow = Calendar.getInstance();
 		review.setDate(new Timestamp(rightNow.getTimeInMillis()));
 		review.setStatus(ReviewStatus.DECLINED);

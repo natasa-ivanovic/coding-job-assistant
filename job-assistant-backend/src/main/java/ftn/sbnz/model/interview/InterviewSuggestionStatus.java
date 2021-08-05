@@ -1,15 +1,12 @@
 package ftn.sbnz.model.interview;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -46,7 +43,7 @@ public class InterviewSuggestionStatus {
 	@ManyToOne
 	private JobOfferDifference jobOfferDifference;
 	
-	@ManyToMany
-	private List<InterviewSuggestion> interviewSuggestions = new ArrayList<>();
+	@ManyToOne
+	private InterviewSuggestion interviewSuggestion;
 
 }

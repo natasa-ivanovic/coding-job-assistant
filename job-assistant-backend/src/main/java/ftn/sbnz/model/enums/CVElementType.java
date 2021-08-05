@@ -1,9 +1,9 @@
   package ftn.sbnz.model.enums;
 
-public enum CVElement {
+public enum CVElementType {
 	PROGRAMMING_LANGUAGE,
 	TECHNOLOGY,
 	KNOWLEDGE,
-	SOFT_SKILL,
-	LANGUAGE
+	LANGUAGE,
+	SOFT_SKILL
 }

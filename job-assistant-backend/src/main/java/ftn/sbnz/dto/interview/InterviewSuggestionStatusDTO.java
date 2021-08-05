@@ -35,9 +35,10 @@ public class InterviewSuggestionStatusDTO {
 		this.company = jo.getCompany().getName();
 		this.seniority = jo.getSeniority();
 		this.interviewSuggestions = new ArrayList<>();
-		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
-			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
-		}
+		// TODO
+//		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
+//			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
+//		}
 	}
 	
 	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status) {
@@ -45,8 +46,9 @@ public class InterviewSuggestionStatusDTO {
 		this.dateSuggested = status.getDateSuggested();
 		this.dateChecked = status.getDateChecked();
 		this.interviewSuggestions = new ArrayList<>();
-		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
-			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
-		}
+		// TODO
+//		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
+//			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
+//		}
 	}
 }

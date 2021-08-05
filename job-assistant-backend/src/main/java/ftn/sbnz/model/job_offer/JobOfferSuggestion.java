@@ -36,7 +36,7 @@ public class JobOfferSuggestion {
 	private Timestamp date;
 	
 	@OneToMany
-	private List<JobOfferRating> offerRatings = new ArrayList<>();
+	private List<JobOfferRating> offerRatings;
 
 	@ManyToOne
 	@NonNull
