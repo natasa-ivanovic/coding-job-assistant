@@ -17,7 +17,6 @@ public class JobOfferRatingDTO {
 	private String description;
 	private String category;
 	private Long jobOfferId;
-	private float offerRating;
 	private boolean following;
 	private String ranking;
 	
@@ -29,7 +28,6 @@ public class JobOfferRatingDTO {
 		this.description = jobOfferRating.getDescription();
 		this.rating = jobOfferRating.getRating();
 		this.category = jobOfferRating.getCategory().name();
-		this.offerRating = jobOfferRating.getJobOffer().getAverageRating();
 		this.ranking = ranking;
 		this.following = false;
 		for (JobSeekerRanking jsr : jobOfferRating.getJobOffer().getRankings()) {

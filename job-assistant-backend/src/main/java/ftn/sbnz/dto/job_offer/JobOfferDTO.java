@@ -3,10 +3,8 @@ package ftn.sbnz.dto.job_offer;
 import java.util.Date;
 
 import ftn.sbnz.model.enums.MedalRank;
-import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_offer.JobOffer;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +20,6 @@ public class JobOfferDTO {
 	private String companyId;
 	private String positionName;
 	private String positionId;
-	private Float ranking;
 
 	public JobOfferDTO(JobOffer jo) {
 		this.id = jo.getId();
@@ -33,6 +30,5 @@ public class JobOfferDTO {
 		this.companyId = jo.getCompany().getId().toString();
 		this.positionName = jo.getPosition().getTitle();
 		this.positionId = jo.getPosition().getId().toString();
-		this.ranking = jo.getAverageRating();
 	}
 }

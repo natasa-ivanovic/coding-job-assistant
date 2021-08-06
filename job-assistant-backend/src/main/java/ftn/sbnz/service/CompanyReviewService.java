@@ -8,25 +8,25 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
+import ftn.sbnz.dto.company.CompanyReviewDTO;
 import ftn.sbnz.events.UserAccountStatusEvent;
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.job_offer.JobOffer;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.user.JobSeeker;
-import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
+import ftn.sbnz.repository.company.CompanyReviewRepository;
 
 @Service
-public class JobOfferReviewService {
+public class CompanyReviewService {
 
-	private JobOfferReviewRepository repository;
+	private CompanyReviewRepository repository;
 	private JobOfferService offerService;
 	private CompanyService companyService;
 	private UserService userService;
 	private KieSessionService kieSession;
 
 	@Autowired
-	public JobOfferReviewService(JobOfferReviewRepository repository, UserService userService,
+	public CompanyReviewService(CompanyReviewRepository repository, UserService userService,
 			CompanyService companyService, JobOfferService offerService, KieSessionService kieSession) {
 		this.repository = repository;
 		this.userService = userService;
@@ -35,18 +35,18 @@ public class JobOfferReviewService {
 		this.offerService = offerService;
 	}
 
-	public void create(JobOfferReviewDTO dto, JobSeeker jobSeeker) throws Exception {
+	public void create(CompanyReviewDTO dto, JobSeeker jobSeeker) throws Exception {
 		if (!userAllowedToReview(jobSeeker.getId()))
 			throw new Exception("User blocked from reviewing due to too many declined reviews!");
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
 		Calendar rightNow = Calendar.getInstance();
-		JobOffer offer = offerService.getOffer(dto.getOfferId());
-		JobOfferReview review = new JobOfferReview(dto, offer, dbJobSeeker, new Timestamp(rightNow.getTimeInMillis()));
-		repository.save(review);
+//		JobOffer offer = offerService.getOffer(dto.getOfferId());
+//		CompanyReview review = new CompanyReview(dto, offer, dbJobSeeker, new Timestamp(rightNow.getTimeInMillis()));
+//		repository.save(review);
 	}
 
 	public void approve(Long id) throws Exception {
-		JobOfferReview review = repository.getOne(id);
+		CompanyReview review = repository.getOne(id);
 		if (!review.getStatus().equals(ReviewStatus.PENDING))
 			throw new Exception("Review already accepted or declined!");
 		review.setStatus(ReviewStatus.APPROVED);
@@ -56,7 +56,7 @@ public class JobOfferReviewService {
 	}
 
 	public void decline(Long id) throws Exception {
-		JobOfferReview review = repository.getOne(id);
+		CompanyReview review = repository.getOne(id);
 		if (!review.getStatus().equals(ReviewStatus.PENDING))
 			throw new Exception("Review already accepted or declined!");
 		review.setStatus(ReviewStatus.DECLINED);
@@ -65,15 +65,15 @@ public class JobOfferReviewService {
 		executeSession(review);
 	}
 
-	private void executeSession(JobOfferReview review) {
+	private void executeSession(CompanyReview review) {
 		kieSession.insert(review);
 		kieSession.setAgendaFocus("job-offer-status");
 		kieSession.setAgendaFocus("company-status");
 		kieSession.setAgendaFocus("job-offer-review-added");
 		kieSession.fireAllRules();
 
-		companyService.updateDBFromRule(review.getJobOffer().getCompany());
-		offerService.updateDBFromRule(review.getJobOffer());
+//		companyService.updateDBFromRule(review.getJobOffer().getCompany());
+//		offerService.updateDBFromRule(review.getJobOffer());
 	}
 
 	private boolean userAllowedToReview(Long jobSeekerId) {
@@ -84,12 +84,12 @@ public class JobOfferReviewService {
 		return fact.isAllowed();
 	}
 
-	public List<JobOfferReviewDTO> getAll() {
-		List<JobOfferReview> reviews = repository.findAll();
+	public List<CompanyReviewDTO> getAll() {
+		List<CompanyReview> reviews = repository.findAll();
 		return reviews.stream().map(this::toDTO).collect(Collectors.toList());
 	}
 
-	private JobOfferReviewDTO toDTO(JobOfferReview review) {
-		return new JobOfferReviewDTO(review);
+	private CompanyReviewDTO toDTO(CompanyReview review) {
+		return new CompanyReviewDTO(review);
 	}
 }

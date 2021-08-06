@@ -37,9 +37,10 @@ public class JobPositionSuggestion {
 	private Timestamp date;
 	
 	@OneToMany
-	private List<JobPositionRating> positionRatings = new ArrayList<>();
+	private List<JobPositionRating> positionRatings;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@NonNull
 	private JobSeeker jobSeeker;
+	
 }

@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.interview.InterviewSuggestion;
 import ftn.sbnz.model.job_offer.JobOffer;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyRepository;
+import ftn.sbnz.repository.company.CompanyReviewRepository;
 import ftn.sbnz.repository.interview.InterviewSuggestionRepository;
 import ftn.sbnz.repository.job_offer.JobOfferRepository;
-import ftn.sbnz.repository.job_offer.JobOfferReviewRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.service.KieSessionService;
@@ -26,7 +26,7 @@ public class SessionInitializer {
 		addJobPositionsToContext(context, kieSession);
 		addCompaniesToContext(context, kieSession);
 		addJobOffersToContext(context, kieSession);
-		addOfferReviewsToContext(context, kieSession);
+		addCompanyReviewsToContext(context, kieSession);
 		addInterviewSuggestionsToContext(context, kieSession);
 	}
 
@@ -60,10 +60,10 @@ public class SessionInitializer {
 		}
 	}
 	
-	private static void addOfferReviewsToContext(ApplicationContext context, KieSessionService session) {
-		JobOfferReviewRepository repo = context.getBean(JobOfferReviewRepository.class);
-		List<JobOfferReview> list = repo.findAll();
-		for (JobOfferReview r : list) {
+	private static void addCompanyReviewsToContext(ApplicationContext context, KieSessionService session) {
+		CompanyReviewRepository repo = context.getBean(CompanyReviewRepository.class);
+		List<CompanyReview> list = repo.findAll();
+		for (CompanyReview r : list) {
 			session.insert(r);
 		}
 	}

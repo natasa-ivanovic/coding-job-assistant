@@ -17,25 +17,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
+import ftn.sbnz.dto.company.CompanyReviewDTO;
 import ftn.sbnz.model.user.JobSeeker;
-import ftn.sbnz.service.JobOfferReviewService;
+import ftn.sbnz.service.CompanyReviewService;
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/job-offer-review", produces = MediaType.APPLICATION_JSON_VALUE)
 public class JobOfferReviewController {
 
-	private JobOfferReviewService service;
+	private CompanyReviewService service;
 	
 	@Autowired
-	public JobOfferReviewController(JobOfferReviewService service) {
+	public JobOfferReviewController(CompanyReviewService service) {
 		this.service = service;
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> createReview(@RequestBody JobOfferReviewDTO dto) throws Exception {
+	public ResponseEntity<Object> createReview(@RequestBody CompanyReviewDTO dto) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
 		service.create(dto, jobSeeker);
@@ -58,8 +58,8 @@ public class JobOfferReviewController {
 	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<List<JobOfferReviewDTO>> getAllReviews() throws Exception {
-		List<JobOfferReviewDTO> reviews = service.getAll();
+	public ResponseEntity<List<CompanyReviewDTO>> getAllReviews() throws Exception {
+		List<CompanyReviewDTO> reviews = service.getAll();
 		return new ResponseEntity<>(reviews, HttpStatus.OK);
 	}
 }

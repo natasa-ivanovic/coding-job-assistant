@@ -1,16 +1,16 @@
-package ftn.sbnz.dto.job_offer;
+package ftn.sbnz.dto.company;
 
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.ReviewStatus;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class JobOfferReviewDTO {
+public class CompanyReviewDTO {
 	private Long id;
-	private Long offerId;
-	private String offerName;
+//	private Long offerId;
+//	private String offerName;
 	private String companyName;
 	private int rating;
 	private String content;
@@ -25,10 +25,8 @@ public class JobOfferReviewDTO {
 	private int ratedNotUseful;
 	private ReviewStatus status;
 	
-	public JobOfferReviewDTO(JobOfferReview review) {
+	public CompanyReviewDTO(CompanyReview review) {
 		this.id = review.getId();
-		this.offerId = review.getJobOffer().getId();
-		this.offerName = review.getJobOffer().getPosition().getTitle();
 		this.companyName = review.getCompany().getName();
 		this.rating = review.getRating();
 		this.content = review.getContent();

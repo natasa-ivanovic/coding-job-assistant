@@ -1,6 +1,6 @@
 package ftn.sbnz.model.company;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.job_offer.JobOffer;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -33,13 +33,28 @@ public class Company {
 	@NonNull
 	private String name;
 	
-	@Column(name = "rank", unique = false, nullable = false)
+	@Column(name = "medal", unique = false, nullable = false)
 	@NonNull
 	private MedalRank medal;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<JobOffer> jobOffers;
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<JobOffer> jobOffers;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
-	private Set<JobOfferReview> jobOffersReviews;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+	private List<CompanyReview> companyReviews;
+	
+	public float getAverageRating() {
+		float totalScore = 0;
+		float count = 0;
+		for (CompanyReview cr : companyReviews) {
+			if (cr.getStatus().equals(ReviewStatus.APPROVED)) {
+				totalScore += cr.getRating();
+				count++;
+			}
+		}
+		if (count == 0)
+			return 0f;
+		else
+			return totalScore / count;
+	}
 }

@@ -1,4 +1,4 @@
-package ftn.sbnz.model.job_offer;
+package ftn.sbnz.model.company;
 
 import java.sql.Timestamp;
 
@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ftn.sbnz.dto.job_offer.JobOfferReviewDTO;
-import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Getter;
@@ -23,12 +21,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "job_offer_reviews")
+@Table(name = "company_reviews")
 @Getter
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JobOfferReview {
+public class CompanyReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -73,27 +71,6 @@ public class JobOfferReview {
 	private Company company;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
-	@JoinColumn(name = "job_offer_id", nullable = false, unique = false) 
-	private JobOffer jobOffer;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
 	@JoinColumn(name = "poster_id", nullable = false, unique = false) 
 	private JobSeeker poster;
-	
-	public JobOfferReview(JobOfferReviewDTO dto, JobOffer offer, JobSeeker user, Timestamp time) {
-		this.poster = user;
-		this.jobOffer = offer;
-		this.company = offer.getCompany();
-		this.date = time;
-		this.rating = dto.getRating();
-		this.content = dto.getContent();
-		this.salary = dto.getSalary();
-		this.hired = dto.isHired();
-		this.jobOffered = dto.isJobOffered();
-		this.recommends = dto.isRecommends();
-		this.interviewComplexity = dto.getInterviewComplexity();
-		this.ratedUseful = dto.getRatedUseful();
-		this.ratedNotUseful = dto.getRatedNotUseful();
-		this.status = ReviewStatus.PENDING;
-	}
 }

@@ -1,7 +1,6 @@
 package ftn.sbnz.model.job_position;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.knowledge.Knowledge;
-import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-import ftn.sbnz.model.technology.Technology;
+import ftn.sbnz.model.cv_element.CVElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -34,12 +31,7 @@ public class JobPosition {
 	@NonNull
 	private String title;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<ProgrammingLanguage> programmingLanguages = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<CVElement> cvElements;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Knowledge> knowledge = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Technology> technologies = new HashSet<>();
 }
