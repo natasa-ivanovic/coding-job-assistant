@@ -20,8 +20,8 @@ public class InterviewSuggestionDTO {
 	
 	public InterviewSuggestionDTO(InterviewSuggestion is) {
 		this.id = is.getId();
-		this.proficiency = is.getElementProficiency().getProficiency();
-		this.cvElement = is.getElementProficiency().getCvElement().getType();
+		this.proficiency = is.getCvElementProficiency().getProficiency();
+		this.cvElement = is.getCvElementProficiency().getCvElement().getType();
 		this.subject = is.getSubject();
 		this.url = is.getUrl();
 		this.description = is.getDescription();

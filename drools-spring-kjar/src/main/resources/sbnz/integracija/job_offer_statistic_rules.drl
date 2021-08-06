@@ -1,383 +1,383 @@
 package sbnz.integracija;
 
-import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.job_position.JobPositionSuggestion;
-import ftn.sbnz.model.job_position.JobPositionRating;
+// import ftn.sbnz.model.job_position.JobPosition;
+// import ftn.sbnz.model.job_position.JobPositionSuggestion;
+// import ftn.sbnz.model.job_position.JobPositionRating;
 
-import ftn.sbnz.model.job_offer.JobOffer;
-import ftn.sbnz.model.job_offer.JobOfferSuggestion;
-import ftn.sbnz.model.job_offer.JobOfferRating;
-import ftn.sbnz.model.job_offer.JobOfferDifference;
-import ftn.sbnz.model.job_offer.JobOfferStatistic;
+// import ftn.sbnz.model.job_offer.JobOffer;
+// import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+// import ftn.sbnz.model.job_offer.JobOfferRating;
+// import ftn.sbnz.model.job_offer.JobOfferDifference;
+// import ftn.sbnz.model.job_offer.JobOfferStatistic;
 
-import ftn.sbnz.model.user.JobSeeker;
-import ftn.sbnz.model.user.WorkingExperience;
+// import ftn.sbnz.model.user.JobSeeker;
+// import ftn.sbnz.model.user.WorkingExperience;
 
-import ftn.sbnz.model.technology.Technology;
-import ftn.sbnz.model.technology.TechnologyImportance;
-import ftn.sbnz.model.technology.TechnologyProficiency;
+// import ftn.sbnz.model.technology.Technology;
+// import ftn.sbnz.model.technology.TechnologyImportance;
+// import ftn.sbnz.model.technology.TechnologyProficiency;
 
-import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-import ftn.sbnz.model.programming_language.ProgrammingProficiency;
-import ftn.sbnz.model.programming_language.ProgrammingImportance;
+// import ftn.sbnz.model.programming_language.ProgrammingLanguage;
+// import ftn.sbnz.model.programming_language.ProgrammingProficiency;
+// import ftn.sbnz.model.programming_language.ProgrammingImportance;
 
-import ftn.sbnz.model.language.Language;
-import ftn.sbnz.model.language.LanguageProficiency;
-import ftn.sbnz.model.language.LanguageImportance;
+// import ftn.sbnz.model.language.Language;
+// import ftn.sbnz.model.language.LanguageProficiency;
+// import ftn.sbnz.model.language.LanguageImportance;
 
-import ftn.sbnz.model.knowledge.Knowledge;
-import ftn.sbnz.model.knowledge.KnowledgeProficiency;
-import ftn.sbnz.model.knowledge.KnowledgeImportance;
+// import ftn.sbnz.model.knowledge.Knowledge;
+// import ftn.sbnz.model.knowledge.KnowledgeProficiency;
+// import ftn.sbnz.model.knowledge.KnowledgeImportance;
 
-import ftn.sbnz.model.soft_skill.SoftSkill;
-import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
-import ftn.sbnz.model.soft_skill.SoftSkillImportance;
+// import ftn.sbnz.model.soft_skill.SoftSkill;
+// import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
+// import ftn.sbnz.model.soft_skill.SoftSkillImportance;
 
-import ftn.sbnz.model.enums.SeniorityLevel;
-import ftn.sbnz.model.enums.SkillProficiency;
-import ftn.sbnz.model.enums.JobOfferCategory;
-import ftn.sbnz.model.enums.MedalRank;
+// import ftn.sbnz.model.enums.SeniorityLevel;
+// import ftn.sbnz.model.enums.SkillProficiency;
+// import ftn.sbnz.model.enums.JobOfferCategory;
+// import ftn.sbnz.model.enums.MedalRank;
 
-import ftn.sbnz.model.enums.SkillProficiency;
-import ftn.sbnz.model.enums.CVElement;
+// import ftn.sbnz.model.enums.SkillProficiency;
+// import ftn.sbnz.model.enums.CVElement;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
-
-
-rule "JobSeeker statistic for offer - programming language exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userProgProficiency: ProgrammingProficiency() from $jobSeeker.getProgrammingProficiencies()
-        and
-        $jobProgProficiencies: List() from accumulate (ProgrammingImportance($proficiency: programmingProficiency) 
-                                                     from $jobOffer.getProgrammingImportances(),
-                                                     collectList($proficiency))
-        and
-        $jobProgProficiency: ProgrammingProficiency(programmingLanguage.getName() == $userProgProficiency.getProgrammingLanguage().getName())
-                             from $jobProgProficiencies              
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $language = $userProgProficiency.getProgrammingLanguage().getName();
-        SkillProficiency $userProficiency = $userProgProficiency.getProficiency();
-        SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
-        $jod.setSubject($language);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getProgrammingDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
-        System.out.println("---");
-end
+// import java.time.LocalDate;
+// import java.time.LocalDateTime;
+// import java.sql.Timestamp;
+// import java.util.List;
+// import java.util.Set;
 
 
-rule "JobSeeker statistic for offer - programing language not exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userProgProficiencies: List() from accumulate (ProgrammingProficiency($language: programmingLanguage) 
-                                                        from $jobSeeker.getProgrammingProficiencies(),
-                                                        collectList($language.getName()))
-        and
-        $jpImportance: ProgrammingImportance($userProgProficiencies not contains programmingProficiency.getProgrammingLanguage().getName(), 
-                                             $jobProgProficiency: programmingProficiency) 
-                       from  $jobOffer.getProgrammingImportances()
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $language = $jobProgProficiency.getProgrammingLanguage().getName();
-        SkillProficiency $userProficiency =SkillProficiency.NONE;
-        SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
-        $jod.setSubject($language);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getProgrammingDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY NOT EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - programming language exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userProgProficiency: ProgrammingProficiency() from $jobSeeker.getProgrammingProficiencies()
+//         and
+//         $jobProgProficiencies: List() from accumulate (ProgrammingImportance($proficiency: programmingProficiency) 
+//                                                      from $jobOffer.getProgrammingImportances(),
+//                                                      collectList($proficiency))
+//         and
+//         $jobProgProficiency: ProgrammingProficiency(programmingLanguage.getName() == $userProgProficiency.getProgrammingLanguage().getName())
+//                              from $jobProgProficiencies              
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $language = $userProgProficiency.getProgrammingLanguage().getName();
+//         SkillProficiency $userProficiency = $userProgProficiency.getProficiency();
+//         SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
+//         $jod.setSubject($language);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getProgrammingDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - technology exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userTechProficiency: TechnologyProficiency() from $jobSeeker.getTechnologyProficiencies()
-        and
-        $jobTechProficiencies: List() from accumulate (TechnologyImportance($proficiency: technologyProficiency) 
-                                                     from $jobOffer.getTechnologyImportances(),
-                                                     collectList($proficiency))
-        and
-        $jobTechProficiency: TechnologyProficiency(technology.getName() == $userTechProficiency.getTechnology().getName())
-                             from $jobTechProficiencies              
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $technology = $userTechProficiency.getTechnology().getName();
-        SkillProficiency $userProficiency = $userTechProficiency.getProficiency();
-        SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
-        $jod.setSubject($technology);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.TECHNOLOGY);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getTechnologyDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - programing language not exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userProgProficiencies: List() from accumulate (ProgrammingProficiency($language: programmingLanguage) 
+//                                                         from $jobSeeker.getProgrammingProficiencies(),
+//                                                         collectList($language.getName()))
+//         and
+//         $jpImportance: ProgrammingImportance($userProgProficiencies not contains programmingProficiency.getProgrammingLanguage().getName(), 
+//                                              $jobProgProficiency: programmingProficiency) 
+//                        from  $jobOffer.getProgrammingImportances()
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $language = $jobProgProficiency.getProgrammingLanguage().getName();
+//         SkillProficiency $userProficiency =SkillProficiency.NONE;
+//         SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
+//         $jod.setSubject($language);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.PROGRAMMING_LANGUAGE);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getProgrammingDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY NOT EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - technology not exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userTechProficiencies: List() from accumulate (TechnologyProficiency($technology: technology) 
-                                                        from $jobSeeker.getTechnologyProficiencies(),
-                                                        collectList($technology.getName()))
-        and
-        $jpImportance: TechnologyImportance($userTechProficiencies not contains technologyProficiency.getTechnology().getName(), 
-                                             $jobTechProficiency: technologyProficiency) 
-                       from  $jobOffer.getTechnologyImportances()
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $technology = $jobTechProficiency.getTechnology().getName();
-        SkillProficiency $userProficiency = SkillProficiency.NONE;
-        SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
-        $jod.setSubject($technology);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.TECHNOLOGY);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getTechnologyDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY NOT EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - technology exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userTechProficiency: TechnologyProficiency() from $jobSeeker.getTechnologyProficiencies()
+//         and
+//         $jobTechProficiencies: List() from accumulate (TechnologyImportance($proficiency: technologyProficiency) 
+//                                                      from $jobOffer.getTechnologyImportances(),
+//                                                      collectList($proficiency))
+//         and
+//         $jobTechProficiency: TechnologyProficiency(technology.getName() == $userTechProficiency.getTechnology().getName())
+//                              from $jobTechProficiencies              
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $technology = $userTechProficiency.getTechnology().getName();
+//         SkillProficiency $userProficiency = $userTechProficiency.getProficiency();
+//         SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
+//         $jod.setSubject($technology);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.TECHNOLOGY);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getTechnologyDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - knowledge exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userKnowledgeProficiency: KnowledgeProficiency() from $jobSeeker.getKnowledgeProficiencies()
-        and
-        $jobKnowledgeProficiencies: List() from accumulate (KnowledgeImportance($proficiency: knowledgeProficiency) 
-                                                     from $jobOffer.getKnowledgeImportances(),
-                                                     collectList($proficiency))
-        and
-        $jobKnowledgeProficiency: KnowledgeProficiency(knowledge.getName() == $userKnowledgeProficiency.getKnowledge().getName())
-                             from $jobKnowledgeProficiencies              
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $knowledge = $userKnowledgeProficiency.getKnowledge().getName();
-        SkillProficiency $userProficiency = $userKnowledgeProficiency.getProficiency();
-        SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
-        $jod.setSubject($knowledge);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setStatistic($jos);
-        $jod.setCvElement(CVElement.KNOWLEDGE);
-        modify($jos) {
-            getKnowledgeDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - technology not exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userTechProficiencies: List() from accumulate (TechnologyProficiency($technology: technology) 
+//                                                         from $jobSeeker.getTechnologyProficiencies(),
+//                                                         collectList($technology.getName()))
+//         and
+//         $jpImportance: TechnologyImportance($userTechProficiencies not contains technologyProficiency.getTechnology().getName(), 
+//                                              $jobTechProficiency: technologyProficiency) 
+//                        from  $jobOffer.getTechnologyImportances()
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $technology = $jobTechProficiency.getTechnology().getName();
+//         SkillProficiency $userProficiency = SkillProficiency.NONE;
+//         SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
+//         $jod.setSubject($technology);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.TECHNOLOGY);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getTechnologyDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY NOT EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - knowledge not exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userKnowledgeProficiencies: List() from accumulate (KnowledgeProficiency($knowledge: knowledge) 
-                                                        from $jobSeeker.getKnowledgeProficiencies(),
-                                                        collectList($knowledge.getName()))
-        and
-        $jpImportance: KnowledgeImportance($userKnowledgeProficiencies not contains knowledgeProficiency.getKnowledge().getName(), 
-                                             $jobKnowledgeProficiency: knowledgeProficiency) 
-                       from  $jobOffer.getKnowledgeImportances()
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $knowledge = $jobKnowledgeProficiency.getKnowledge().getName();
-        SkillProficiency $userProficiency = SkillProficiency.NONE;
-        SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
-        $jod.setSubject($knowledge);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.KNOWLEDGE);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getKnowledgeDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY NOT EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - knowledge exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userKnowledgeProficiency: KnowledgeProficiency() from $jobSeeker.getKnowledgeProficiencies()
+//         and
+//         $jobKnowledgeProficiencies: List() from accumulate (KnowledgeImportance($proficiency: knowledgeProficiency) 
+//                                                      from $jobOffer.getKnowledgeImportances(),
+//                                                      collectList($proficiency))
+//         and
+//         $jobKnowledgeProficiency: KnowledgeProficiency(knowledge.getName() == $userKnowledgeProficiency.getKnowledge().getName())
+//                              from $jobKnowledgeProficiencies              
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $knowledge = $userKnowledgeProficiency.getKnowledge().getName();
+//         SkillProficiency $userProficiency = $userKnowledgeProficiency.getProficiency();
+//         SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
+//         $jod.setSubject($knowledge);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setStatistic($jos);
+//         $jod.setCvElement(CVElement.KNOWLEDGE);
+//         modify($jos) {
+//             getKnowledgeDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - soft skill exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userSkillProficiency: SoftSkillProficiency() from $jobSeeker.getSoftSkillProficiencies()
-        and
-        $jobSkillProficiencies: List() from accumulate (SoftSkillImportance($proficiency: softSkillProficiency) 
-                                                     from $jobOffer.getSoftSkillImportances(),
-                                                     collectList($proficiency))
-        and
-        $jobSkillProficiency: SoftSkillProficiency(softSkill.getName() == $userSkillProficiency.getSoftSkill().getName())
-                             from $jobSkillProficiencies              
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $skill = $userSkillProficiency.getSoftSkill().getName();
-        SkillProficiency $userProficiency = $userSkillProficiency.getProficiency();
-        SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
-        $jod.setSubject($skill);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.SOFT_SKILL);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getSoftSkillDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - knowledge not exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userKnowledgeProficiencies: List() from accumulate (KnowledgeProficiency($knowledge: knowledge) 
+//                                                         from $jobSeeker.getKnowledgeProficiencies(),
+//                                                         collectList($knowledge.getName()))
+//         and
+//         $jpImportance: KnowledgeImportance($userKnowledgeProficiencies not contains knowledgeProficiency.getKnowledge().getName(), 
+//                                              $jobKnowledgeProficiency: knowledgeProficiency) 
+//                        from  $jobOffer.getKnowledgeImportances()
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $knowledge = $jobKnowledgeProficiency.getKnowledge().getName();
+//         SkillProficiency $userProficiency = SkillProficiency.NONE;
+//         SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
+//         $jod.setSubject($knowledge);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.KNOWLEDGE);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getKnowledgeDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY NOT EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - soft skill not exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userSkillProficiencies: List() from accumulate (SoftSkillProficiency($skill: softSkill) 
-                                                        from $jobSeeker.getSoftSkillProficiencies(),
-                                                        collectList($skill.getName()))
-        and
-        $jpImportance: SoftSkillImportance($userSkillProficiencies not contains softSkillProficiency.getSoftSkill().getName(), 
-                                             $jobSkillProficiency: softSkillProficiency) 
-                       from  $jobOffer.getSoftSkillImportances()
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $skill = $jobSkillProficiency.getSoftSkill().getName();
-        SkillProficiency $userProficiency = SkillProficiency.NONE;
-        SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
-        $jod.setSubject($skill);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.SOFT_SKILL);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getSoftSkillDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY NOT EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - soft skill exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userSkillProficiency: SoftSkillProficiency() from $jobSeeker.getSoftSkillProficiencies()
+//         and
+//         $jobSkillProficiencies: List() from accumulate (SoftSkillImportance($proficiency: softSkillProficiency) 
+//                                                      from $jobOffer.getSoftSkillImportances(),
+//                                                      collectList($proficiency))
+//         and
+//         $jobSkillProficiency: SoftSkillProficiency(softSkill.getName() == $userSkillProficiency.getSoftSkill().getName())
+//                              from $jobSkillProficiencies              
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $skill = $userSkillProficiency.getSoftSkill().getName();
+//         SkillProficiency $userProficiency = $userSkillProficiency.getProficiency();
+//         SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
+//         $jod.setSubject($skill);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.SOFT_SKILL);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getSoftSkillDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - language exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userLanguageProficiency: LanguageProficiency() from $jobSeeker.getLanguageProficiencies()
-        and
-        $jobLanguageProficiencies: List() from accumulate (LanguageImportance($proficiency: languageProficiency) 
-                                                     from $jobOffer.getLanguageImportances(),
-                                                     collectList($proficiency))
-        and
-        $jobLanguageProficiency: LanguageProficiency(language.getName() == $userLanguageProficiency.getLanguage().getName())
-                             from $jobLanguageProficiencies              
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $language = $userLanguageProficiency.getLanguage().getName();
-        SkillProficiency $userProficiency = $userLanguageProficiency.getProficiency();
-        SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
-        $jod.setSubject($language);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.LANGUAGE);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getLanguageDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - soft skill not exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userSkillProficiencies: List() from accumulate (SoftSkillProficiency($skill: softSkill) 
+//                                                         from $jobSeeker.getSoftSkillProficiencies(),
+//                                                         collectList($skill.getName()))
+//         and
+//         $jpImportance: SoftSkillImportance($userSkillProficiencies not contains softSkillProficiency.getSoftSkill().getName(), 
+//                                              $jobSkillProficiency: softSkillProficiency) 
+//                        from  $jobOffer.getSoftSkillImportances()
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $skill = $jobSkillProficiency.getSoftSkill().getName();
+//         SkillProficiency $userProficiency = SkillProficiency.NONE;
+//         SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
+//         $jod.setSubject($skill);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.SOFT_SKILL);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getSoftSkillDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY NOT EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
+//         System.out.println("---");
+// end
 
 
-rule "JobSeeker statistic for offer - language not exists"
-    agenda-group "job-seeker-statistic"
-    lock-on-active
-    when 
-        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
-        and
-        $userLanguageProficiencies: List() from accumulate (LanguageProficiency($language: language) 
-                                                        from $jobSeeker.getLanguageProficiencies(),
-                                                        collectList($language.getName()))
-        and
-        $jpImportance: LanguageImportance($userLanguageProficiencies not contains languageProficiency.getLanguage().getName(), 
-                                             $jobLanguageProficiency: languageProficiency) 
-                       from  $jobOffer.getLanguageImportances()
-    then
-        JobOfferDifference $jod = new JobOfferDifference();
-        String $language = $jobLanguageProficiency.getLanguage().getName();
-        SkillProficiency $userProficiency = SkillProficiency.NONE;
-        SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
-        $jod.setSubject($language);
-        $jod.setUserProficiency($userProficiency);
-        $jod.setJobOfferProficiency($jobProficiency);
-        $jod.setCvElement(CVElement.LANGUAGE);
-        $jod.setStatistic($jos);
-        modify($jos) {
-            getLanguageDifferences().add($jod);
-        }
-        System.out.println("[PROFICIENCY NOT EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
-        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
-        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
-        System.out.println("---");
-end
+// rule "JobSeeker statistic for offer - language exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userLanguageProficiency: LanguageProficiency() from $jobSeeker.getLanguageProficiencies()
+//         and
+//         $jobLanguageProficiencies: List() from accumulate (LanguageImportance($proficiency: languageProficiency) 
+//                                                      from $jobOffer.getLanguageImportances(),
+//                                                      collectList($proficiency))
+//         and
+//         $jobLanguageProficiency: LanguageProficiency(language.getName() == $userLanguageProficiency.getLanguage().getName())
+//                              from $jobLanguageProficiencies              
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $language = $userLanguageProficiency.getLanguage().getName();
+//         SkillProficiency $userProficiency = $userLanguageProficiency.getProficiency();
+//         SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
+//         $jod.setSubject($language);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.LANGUAGE);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getLanguageDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+//         System.out.println("---");
+// end
+
+
+// rule "JobSeeker statistic for offer - language not exists"
+//     agenda-group "job-seeker-statistic"
+//     lock-on-active
+//     when 
+//         $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+//         and
+//         $userLanguageProficiencies: List() from accumulate (LanguageProficiency($language: language) 
+//                                                         from $jobSeeker.getLanguageProficiencies(),
+//                                                         collectList($language.getName()))
+//         and
+//         $jpImportance: LanguageImportance($userLanguageProficiencies not contains languageProficiency.getLanguage().getName(), 
+//                                              $jobLanguageProficiency: languageProficiency) 
+//                        from  $jobOffer.getLanguageImportances()
+//     then
+//         JobOfferDifference $jod = new JobOfferDifference();
+//         String $language = $jobLanguageProficiency.getLanguage().getName();
+//         SkillProficiency $userProficiency = SkillProficiency.NONE;
+//         SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
+//         $jod.setSubject($language);
+//         $jod.setUserProficiency($userProficiency);
+//         $jod.setJobOfferProficiency($jobProficiency);
+//         $jod.setCvElement(CVElement.LANGUAGE);
+//         $jod.setStatistic($jos);
+//         modify($jos) {
+//             getLanguageDifferences().add($jod);
+//         }
+//         System.out.println("[PROFICIENCY NOT EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+//         System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+//         System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+//         System.out.println("---");
+// end

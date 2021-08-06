@@ -37,6 +37,6 @@ public class InterviewSuggestion {
 	private List<InterviewSuggestionStatus> statuses;
 	
 	@ManyToOne
-	private CVElementProficiency elementProficiency;
+	private CVElementProficiency cvElementProficiency;
 	
 }

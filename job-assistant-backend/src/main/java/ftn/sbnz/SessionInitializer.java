@@ -21,7 +21,7 @@ import ftn.sbnz.service.KieSessionService;
 public class SessionInitializer {
 	public static void initializeSession(ApplicationContext context) {
 		KieSessionService kieSession = context.getBean(KieSessionService.class);
-		initializeGlobals(kieSession);
+//		initializeGlobals(kieSession);
 		addJobSeekersToContext(context, kieSession);
 		addJobPositionsToContext(context, kieSession);
 		addCompaniesToContext(context, kieSession);

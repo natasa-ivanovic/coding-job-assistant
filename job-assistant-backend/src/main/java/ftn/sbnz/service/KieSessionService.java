@@ -69,8 +69,7 @@ public class KieSessionService {
 		};
 		Collection<FactHandle> events = this.kieSession.getFactHandles(filter);
 		for (FactHandle handle : events) {
-			this.kieSession.delete(handle);			
+			this.kieSession.delete(handle);
 		}
 	}
-
 }

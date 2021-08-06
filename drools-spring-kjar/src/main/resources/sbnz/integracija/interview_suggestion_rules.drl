@@ -1,53 +1,53 @@
 package sbnz.integracija;
 
-import ftn.sbnz.model.interview.InterviewSuggestion;
-import ftn.sbnz.model.interview.InterviewSuggestionStatus;
-import ftn.sbnz.model.enums.SkillProficiency;
+// import ftn.sbnz.model.interview.InterviewSuggestion;
+// import ftn.sbnz.model.interview.InterviewSuggestionStatus;
+// import ftn.sbnz.model.enums.SkillProficiency;
 
-import ftn.sbnz.model.enums.SkillProficiency;
-import ftn.sbnz.model.enums.CVElement;
-
-
-query getInterviewSuggestionForCVElement(
-            SkillProficiency iUserProficiency, 
-            SkillProficiency iJobProficiency, 
-            String iSubject,
-            CVElement iCv,
-            InterviewSuggestion $is)
-    $is := InterviewSuggestion(cvElement == iCv, 
-                             subject == iSubject, 
-                             proficiency.getValue() > iUserProficiency.getValue(),
-                             proficiency.getValue() <= iJobProficiency.getValue())
-end
+// import ftn.sbnz.model.enums.SkillProficiency;
+// import ftn.sbnz.model.enums.CVElement;
 
 
-salience 100
-rule "Interview suggestion for cv element"
-	agenda-group "interview-suggestion"
-	lock-on-active
-	when
-        $iss: InterviewSuggestionStatus($jobOfferDifference: jobOfferDifference, 
-                                        $cvElement: jobOfferDifference.cvElement, 
-                                        $userProficiency: jobOfferDifference.userProficiency, 
-                                        $jobOfferProficiency: jobOfferDifference.jobOfferProficiency,
-                                        $subject: jobOfferDifference.subject,
-                                        $userProficiency < $jobOfferProficiency)
-        and
-        getInterviewSuggestionForCVElement($userProficiency, $jobOfferProficiency, $subject, $cvElement, $is;)
-    then
-    modify($iss) {
-        getInterviewSuggestions().add($is)
-    }
-    System.out.println("Interview suggestion phase: " + $subject);
-end
+// query getInterviewSuggestionForCVElement(
+//             SkillProficiency iUserProficiency, 
+//             SkillProficiency iJobProficiency, 
+//             String iSubject,
+//             CVElement iCv,
+//             InterviewSuggestion $is)
+//     $is := InterviewSuggestion(cvElement == iCv, 
+//                              subject == iSubject, 
+//                              proficiency.getValue() > iUserProficiency.getValue(),
+//                              proficiency.getValue() <= iJobProficiency.getValue())
+// end
 
 
-salience 5
-rule "Remove interview suggestion status"
-	agenda-group "interview-suggestion"
-	lock-on-active
-	when
-        $iss: InterviewSuggestionStatus()
-    then
-        delete($iss);
-end
+// salience 100
+// rule "Interview suggestion for cv element"
+// 	agenda-group "interview-suggestion"
+// 	lock-on-active
+// 	when
+//         $iss: InterviewSuggestionStatus($jobOfferDifference: jobOfferDifference, 
+//                                         $cvElement: jobOfferDifference.cvElement, 
+//                                         $userProficiency: jobOfferDifference.userProficiency, 
+//                                         $jobOfferProficiency: jobOfferDifference.jobOfferProficiency,
+//                                         $subject: jobOfferDifference.subject,
+//                                         $userProficiency < $jobOfferProficiency)
+//         and
+//         getInterviewSuggestionForCVElement($userProficiency, $jobOfferProficiency, $subject, $cvElement, $is;)
+//     then
+//     modify($iss) {
+//         getInterviewSuggestions().add($is)
+//     }
+//     System.out.println("Interview suggestion phase: " + $subject);
+// end
+
+
+// salience 5
+// rule "Remove interview suggestion status"
+// 	agenda-group "interview-suggestion"
+// 	lock-on-active
+// 	when
+//         $iss: InterviewSuggestionStatus()
+//     then
+//         delete($iss);
+// end
