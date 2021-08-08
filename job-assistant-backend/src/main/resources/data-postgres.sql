@@ -1468,275 +1468,344 @@ insert into working_experiences_cv_elements (working_experience_id, cv_elements_
 insert into working_experiences_cv_elements (working_experience_id, cv_elements_id) values (1, 60);
 insert into users_working_experience (job_seeker_id, working_experience_id) values (2, 1);
 
-------------------------------------------------------------------------------
-
--- -- companies
--- insert into companies (id, name, medal) values (1, 'Levi9', 0);
--- insert into companies (id, name, medal) values (2, 'Continental', 0);
--- insert into companies (id, name, medal) values (3, 'VegaIT', 0);
--- insert into companies (id, name, medal) values (4, 'Vivify', 0);
--- insert into companies (id, name, medal) values (5, 'MarbleIT', 0);
--- insert into companies (id, name, medal) values (6, 'Nordeus', 0);
--- insert into companies (id, name, medal) values (7, 'Synechron', 0);
-
--- -- language importances
--- insert into language_importances (id, language_proficiency_id, importance) values (1, 3, 9);
-
--- -- -- job offers
--- -- -- Levi9
--- insert into job_offers (id, company_id, position_id, seniority, rank, date_posted) values (1, 1, 1, 2, 0, '2021-06-25 16:00:00.508-07'); -- BACKEND, MEDIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (1, 8, 7); -- SQL DATABASES, VERY GOOD
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (2, 44, 10); -- REST, EXCELLENT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (3, 65, 10); -- Object oriented programming, EXPERT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (4, 73, 8); -- Design patterns, VERY GOOD
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (1, 1); -- SQL Databases, GOOD 
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (1, 2); -- REST, EXCELLENT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (1, 3); -- Object oriented programming, EXPERT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (1, 4); -- Design patterns, VERY GOOD
-
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (1, 19, false, 10); -- Java, EXCELLENT
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (1, 1); -- Java, EXCELLENT
-
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (1, 73, 8); -- Maven, VERY GOOD
--- insert into technology_importances (id, technology_proficiency_id, importance) values (2, 79, 10); -- Spring Boot, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (3, 84, 9); -- Spring, EXCELLENT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (1, 1); -- Maven, VERY GOOD
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (1, 2); -- Spring Boot, EXCELLENT 
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (1, 3); -- Spring, EXCELLENT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (1, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) values (1, 24, 10); -- Team work, EXCELLENT
--- insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) values (2, 38, 10); -- Time management, VERY GOOD
-
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (1, 1); -- Team work, EXCELLENT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (1, 2); -- Time management, VERY GOOD
--- -- -----------------------------------------
--- -- Levi9
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (2, 1, 2, 2, 0, '2021-06-17 16:00:00.508-07'); -- FRONTEND, MEDIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (5, 84, 9); -- ES6 specification, EXCELLENT
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (2, 2); -- REST, EXCELLENT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (2, 4); -- Design patterns, VERY GOOD
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (2, 5); -- ES6 specification, EXCELLENT
-
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (2, 24, true, 10); -- JavaScript, EXCELLENT
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (2, 2); -- JavaScript, EXCELLENT
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (4, 44, 10); -- REACT, EXCELLENT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (2, 4); -- REACT, EXCELLENT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (2, 1); -- ENGLISH, VERY GOOD
 
--- -- soft skills importances
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (2, 1); -- Team work, EXCELLENT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (2, 2); -- Time management, VERY GOOD
--- -- -------------------------------------
--- -- -- Levi9
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (3, 1, 3, 3, 0, '2021-06-17 16:00:00.508-07'); -- FULLSTACK, SENIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (6, 10, 9); -- SQL DATABASES, EXCELLENT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (7, 45, 10); -- REST, EXPERT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (8, 75, 8); -- Design patterns, EXPERT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (9, 85, 9); -- ES6 specification, EXPERT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (10, 65, 9); -- Object oriented programming, EXPERT
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (3, 6); -- SQL Databases, EXPERT 
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (3, 7); -- REST, EXPERT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (3, 8); -- Design patterns, EXPERT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (3, 9); -- ES6 specification, EXPERT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (3, 10); -- Object oriented programming, EXPERT
-
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (3, 20, false, 10); -- Java, EXPERT
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (4, 25, false, 10); -- JavaScript, EXCELLENT
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (3, 3); -- Java, EXPERT
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (3, 4); -- JavaScript, EXPERT
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (5, 80, 10); -- Spring Boot, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (6, 85, 7); -- Spring, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (7, 45, 9); -- REACT, EXPERT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (3, 5); -- Spring Boot, EXPERT 
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (3, 6); -- Spring, EXPERT
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (3, 7); -- REACT, EXPERT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (3, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) values (3, 25, 10); -- Team work, EXPERT
--- insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) values (4, 40, 10); -- Time management, EXPERT
-
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (3, 3); -- Team work, EXPERT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (3, 4); -- Time management, EXPERT
--- -- -------------------------------------
--- -- -- Levi9
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (4, 1, 22, 1, 0, '2021-06-17 16:00:00.508-07'); -- TESTER, JUNIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (11, 56, 10); -- Testing metodologies, BASIC
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (12, 60, 8); -- Object oriented programming, BASIC
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (4, 11); -- Testing metodologies, BASIC
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (4, 12); -- Object oriented programming, BASIC
-
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (5, 15, false, 9); -- Java, BASIC
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (6, 20, false, 9); -- JavaScript, BASIC
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (4, 5); -- Java, BASIC
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (4, 6); -- JavaScript, BASIC
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (8, 51, 10); -- JUnit, BASIC
--- insert into technology_importances (id, technology_proficiency_id, importance) values (9, 56, 9); -- Jasmine, BASIC
--- insert into technology_importances (id, technology_proficiency_id, importance) values (10, 61, 10); -- Selenium, BASIC
--- insert into technology_importances (id, technology_proficiency_id, importance) values (11, 11, 9); -- Angular, BASIC
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (4, 8); -- JUnit, BASIC
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (4, 9); -- Jasmine, BASIC
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (4, 10); -- Selenium, BASIC
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (4, 11); -- Angular, BASIC
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (4, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (4, 3); -- Team work, EXPERT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (4, 4); -- Time management, EXPERT
--- -- -------------------------------------
-
--- -- Continental
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (5, 2, 10, 2, 0, '2021-06-16 16:00:00.508-07'); -- DATABASE ADMINISTRATOR, MEDIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (13, 9, 9); -- SQL Databases, EXCELLENT
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (14, 19, 7); -- NoSQL Databases, EXCELLENT
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (5, 13); -- SQL Databases, EXCELLENT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (5, 14); -- NoSQL Databases, EXCELLENT
-
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (7, 104, false, 10); -- SQL, EXCELLENT
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (5, 7); -- SQL, EXCELLENT
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (12, 144, 10); -- Amazon AWS, EXCELLENT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (5, 12); -- Amazon AWS, EXCELLENT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (5, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (5, 3); -- Team work, EXPERT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (5, 4); -- Time management, EXPERT
--- -- ------------------------------------
-
--- -- VegaIT
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (6, 3, 11, 2, 0, '2021-06-17 16:00:00.508-07'); -- ARTIFICIAL INTELLIGENCE SPECIALIST, MEDIOR, NONE
-
--- -- knowledge importances
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (15, 88, 9); -- Neural networks, VERY GOOD
--- insert into knowledge_importances (id, knowledge_proficiency_id, importance) values (16, 93, 10); -- Machine learning algorithms, VERY GOOD
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (6, 15); -- Neural networks, VERY GOOD
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (6, 16); -- Machine learning algorithms, VERY GOOD
- 
--- -- programming importances
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (8, 54, false, 10); -- Python, EXCELLENT
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (9, 93, true, 7); -- R, VERY GOOD
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (6, 8); -- Python, EXCELLENT
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (6, 9); -- R, VERY_GOOD
-
--- -- technology importances
--- insert into technology_importances (id, technology_proficiency_id, importance) values (13, 89, 10); -- Pandas, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (14, 94, 10); -- Numpy, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (15, 99, 8); -- Tensorflow, EXCELLENT
--- insert into technology_importances (id, technology_proficiency_id, importance) values (16, 104, 9); -- Keras, EXCELLENT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (6, 13); -- Pandas, EXCELLENT
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (6, 14); -- Numpy, EXCELLENT
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (6, 15); -- Tensorflow, EXCELLENT
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (6, 16); -- Keras, EXCELLENT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (6, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- insert into soft_skill_importances (id, soft_skill_proficiency_id, importance) values (5, 9, 10); -- Self motivation, EXCELLENT
-
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 3); -- Team work, EXPERT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 4); -- Time management, EXPERT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (6, 5); -- Self motivation, EXCELLENT
-
--- -----------------------------------------------------------------
-
--- -- -- -- Vivify
--- insert into job_offers (id, company_id, position_id, seniority, medal, date_posted) values (7, 4, 1, 2, 0, '2021-06-18 16:00:00.508-07'); -- BACKEND, MEDIOR, NONE
-
--- -- knowledge importances
--- -- insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (17, 8, false, 7); -- SQL DATABASES, VERY GOOD
--- -- insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (18, 44, false, 10); -- REST, EXCELLENT
--- -- insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (19, 65, false, 10); -- Object oriented programming, EXPERT
--- -- insert into knowledge_importances (id, knowledge_proficiency_id, optional, importance) values (20, 73, false, 8); -- Design patterns, VERY GOOD
-
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (7, 1); -- SQL Databases, GOOD 
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (7, 2); -- REST, EXCELLENT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (7, 3); -- Object oriented programming, EXPERT
--- insert into job_offers_knowledge_importances (job_offer_id, knowledge_importances_id) values (7, 4); -- Design patterns, VERY GOOD
-
--- -- programming importances
--- -- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (1, 19, false, 10); -- Java, EXCELLENT
--- insert into programming_importances (id, programming_proficiency_id, optional, importance) values (10, 34, false, 10); -- PHP, EXCELLENT
-
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (7, 1); -- Java, EXCELLENT
--- insert into job_offers_programming_importances (job_offer_id, programming_importances_id) values (7, 10); -- PHP, EXCELLENT
-
--- -- technology importances
--- -- insert into technology_importances (id, technology_proficiency_id, optional, importance) values (1, 73, false, 8); -- Maven, VERY GOOD
--- -- insert into technology_importances (id, technology_proficiency_id, optional, importance) values (2, 79, false, 10); -- Spring Boot, EXCELLENT
--- -- insert into technology_importances (id, technology_proficiency_id, optional, importance) values (3, 84, false, 9); -- Spring, EXCELLENT
-
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (7, 1); -- Maven, VERY GOOD
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (7, 2); -- Spring Boot, EXCELLENT 
--- insert into job_offers_technology_importances (job_offer_id, technology_importances_id) values (7, 3); -- Spring, EXCELLENT
-
--- -- language importances
--- insert into job_offers_language_importances (job_offer_id, language_importances_id) values (7, 1); -- ENGLISH, VERY GOOD
-
--- -- soft skills importances
--- -- insert into soft_skill_importances (id, soft_skill_proficiency_id, optional, importance) values (1, 24, false, 10); -- Team work, EXCELLENT
--- -- insert into soft_skill_importances (id, soft_skill_proficiency_id, optional, importance) values (2, 38, false, 10); -- Time management, VERY GOOD
-
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (7, 1); -- Team work, EXCELLENT
--- insert into job_offers_soft_skill_importances (job_offer_id, soft_skill_importances_id) values (7, 2); -- Time management, VERY GOOD
-
--- -----------------------------------
-
+------------------------------- COMPANIES -------------------------------
+-- 1 - LEVI9
+insert into companies (name, medal) values ('Levi9', 0);
+-- 2 - CONTINENTAL
+insert into companies (name, medal) values ('Continental', 0);
+-- 3 - VEGAIT
+insert into companies (name, medal) values ('VegaIT', 0);
+-- 4 - VIVIFY
+insert into companies (name, medal) values ('Vivify', 0);
+-- 5 - MARBLEIT
+insert into companies (name, medal) values ('MarbleIT', 0);
+-- 6 - NORDEUS
+insert into companies (name, medal) values ('Nordeus', 0);
+-- 7 - SYNECHRON
+insert into companies (name, medal) values ('Synechron', 0);
+-- 8 - RT-RK
+insert into companies (name, medal) values ('RT-RK', 0);
+-- 9 - UBISOFT
+insert into companies (name, medal) values ('Ubisoft', 0);
+-- 10 - 3LATERAL
+insert into companies (name, medal) values ('3Lateral', 0);
+-- 11 - QUANTOX TECHNOLOGY
+insert into companies (name, medal) values ('Quantox Technology', 0);
+-- 12 - EXECOM
+insert into companies (name, medal) values ('Execom', 0);
+-- 13 - MICROSOFT DEVELOPMENT CENTER SERBIA
+insert into companies (name, medal) values ('Microsoft Development Center Serbia', 0);
+
+------------------------------- IMPORTANCES -------------------------------
+-- 1 - SQL DATABASES, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (263, 7, false);
+-- 2 - REST, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (299, 10, false);
+-- 3 - OBJECT ORIENTED PROGRAMMING, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (319, 10, false);
+-- 4 - DESIGN PATTERNS, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (328, 8, false);
+-- 5 - JAVA, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (19, 10, false);
+-- 6 - MAVEN, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (178, 8, false);
+-- 7 - SPRING BOOT, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (184, 10, false);
+-- 8 - SPRING, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (189, 9, false);
+-- 9 - ENGLISH, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (358, 10, false);
+-- 10 - TEAMWORK, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (404, 10, false);
+-- 11 - TIME MANAGEMENT, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (418, 10, false);
+-- 12 - ES6 SPECIFICATION, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (339, 9, false);
+-- 13 - SQL DATABASES, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (264, 9, false);
+-- 14 - REST, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (300, 10, false);
+-- 15 - DESIGN PATTERNS, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (330, 8, false);
+-- 16 - ES6 SPECIFICATION, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (340, 9, false);
+-- 17 - OBJECT ORIENTED PROGRAMMING, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (320, 9, false);
+-- 18 - JAVASCRIPT, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (25, 10, false);
+-- 19 - JAVA, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (20, 10, false);
+-- 20 - SPRING BOOT, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (185, 10, false);
+-- 21 - SPRING, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (190, 7, false);
+-- 22 - REACT, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (150, 9, false);
+-- 23 - TEAMWORK, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (405, 10, false);
+-- 24 - TIME MANAGEMENT, EXPERT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (420, 10, false);
+-- 25 - TESTING METODOLOGIES, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (311, 10, false);
+-- 26 - OBJECT ORIENTED PROGRAMMING, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (316, 8, false);
+-- 27 - JAVA, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (16, 9, false);
+-- 28 - JAVASCRIPT, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (21, 9, false);
+-- 29 - JUNIT, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (156, 10, false);
+-- 30 - JASMINE, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (161, 9, false);
+-- 31 - SELENIUM, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (166, 10, false);
+-- 32 - ANGULAR, BASIC
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (116, 9, false);
+-- 33 - NOSQL DATABASES, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (274, 10, false);
+-- 34 - SQL, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (104, 10, false);
+-- 35 - AMAZON AWS, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (249, 10, false);
+-- 36 - NEURAL NETWORKS, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (343, 9, false);
+-- 37 - MACHINE LEARNING ALGORITHMS, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (348, 10, false);
+-- 38 - PYTHON, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (54, 10, false);
+-- 39 - R, VERY GOOD
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (93, 7, false);
+-- 40 - PANDAS, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (194, 10, false);
+-- 41 - NUMPY, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (199, 10, false);
+-- 42 - TENSORFLOW, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (204, 8, false);
+-- 43 - KERAS, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (209, 9, false);
+-- 44 - SELF MOTIVATION, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (389, 10, false);
+-- 45 - PHP, EXCELLENT
+insert into cv_element_importances (proficiency_id, importance_level, optional) values (34, 10, false);
+
+------------------------------- JOB OFFERS --------------------------------
+
+-- 1 - LEVI9 - BACKEND - MEDIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 1, 2, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- SQL DATABASES, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 1);
+-- REST, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 2);
+-- OBJECT ORIENTED PROGRAMMING, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 3);
+-- DESIGN PATTERNS, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 4);
+-------------------- PROGRAMMING --------------------
+-- JAVA, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 5);
+-------------------- TECHNOLOGY --------------------
+-- MAVEN, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 6);
+-- SPRING BOOT, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 7);
+-- SPRING, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 8);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAMWORK, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 10);
+-- TIME MANAGEMENT, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 11);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 2 - LEVI9 - FRONTEND - MEDIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 2, 2, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- ES6 SPECIFICATION, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 12);
+-- REST, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 2);
+-- DESIGN PATTERNS, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 4);
+-------------------- PROGRAMMING --------------------
+-- JAVASCRIPT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 18);
+-------------------- TECHNOLOGY --------------------
+-- REACT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 22);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAMWORK, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 10);
+-- TIME MANAGEMENT, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 11);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 3 - LEVI 9 - FULLSTACK - SENIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 3, 3, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- SQL DATABASES, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 13);
+-- REST, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 14);
+-- DESIGN PATTERNS, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 15);
+-- ES6 SPECIFICATION, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 16);
+-- OBJECT ORIENTED PROGRAMMING, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 17);
+-------------------- PROGRAMMING --------------------
+-- JAVA, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 19);
+-- JAVASCRIPT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 18);
+-------------------- TECHNOLOGY --------------------
+-- SPRING BOOT, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 7);
+-- SPRING, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 8);
+-- REACT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 22);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAMWORK, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 23);
+-- TIME MANAGEMENT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 24);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 4 - LEVI9 - TESTER - JUNIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 22, 1, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- TESTING METODOLOGIES, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 25);
+-- OBJECT ORIENTED PROGRAMMING, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 26);
+-------------------- PROGRAMMING --------------------
+-- JAVA, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 27);
+-- JAVASCRIPT, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 28);
+-------------------- TECHNOLOGY --------------------
+-- JUNIT, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 29);
+-- JASMINE, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 30);
+-- SELENIUM, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 31);
+-- ANGULAR, BASIC
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 32);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAM WORK, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 23);
+-- TIME MANAGEMENT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 24);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 5 - CONTINENTAL - DATABASE ADMINISTRATOR - MEDIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (2, 10, 2, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- SQL DATABASES, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 13);
+-- NOSQL DATABASES, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 33);
+-------------------- PROGRAMMING --------------------
+-- SQL, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 34);
+-------------------- TECHNOLOGY --------------------
+-- AMAZON AWS, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 35);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAM WORK, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 23);
+-- TIME MANAGEMENT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 24);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 6 - VEGA IT - ARTIFICIAL INTELLIGENCE SPECIALIST - MEDIOR - NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (6, 11, 2, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- NEURAL NETWORKS, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 36);
+-- MACHINE LEARNING ALGORITHMS, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 37);
+-------------------- PROGRAMMING --------------------
+-- PYTHON, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 38);
+-- R, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 39);
+-------------------- TECHNOLOGY --------------------
+-- PANDAS, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 40);
+-- NUMPY EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 41);
+-- TENSORFLOW, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 42);
+-- KERAS, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 43);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAM WORK, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 23);
+-- TIME MANAGEMENT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 24);
+
+-------------------------------------------------------------------------------------------------------
+
+-- 7 - VIVIFY - BACKEND, MEDIOR, NONE
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (7, 1, 2, 0, '2021-08-08 16:00:00.508-07');
+-------------------- KNOWLEDGE --------------------
+-- SQL DATABASES, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 1);
+-- REST, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 2);
+-- OBJECT ORIENTED PROGRAMMING, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 17);
+-- DESIGN PATTERNS, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 4);
+-------------------- PROGRAMMING --------------------
+-- JAVA, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 5);
+-- PHP, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 45);
+-------------------- TECHNOLOGY --------------------
+-- MAVEN, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 6);
+-- SPRING BOOT, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 7);
+-- SPRING, EXCELLENT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 8);
+-------------------- LANGUAGE --------------------
+-- ENGLISH, VERY GOOD
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 9);
+-------------------- SOFT SKILLS --------------------
+-- TEAM WORK, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 23);
+-- TIME MANAGEMENT, EXPERT
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 24);
+
+------------------------------------------------------------------------------------------------------
 
 -- -- REVIEWS
 
