@@ -45,7 +45,7 @@ public class JobOfferRating {
 	@ManyToOne
 	private JobOffer jobOffer;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<InterviewSuggestion> interviewSuggestions;
 
 	@OneToMany

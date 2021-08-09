@@ -1,7 +1,9 @@
 package ftn.sbnz.model.job_position;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +33,7 @@ public class JobPosition {
 	@NonNull
 	private String title;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<CVElement> cvElements;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<CVElement> cvElements = new HashSet<>();
 
 }

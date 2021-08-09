@@ -1,213 +1,226 @@
 package sbnz.integracija;
 
-// import ftn.sbnz.model.job_position.JobPosition;
-// import ftn.sbnz.model.job_position.JobPositionSuggestion;
-// import ftn.sbnz.model.job_position.JobPositionRating;
-// import ftn.sbnz.model.user.JobSeeker;
-// import ftn.sbnz.model.user.WorkingExperience;
-// import ftn.sbnz.model.technology.Technology;
-// import ftn.sbnz.model.technology.TechnologyProficiency;
-// import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-// import ftn.sbnz.model.programming_language.ProgrammingProficiency;
-// import ftn.sbnz.model.knowledge.Knowledge;
-// import ftn.sbnz.model.knowledge.KnowledgeProficiency;
-// import ftn.sbnz.model.enums.SeniorityLevel;
-// import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.WorkingExperience;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
+import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.CVElementType;
 
-// import java.util.List;
-// import java.util.ArrayList;
-// import java.util.Set;
-// import java.util.HashSet;
-// import java.util.Collections;
-// import java.util.Comparator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+import java.util.Comparator;
 
-// import java.lang.Integer;
+import java.lang.Integer;
 
-// global Integer programmingLanguageCoefficient;
-// global Integer technologyCoefficient;
-// global Integer knowledgeCoefficient;
-// global Float monthsExperienceCoefficient;
-
-// rule "JobPositionSuggestion - phase 1"
-// 	agenda-group "jps-p1"
-// 	lock-on-active
-//     when
-//         $jps: JobPositionSuggestion($user: jobSeeker, $posRatings: positionRatings) and
-// 		forall(JobPositionRating(rating == 0) from $posRatings) and
-//         $u_progLanguages: List() from accumulate(ProgrammingProficiency($programmingLang: programmingLanguage)
-//         										from $user.programmingProficiencies,
-//         										collectList($programmingLang)) and
-//         $position: JobPosition ($p_progLanguages: programmingLanguages,
-// 							    $u_progLanguages intersects $p_progLanguages) and
-// 		$progLang: ProgrammingLanguage() from $p_progLanguages
-//     then
-// 		JobPositionRating $jpr = new JobPositionRating();
-// 		$jpr.setRating(0);
-// 		$jpr.setTitle($position.getTitle());
-// 		$jpr.setSubtitle($progLang.getName());
-// 		$jpr.setDescription("");
-// 		$jpr.setJobPosition($position);
-// 		$jpr.setSeniority(SeniorityLevel.NONE);
-// 		modify($jps) {
-// 			getPositionRatings().add($jpr)  		
-// 		}
-// 		insert($jpr);
-// 		System.out.println("Added job position with title: " + $jpr.getTitle() + " for language " + $jpr.getSubtitle());    
-// end
-
-// rule "JobPositionSuggestion - phase 2 - programming language"
-// 	agenda-group "jps-p2"
-// 	lock-on-active
-//     when
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0) and
-// 		$u_progLanguages: List() from accumulate(ProgrammingProficiency($programmingLang: programmingLanguage)
-// 										from $user.programmingProficiencies,
-// 										collectList($programmingLang.getName())) and
-// 		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages contains subtitle) and
-// 		$progLangProf: ProgrammingProficiency(programmingLanguage.name == $jpr.subtitle) from $user.programmingProficiencies
-//     then
-// 		int $progLangValue = $progLangProf.getProficiency().getValue() + 1;
-// 		String $newDescription = "Programming language - " + $progLangProf.getProgrammingLanguage().getName() + " (" + $progLangProf.getProficiency().toString() + ")\n";
-// 		int $newRating = $progLangValue * programmingLanguageCoefficient; 
-// 		modify ($jpr) {
-// 			setDescription($newDescription),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
-// end
-
-// rule "JobPositionSuggestion - phase 2 - delete empty"
-// 	agenda-group "jps-p2"
-// 	lock-on-active
-//     when
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0) and
-// 		$u_progLanguages: List() from accumulate(ProgrammingProficiency($programmingLang: programmingLanguage)
-// 										from $user.programmingProficiencies,
-// 										collectList($programmingLang.getName())) and
-// 		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages not contains subtitle)
-//     then
-// 		System.out.println("Removing JPS with name " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle());
-// 		delete($jpr);
-// 		modify ($jps) {
-// 			getPositionRatings().removeIf(obj -> $jpr == obj)
-// 		}
-// end
-
-// rule "JobPositionSuggestion - phase 3 - technology"
-// 	agenda-group "jps-p3"
-// 	lock-on-active
-//     when
-// 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0, $positionRatings contains $jpr) and
-// 		$job_technologies: List() from accumulate(Technology($technologyName: name)
-// 										from $jobPosition.technologies,
-// 										collectList($technologyName)) and
-// 		$techProf: TechnologyProficiency($job_technologies contains technology.name) from $user.technologyProficiencies
-//     then
-// 		int $technologyValue = $techProf.getProficiency().getValue() + 1;
-// 		String $newDescription = $jpr.getDescription() + "Technology - " + $techProf.getTechnology().getName() + " (" + $techProf.getProficiency().toString() + ")\n";
-// 		int $newRating = $jpr.getRating() + $technologyValue * technologyCoefficient; 
-// 		modify ($jpr) {
-// 			setDescription($newDescription),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
-// end
-
-// rule "JobPositionSuggestion - phase 3 - knowledge"
-// 	agenda-group "jps-p3"
-// 	lock-on-active
-//     when
-// 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0, $positionRatings contains $jpr) and
-// 		$job_knowledge: List() from accumulate(Knowledge($knowledgeName: name)
-// 										from $jobPosition.knowledge,
-// 										collectList($knowledgeName)) and
-// 		$knowledgeProf: KnowledgeProficiency($job_knowledge contains knowledge.name) from $user.knowledgeProficiencies
-//     then
-// 		int $knowledgeValue = $knowledgeProf.getProficiency().getValue() + 1;
-// 		String $newDescription = $jpr.getDescription() + "Knowledge - " + $knowledgeProf.getKnowledge().getName() + " (" + $knowledgeProf.getProficiency().toString() + ")\n";
-// 		int $newRating = $jpr.getRating() + $knowledgeValue * knowledgeCoefficient; 
-// 		modify ($jpr) {
-// 			setDescription($newDescription),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
-// end
+global Integer programmingLanguageCoefficient;
+global Integer technologyCoefficient;
+global Integer knowledgeCoefficient;
+global Float monthsExperienceCoefficient;
 
 
-// salience 0
-// rule "JobPositionSuggestion - phase 4 - Junior"
-// 	agenda-group "jps-p4"
-// 	lock-on-active
-//     when
-// 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0, $positionRatings contains $jpr) and
-// 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-// 					from $user.getWorkingExperience(),
-// 					$effectiveMonths: sum($seniority.getValue() * $months)
-// 					) and
-// 		eval($effectiveMonths < 18)
-//     then
-// 		SeniorityLevel $newLevel = SeniorityLevel.JUNIOR;
-// 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
-// 		int $newRating = $jpr.getRating() + $seniorityPoints;
-// 		modify ($jpr) {
-// 			setSeniority($newLevel),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
-// end
+rule "JobPositionSuggestion - phase 1"
+	agenda-group "jps-p1"
+	lock-on-active
+    when
+        $jps: JobPositionSuggestion($user: jobSeeker, $posRatings: positionRatings) 
+        and
+		forall(JobPositionRating(rating == 0) from $posRatings) 
+        and
+        $u_progLanguages: List() from accumulate(CVElementProficiency($cvElement: cvElement, cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
+        										from $user.proficiencies,
+        										collectList($cvElement)) 
+        and
+        $position: JobPosition ($p_progLanguages: cvElements,
+							    $u_progLanguages intersects $p_progLanguages) 
+        and
+		$progLang: CVElement() from $p_progLanguages
+    then
+		JobPositionRating $jpr = new JobPositionRating();
+		$jpr.setRating(0);
+		$jpr.setTitle($position.getTitle());
+		$jpr.setSubtitle($progLang.getName());
+		$jpr.setDescription("");
+		$jpr.setJobPosition($position);
+		$jpr.setSeniority(SeniorityLevel.NONE);
+		modify($jps) {
+			getPositionRatings().add($jpr)  		
+		}
+		insert($jpr);
+		System.out.println("Added job position with title: " + $jpr.getTitle() + " for language " + $jpr.getSubtitle());    
+end
 
-// salience 50
-// rule "JobPositionSuggestion - phase 4 - Medior"
-// 	agenda-group "jps-p4"
-// 	lock-on-active
-//     when
-// 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0, $positionRatings contains $jpr) and
-// 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-// 					from $user.getWorkingExperience(),
-// 					$effectiveMonths: sum($seniority.getValue() * $months)
-// 					) and
-// 		eval($effectiveMonths >= 18 && $effectiveMonths < 36)
-//     then
-// 		SeniorityLevel $newLevel = SeniorityLevel.MEDIOR;
-// 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
-// 		int $newRating = $jpr.getRating() + $seniorityPoints;
-// 		modify ($jpr) {
-// 			setSeniority($newLevel),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
-// end
+rule "JobPositionSuggestion - phase 2 - programming language"
+	agenda-group "jps-p2"
+	lock-on-active
+    when
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0) 
+		and
+		$u_progLanguages: List() from accumulate(CVElementProficiency($cvElement: cvElement, cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
+										from $user.proficiencies,
+										collectList($cvElement.getName())) 
+		and
+		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages contains subtitle) 
+		and
+		$progLangProf: CVElementProficiency(cvElement.getName() == $jpr.subtitle) from $user.proficiencies
+    then
+		int $progLangValue = $progLangProf.getProficiency().getValue() + 1;
+		String $newDescription = "Programming language - " + $progLangProf.getCvElement().getName() + " (" + $progLangProf.getProficiency().toString() + ")\n";
+		int $newRating = $progLangValue * programmingLanguageCoefficient; 
+		modify ($jpr) {
+			setDescription($newDescription),
+			setRating($newRating)
+		}
+		System.out.println("JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
+end
 
-// salience 100
-// rule "JobPositionSuggestion - phase 4 - Senior"
-// 	agenda-group "jps-p4"
-// 	lock-on-active
-//     when
-// 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
-//         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-//         							$positionRatings.size() != 0, $positionRatings contains $jpr) and
-// 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-// 					from $user.getWorkingExperience(),
-// 					$effectiveMonths: sum($seniority.getValue() * $months)
-// 					) and
-// 		eval($effectiveMonths >= 36)
-//     then
-// 		SeniorityLevel $newLevel = SeniorityLevel.SENIOR;
-// 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
-// 		int $newRating = $jpr.getRating() + $seniorityPoints;
-// 		modify ($jpr) {
-// 			setSeniority($newLevel),
-// 			setRating($newRating)
-// 		}
-// 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
-// end
+rule "JobPositionSuggestion - phase 2 - delete empty"
+	agenda-group "jps-p2"
+	lock-on-active
+    when
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0) 
+		and
+		$u_progLanguages: List() from accumulate(CVElementProficiency($cvElement: cvElement, cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
+										from $user.proficiencies,
+										collectList($cvElement.getName())) 
+		and
+		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages not contains subtitle)
+    then
+		System.out.println("Removing JPS with name " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle());
+		delete($jpr);
+		modify ($jps) {
+			getPositionRatings().removeIf(obj -> $jpr == obj)
+		}
+end
+
+rule "JobPositionSuggestion - phase 3 - technology"
+	agenda-group "jps-p3"
+	lock-on-active
+    when
+		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) 
+		and
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr) 
+		and
+		$job_technologies: List() from accumulate(CVElement($technologyName: name, type == CVElementType.TECHNOLOGY)
+										from $jobPosition.cvElements,
+										collectList($technologyName)) 
+		and
+		$techProf: CVElementProficiency($job_technologies contains cvElement.getName()) from $user.proficiencies
+    then
+		int $technologyValue = $techProf.getProficiency().getValue() + 1;
+		String $newDescription = $jpr.getDescription() + "Technology - " + $techProf.getCvElement().getName() + " (" + $techProf.getProficiency().toString() + ")\n";
+		int $newRating = $jpr.getRating() + $technologyValue * technologyCoefficient; 
+		modify ($jpr) {
+			setDescription($newDescription),
+			setRating($newRating)
+		}
+		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
+end
+
+rule "JobPositionSuggestion - phase 3 - knowledge"
+	agenda-group "jps-p3"
+	lock-on-active
+    when
+		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) 
+		and
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr) 
+		and
+		$job_knowledge: List() from accumulate(CVElement($knowledgeName: name, type == CVElementType.KNOWLEDGE)
+										from $jobPosition.cvElements,
+										collectList($knowledgeName)) 
+		and
+		$knowledgeProf: CVElementProficiency($job_knowledge contains cvElement.getName()) from $user.proficiencies
+    then
+		int $knowledgeValue = $knowledgeProf.getProficiency().getValue() + 1;
+		String $newDescription = $jpr.getDescription() + "Knowledge - " + $knowledgeProf.getCvElement().getName() + " (" + $knowledgeProf.getProficiency().toString() + ")\n";
+		int $newRating = $jpr.getRating() + $knowledgeValue * knowledgeCoefficient; 
+		modify ($jpr) {
+			setDescription($newDescription),
+			setRating($newRating)
+		}
+		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + ",rating - " + $jpr.getRating() );
+end
+
+
+salience 0
+rule "JobPositionSuggestion - phase 4 - Junior"
+	agenda-group "jps-p4"
+	lock-on-active
+    when
+		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
+					from $user.getWorkingExperience(),
+					$effectiveMonths: sum($seniority.getValue() * $months)
+					) and
+		eval($effectiveMonths < 18)
+    then
+		SeniorityLevel $newLevel = SeniorityLevel.JUNIOR;
+		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
+		int $newRating = $jpr.getRating() + $seniorityPoints;
+		modify ($jpr) {
+			setSeniority($newLevel),
+			setRating($newRating)
+		}
+		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
+end
+
+salience 50
+rule "JobPositionSuggestion - phase 4 - Medior"
+	agenda-group "jps-p4"
+	lock-on-active
+    when
+		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
+					from $user.getWorkingExperience(),
+					$effectiveMonths: sum($seniority.getValue() * $months)
+					) and
+		eval($effectiveMonths >= 18 && $effectiveMonths < 36)
+    then
+		SeniorityLevel $newLevel = SeniorityLevel.MEDIOR;
+		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
+		int $newRating = $jpr.getRating() + $seniorityPoints;
+		modify ($jpr) {
+			setSeniority($newLevel),
+			setRating($newRating)
+		}
+		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
+end
+
+salience 100
+rule "JobPositionSuggestion - phase 4 - Senior"
+	agenda-group "jps-p4"
+	lock-on-active
+    when
+		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
+        $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
+					from $user.getWorkingExperience(),
+					$effectiveMonths: sum($seniority.getValue() * $months)
+					) and
+		eval($effectiveMonths >= 36)
+    then
+		SeniorityLevel $newLevel = SeniorityLevel.SENIOR;
+		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
+		int $newRating = $jpr.getRating() + $seniorityPoints;
+		modify ($jpr) {
+			setSeniority($newLevel),
+			setRating($newRating)
+		}
+		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
+end

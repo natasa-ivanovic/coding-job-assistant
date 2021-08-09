@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import ftn.sbnz.repository.job_position.JobPositionRatingRepository;
 import ftn.sbnz.repository.job_position.JobPositionSuggestionRepository;
 
 @Service
+@Transactional
 public class JobPositionSuggestionService {
 
 	private JobPositionSuggestionRepository repository;
@@ -35,6 +38,7 @@ public class JobPositionSuggestionService {
 		this.userService = userService;
 	}
 
+	 
 	public JobPositionSuggestionDTO create(JobSeeker jobSeeker) {
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
 		Calendar rightNow = Calendar.getInstance();

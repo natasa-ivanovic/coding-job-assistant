@@ -1,7 +1,8 @@
 package ftn.sbnz.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,7 +159,7 @@ public class UserService {
 		js.setSurname(userDTO.getSurname());
 		js.setPassword(userDetailsService.encodePassword(userDTO.getPassword()));
 		js.setRole("USER");
-		ArrayList<Authority> auth = new ArrayList<>();
+		Set<Authority> auth = new HashSet<>();
 		auth.add(authorityService.findByName("ROLE_USER"));
 		js.setAuthorities(auth);
 		js.setEnabled(true); //TODO: account activation mail
