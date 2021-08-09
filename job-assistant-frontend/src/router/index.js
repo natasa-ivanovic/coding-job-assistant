@@ -16,6 +16,7 @@ import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
 import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
 import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
 import ClassroomView from '../views/classroom/ClassroomView.vue'
+import CompanyListView from '../views/jobseeker/CompanyListView.vue'
 
 Vue.use(VueRouter)
 
@@ -102,6 +103,12 @@ const routes = [
         component: ClassroomView,
         name: "ClassroomView",
         path: "/classroom",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: CompanyListView,
+        name: "CompanyListView",
+        path: "/companies",
         beforeEnter: guardRouteJobSeeker
       }
     ]

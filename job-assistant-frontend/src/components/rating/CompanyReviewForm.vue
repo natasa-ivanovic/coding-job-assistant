@@ -1,8 +1,16 @@
 <template>
-  <v-card width="600px" height="700px">
+  <v-card>
     <v-card-title>Leave a review</v-card-title>
     <v-card-text>
       <v-form v-model="valid" ref="form">
+        <v-row>
+          <v-col>
+            <v-text-field
+              label="Job title"
+              v-model="review.jobTitle"
+            />
+            </v-col>
+        </v-row>
         <v-row>
           <v-col class="review-font">
             <v-textarea
@@ -18,7 +26,7 @@
             <v-checkbox v-model="review.jobOffered" label="Job offered" />
           </v-col>
           <v-col class="review-font">
-            <v-checkbox v-model="review.recommends" label="Recommends company" />
+            <v-checkbox v-model="review.recommends" label="I recommend this company" />
           </v-col>
         </v-row>
         <v-row>
@@ -27,7 +35,6 @@
           </v-col>
           <v-col>
             <v-text-field
-              single-line
               label="Salary"
               suffix="€"
               v-model="review.salary"
@@ -79,14 +86,15 @@
   </v-card>
 </template>
 <script>
-const apiURL = "/api/job-offer-review";
+const apiURL = "/api/company-review";
 
 export default {
-  name: "OfferReviewForm",
+  name: "CompanyReviewForm",
   data() {
     return {
       review: {
         rating: 5,
+        jobTitle: "Backend developer",
         content: "Test description",
         salary: 1000,
         hired: true,
@@ -106,7 +114,7 @@ export default {
     };
   },
   props: {
-    offerId: Number,
+    companyId: Number,
   },
   methods: {
     addReview: function () {
@@ -116,7 +124,7 @@ export default {
         this.loading = false;
         return;
       }
-      this.review.offerId = this.offerId;
+      this.review.companyId = this.companyId;
       this.axios({
         url: apiURL,
         method: "POST",

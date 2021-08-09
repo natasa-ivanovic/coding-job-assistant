@@ -34,7 +34,10 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link :to="{ name: 'JobOfferReviewListView' }" v-slot="{ navigate }">
+        <router-link
+          :to="{ name: 'JobOfferReviewListView' }"
+          v-slot="{ navigate }"
+        >
           <v-list-item @click="navigate">
             <v-list-item-icon>
               <v-icon>mdi-message-draw</v-icon>
@@ -71,9 +74,8 @@
         </router-link> -->
         <v-divider></v-divider>
 
-
         <v-list-group prepend-icon="mdi-school">
-          <template v-slot:activator> 
+          <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-content>
                 <v-list-item-title>Job positions</v-list-item-title>
@@ -110,9 +112,8 @@
           </router-link>
         </v-list-group>
 
-
         <v-list-group prepend-icon="mdi-briefcase">
-          <template v-slot:activator> 
+          <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-content>
                 <v-list-item-title>Job offers</v-list-item-title>
@@ -134,23 +135,28 @@
             </v-list-item>
           </router-link>
 
-
-        <router-link
-          :to="{ name: 'JobOfferListView' }"
-          v-slot="{ navigate }"
-        >
-          <v-list-item @click="navigate">
-            <v-list-item-icon>
-              <v-icon>mdi-format-list-text</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>View all offers</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
+          <router-link :to="{ name: 'JobOfferListView' }" v-slot="{ navigate }">
+            <v-list-item @click="navigate">
+              <v-list-item-icon>
+                <v-icon>mdi-format-list-text</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>View all offers</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
         </v-list-group>
       </v-list-item-group>
-
+      <router-link :to="{ name: 'CompanyListView' }" v-slot="{ navigate }">
+        <v-list-item @click="navigate">
+          <v-list-item-icon>
+            <v-icon>mdi-office-building</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Companies</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
       <v-divider></v-divider>
       <router-link :to="{ name: 'ClassroomView' }" v-slot="{ navigate }">
         <v-list-item @click="navigate">

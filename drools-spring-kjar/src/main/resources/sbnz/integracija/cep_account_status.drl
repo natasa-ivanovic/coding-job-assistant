@@ -1,74 +1,62 @@
 package sbnz.integracija;
 
-// import ftn.sbnz.model.company.Company;
-// import ftn.sbnz.model.job_offer.JobOfferReview;
-// import ftn.sbnz.model.enums.MedalRank;
-// import ftn.sbnz.model.enums.ReviewStatus;
-
-// import ftn.sbnz.events.ReviewDeclinedEvent;
-// import ftn.sbnz.events.MaliciousReviewerEvent;
-// import ftn.sbnz.events.DisabledUserEvent;
-// import ftn.sbnz.events.UserAccountStatusEvent;
-
-// import java.time.LocalDate;
-// import java.time.LocalDateTime;
-// import java.sql.Timestamp;
-// import java.util.List;
-// import java.util.Set;
+import ftn.sbnz.events.MaliciousReviewerEvent;
+import ftn.sbnz.events.DisabledUserEvent;
+import ftn.sbnz.events.UserAccountStatusEvent;
 
 
-// salience 100
-// rule "UserReview attempted - check if he's banned - DisabledUserEvent"
-//     agenda-group "user-account-status-check"
-//     when
-//         $fact: UserAccountStatusEvent($userId: userId) and
-//         $event: DisabledUserEvent($userId == jobSeekerId)
-//     then
-//         modify ($fact) {
-//             setAllowed(false),
-//             setBanned(true)
-//         }
-//         delete($fact);
-// end
+salience 100
+rule "UserReview attempted - check if he's banned - DisabledUserEvent"
+    agenda-group "user-account-status-check"
+    when
+        $fact: UserAccountStatusEvent($userId: userId) and
+        $event: DisabledUserEvent($userId == jobSeekerId)
+    then
+        modify ($fact) {
+            setAllowed(false),
+            setBanned(true)
+        }
+        delete($fact);
+end
 
-// salience 75
-// rule "UserReview attempted - not allowed (malicious event in last 15 days)"
-//     agenda-group "user-account-status-check"
-//     when
-//         $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
-//         $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime before $endDate)
-//     then
-//         modify ($fact) {
-//             setAllowed(false),
-//             setBanned(false)
-//         }
-//         delete($fact);
-// end
+salience 75
+rule "UserReview attempted - not allowed (malicious event in last 15 days)"
+    agenda-group "user-account-status-check"
+    when
+        $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
+        $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime before $endDate)
+    then
+        modify ($fact) {
+            setAllowed(false),
+            setBanned(false)
+        }
+        delete($fact);
+end
 
-// salience 50
-// rule "UserReview attempted - allowed (no malicious event in last 15 days)"
-//     agenda-group "user-account-status-check"
-//     when
-//         $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
-//         $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime after $endDate) 
-//     then
-//         modify ($fact) {
-//             setAllowed(true),
-//             setBanned(false)
-//         }
-//         delete($fact);
-// end
+salience 50
+rule "UserReview attempted - allowed (no malicious event in last 15 days)"
+    agenda-group "user-account-status-check"
+    when
+        $fact: UserAccountStatusEvent($userId: userId, $eventTime: eventTime) and
+        $maliciousEvent: MaliciousReviewerEvent(jobSeekerId == $userId, $endDate: endDate, $eventTime after $endDate) 
+    then
+        modify ($fact) {
+            setAllowed(true),
+            setBanned(false)
+        }
+        delete($fact);
+end
 
 
-// salience 25
-// rule "UserReview attempted - if it passed all checks set to allow"
-//     agenda-group "user-account-status-check"
-//     when
-//         $fact: UserAccountStatusEvent()
-//     then
-//         modify ($fact) {
-//             setAllowed(true),
-//             setBanned(false)
-//         }
-//         delete($fact);
-// end
+salience 25
+rule "UserReview attempted - if it passed all checks set to allow"
+    agenda-group "user-account-status-check"
+    when
+        $fact: UserAccountStatusEvent()
+    then
+        modify ($fact) {
+            setAllowed(true),
+            setBanned(false)
+        }
+        delete($fact);
+end

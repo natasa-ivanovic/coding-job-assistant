@@ -23,13 +23,13 @@ import ftn.sbnz.service.CompanyReviewService;
 
 @RestController
 @Validated
-@RequestMapping(value = "/api/job-offer-review", produces = MediaType.APPLICATION_JSON_VALUE)
-public class JobOfferReviewController {
+@RequestMapping(value = "/api/company-review", produces = MediaType.APPLICATION_JSON_VALUE)
+public class CompanyReviewController {
 
 	private CompanyReviewService service;
 	
 	@Autowired
-	public JobOfferReviewController(CompanyReviewService service) {
+	public CompanyReviewController(CompanyReviewService service) {
 		this.service = service;
 	}
 	
