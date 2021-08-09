@@ -1,6 +1,7 @@
                                           package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +47,7 @@ public class JobOfferRating {
 	private JobOffer jobOffer;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	private List<InterviewSuggestion> interviewSuggestions;
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 
 	@OneToMany
 	private List<JobOfferStatistic> statistic = new ArrayList<>();

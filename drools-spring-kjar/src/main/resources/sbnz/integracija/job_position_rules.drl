@@ -5,11 +5,12 @@ import ftn.sbnz.model.job_position.JobPositionSuggestion;
 import ftn.sbnz.model.job_position.JobPositionRating;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.WorkingExperience;
-import ftn.sbnz.model.cv_element.CVElementProficiency;
 import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
+import ftn.sbnz.model.enums.CVElementType;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.enums.SkillProficiency;
-import ftn.sbnz.model.enums.CVElementType;
+
 
 import java.util.List;
 import java.util.ArrayList;

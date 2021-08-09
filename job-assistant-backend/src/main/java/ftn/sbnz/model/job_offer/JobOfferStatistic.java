@@ -37,7 +37,7 @@ public class JobOfferStatistic {
 	private Timestamp date;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<JobOfferDifference> differences;
+	private List<JobOfferDifference> differences = new ArrayList<>();
 		
 	@ManyToOne
 	private JobOffer jobOffer;
