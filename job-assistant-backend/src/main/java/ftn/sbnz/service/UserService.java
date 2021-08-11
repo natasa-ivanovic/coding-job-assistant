@@ -14,8 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import ftn.sbnz.dto.UserDTO;
-import ftn.sbnz.dto.UserTokenStateDTO;
+import ftn.sbnz.dto.user.UserDTO;
+import ftn.sbnz.dto.user.UserDetailsDTO;
+import ftn.sbnz.dto.user.UserTokenStateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
 import ftn.sbnz.events.UserAccountStatusEvent;
 import ftn.sbnz.events.UserLoginStatusEvent;
@@ -23,6 +24,7 @@ import ftn.sbnz.exception.UserException;
 import ftn.sbnz.model.auth.Authority;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.User;
+import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.repository.user.UserRepository;
 import ftn.sbnz.security.CustomUserDetailsService;
 import ftn.sbnz.security.TokenUtils;
@@ -36,17 +38,19 @@ public class UserService {
 	private CustomUserDetailsService userDetailsService;
 	private KieSessionService kieSession;
 	private AuthorityService authorityService;
+	private JobSeekerRepository jobSeekerRepository;
 
 	@Autowired
 	public UserService(UserRepository userRepository, TokenUtils tokenUtils,
 			AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService,
-			KieSessionService kieSession, AuthorityService authorityService) {
+			KieSessionService kieSession, AuthorityService authorityService, JobSeekerRepository jobSeekerRepository) {
 		this.userRepository = userRepository;
 		this.tokenUtils = tokenUtils;
 		this.authenticationManager = authenticationManager;
 		this.userDetailsService = userDetailsService;
 		this.kieSession = kieSession;
 		this.authorityService = authorityService;
+		this.jobSeekerRepository = jobSeekerRepository;
 	}
 
 	public User findByUsername(String username) {
@@ -76,7 +80,7 @@ public class UserService {
 		if (existUser.getKey() != null && existUser.getRole().equals("USER")) {
 			throw new DisabledException("Your password hasn't been reset yet. Please check your email!");
 		}
-		
+
 		if (userBanned(existUser.getId())) {
 			throw new Exception("User has been banned for posting too many malicious reviews!");
 		}
@@ -162,16 +166,31 @@ public class UserService {
 		Set<Authority> auth = new HashSet<>();
 		auth.add(authorityService.findByName("ROLE_USER"));
 		js.setAuthorities(auth);
-		js.setEnabled(true); //TODO: account activation mail
-		
+		js.setEnabled(true); // TODO: account activation mail
+
 		save(js);
 	}
-	
+
 	private boolean userBanned(Long jobSeekerId) {
 		UserAccountStatusEvent fact = new UserAccountStatusEvent(jobSeekerId);
 		kieSession.insert(fact);
 		kieSession.setAgendaFocus("user-account-status-check");
 		kieSession.fireAllRules();
 		return fact.isBanned();
+	}
+
+	public UserDetailsDTO getDetails(Long userId) {
+		JobSeeker js = this.jobSeekerRepository.getOne(userId);
+		return new UserDetailsDTO(js);
+	}
+
+	public void updateDetails(Long userId, UserDetailsDTO dto) {
+		JobSeeker js = this.jobSeekerRepository.getOne(userId);
+		js.setName(dto.getName());
+		js.setSurname(dto.getSurname());
+		js.setEducation(dto.getEducation());
+		js.setRemoteWork(dto.isRemoteWork());
+		js.setSalaryExpectation(dto.getSalaryExpectation());
+		this.jobSeekerRepository.save(js);
 	}
 }

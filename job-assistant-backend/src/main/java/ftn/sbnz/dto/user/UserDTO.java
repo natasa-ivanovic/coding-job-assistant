@@ -1,4 +1,4 @@
-package ftn.sbnz.dto;
+package ftn.sbnz.dto.user;
 
 import javax.validation.constraints.NotBlank;
 
