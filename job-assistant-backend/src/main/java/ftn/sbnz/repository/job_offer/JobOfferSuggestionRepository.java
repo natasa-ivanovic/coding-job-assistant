@@ -10,4 +10,6 @@ import ftn.sbnz.model.user.JobSeeker;
 public interface JobOfferSuggestionRepository extends JpaRepository<JobOfferSuggestion, Long> {
 	
 	public List<JobOfferSuggestion> findAllByJobSeeker(JobSeeker jobSeeker);
+
+	public JobOfferSuggestion getOneById(Long jobOfferSuggestionId);
 }

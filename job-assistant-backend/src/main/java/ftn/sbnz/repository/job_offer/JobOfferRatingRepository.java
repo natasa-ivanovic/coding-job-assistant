@@ -6,4 +6,6 @@ import ftn.sbnz.model.job_offer.JobOfferRating;
 
 public interface JobOfferRatingRepository extends JpaRepository<JobOfferRating, Long> {
 
+	JobOfferRating getOneById(Long jobOfferSuggestionId);
+
 }

@@ -1,13 +1,10 @@
 package ftn.sbnz.dto.interview;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import ftn.sbnz.model.enums.SeniorityLevel;
-import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.enums.CVElementType;
+import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
-import ftn.sbnz.model.job_offer.JobOffer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,39 +13,26 @@ import lombok.NoArgsConstructor;
 public class InterviewSuggestionStatusDTO {
 	
 	private Long id;
-//	private boolean checked;
+	private boolean checked;
 	private Date dateSuggested;
 	private Date dateChecked;
-	private List<InterviewSuggestionDTO> interviewSuggestions;
-	private String position;
-	private String company;
-	private SeniorityLevel seniority;
-//	private JobSeeker jobSeeker;
-//	private JobOfferDifference jobOfferDifference;
-	
-	
-	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status, JobOffer jo) {
-		this.id = status.getId();
-		this.dateSuggested = status.getDateSuggested();
-		this.dateChecked = status.getDateChecked();
-		this.position = jo.getPosition().getTitle();
-		this.company = jo.getCompany().getName();
-		this.seniority = jo.getSeniority();
-		this.interviewSuggestions = new ArrayList<>();
-		// TODO
-//		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
-//			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
-//		}
-	}
-	
+	private Long interviewSuggestionId;
+	private SkillProficiency proficiency;
+	private CVElementType cvElement;
+	private String subject;
+	private String url;
+	private String description;
+//	private InterviewSuggestionDTO interviewSuggestion;
+		
 	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status) {
 		this.id = status.getId();
+		this.checked = status.isChecked();
 		this.dateSuggested = status.getDateSuggested();
-		this.dateChecked = status.getDateChecked();
-		this.interviewSuggestions = new ArrayList<>();
-		// TODO
-//		for (InterviewSuggestion is : status.getInterviewSuggestions()) {
-//			this.interviewSuggestions.add(new InterviewSuggestionDTO(is));
-//		}
+		this.dateChecked = this.checked ? status.getDateChecked() : null;
+		this.interviewSuggestionId = status.getInterviewSuggestion().getId();
+		this.proficiency = status.getInterviewSuggestion().getCvElementProficiency().getProficiency();
+		this.cvElement = status.getInterviewSuggestion().getCvElementProficiency().getCvElement().getType();
+		this.subject = status.getInterviewSuggestion().getSubject();
+		this.description = status.getInterviewSuggestion().getDescription();
 	}
 }

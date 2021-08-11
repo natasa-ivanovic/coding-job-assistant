@@ -3,18 +3,21 @@ package ftn.sbnz.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ftn.sbnz.dto.interview.InterviewSuggestionGroupDTO;
 import ftn.sbnz.dto.interview.InterviewSuggestionStatusDTO;
 import ftn.sbnz.events.StudiedTodayEvent;
 import ftn.sbnz.model.cv_element.CVElement;
 import ftn.sbnz.model.cv_element.CVElementProficiency;
 import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.interview.InterviewSuggestionGroup;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferDifference;
@@ -52,29 +55,38 @@ public class InterviewSuggestionService {
 		this.kieSession = kieSession;
 	}
 
-	public InterviewSuggestionStatusDTO create(Long jobOfferDifferenceId, Long jobSeekerId) {
-		JobOfferDifference jod = differenceRepository.getOne(jobOfferDifferenceId);
+	public InterviewSuggestionGroupDTO create(Long jobOfferDifferenceId, Long jobSeekerId) {
+		JobOfferDifference jod = differenceRepository.getOneById(jobOfferDifferenceId);
 		JobOffer offer = jod.getStatistic().getJobOffer();
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		Calendar rightNow = Calendar.getInstance();
-		InterviewSuggestionStatus iss = new InterviewSuggestionStatus(new Timestamp(rightNow.getTimeInMillis()));
-		iss.setChecked(false);
-		iss.setJobSeeker(js);
-		iss.setJobOfferDifference(jod);
-		suggest(iss);
-		iss = statusRepository.save(iss);
-		jod.getInterviewSuggestionStatuses().add(iss);
-		js.getInterviewSuggestions().add(iss);
+
+		InterviewSuggestionGroup isg = new InterviewSuggestionGroup();
+		isg.setJobOfferDifference(jod);
+		suggest(isg);
+		List<InterviewSuggestion> suggestions = isg.getInterviewSuggestions();
+		List<InterviewSuggestionStatus> statuses = new ArrayList<>();
+		for (InterviewSuggestion is: suggestions) {
+			InterviewSuggestionStatus isstat = new InterviewSuggestionStatus(new Timestamp(rightNow.getTimeInMillis()));
+			isstat.setChecked(false);
+			isstat.setJobSeeker(js);
+			isstat.setJobOfferDifference(jod);
+			isstat.setInterviewSuggestion(is);
+			isstat = statusRepository.save(isstat);
+			jod.getInterviewSuggestionStatuses().add(isstat);
+			js.getInterviewSuggestions().add(isstat);
+			statuses.add(isstat);
+		}
 		differenceRepository.save(jod);
 		jobSeekerRepository.save(js);
-
-		InterviewSuggestionStatusDTO dto = new InterviewSuggestionStatusDTO(iss, offer);
+		
+		InterviewSuggestionGroupDTO dto = new InterviewSuggestionGroupDTO(statuses, offer);
 		return dto;
 
 	}
 
-	public void suggest(InterviewSuggestionStatus is) {
-		kieSession.insert(is);
+	public void suggest(InterviewSuggestionGroup group) {
+		kieSession.insert(group);
 		kieSession.setAgendaFocus("interview-suggestion");
 		kieSession.fireAllRules();
 	}
@@ -99,14 +111,30 @@ public class InterviewSuggestionService {
 		kieSession.fireAllRules();
 	}
 
-	public List<InterviewSuggestionStatusDTO> getAll(JobSeeker js) {
+	public List<InterviewSuggestionGroupDTO> getAll(JobSeeker js) {
 		List<InterviewSuggestionStatus> iss = statusRepository.findAllByJobSeeker(js);
-		List<InterviewSuggestionStatusDTO> dtos = new ArrayList<>();
+		HashMap<JobOffer, List<InterviewSuggestionStatusDTO>> map = new HashMap<>();
 		for (InterviewSuggestionStatus i : iss) {
 			JobOffer jo = i.getJobOfferDifference().getStatistic().getJobOffer();
-			dtos.add(new InterviewSuggestionStatusDTO(i, jo));
+			if (!map.containsKey(jo)) {
+				List<InterviewSuggestionStatusDTO> statuses = new ArrayList<>();
+				statuses.add(new InterviewSuggestionStatusDTO(i));
+				map.put(jo, statuses);
+			} else {
+				map.get(jo).add(new InterviewSuggestionStatusDTO(i));
+			}
 		}
-		return dtos;
+		List<InterviewSuggestionGroupDTO> dtos = new ArrayList<>();
+		map.forEach((offer, statuses) -> {
+			InterviewSuggestionGroupDTO dto = new InterviewSuggestionGroupDTO();
+			dto.setCompany(offer.getCompany().getName());
+			dto.setPosition(offer.getPosition().getTitle());
+			dto.setSeniority(offer.getSeniority());
+			dto.setStatuses(statuses);
+			dtos.add(dto);
+		});
+		
+		return dtos;        
 	}
 
 	private void updateJobSeekerProficiency(InterviewSuggestion suggestion, JobSeeker js) {

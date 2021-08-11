@@ -26,7 +26,7 @@
       <td :colspan="headers.length">
         <v-data-table
           :headers="materialHeader"
-          :items="item.interviewSuggestions"
+          :items="item.statuses"
           item-key="name"
           class="elevation-0 mt-3 mb-3"
           hide-default-footer
@@ -49,7 +49,6 @@ export default {
     return {
       expanded: [],
       infoHeader: [
-        { text: "Date", value: "dateSuggested" },
         { text: "Position", value: "position" },
         { text: "Company", value: "company" },
         { text: "Seniority", value: "seniority" },
@@ -57,6 +56,7 @@ export default {
       ],
       info: [],
       materialHeader: [
+        { text: "Date", value: "dateSuggested" },
         { text: "CV Element", value: "cvElement" },
         { text: "Subject", value: "subject" },
         { text: "Your proficiency", value: "proficiency" },

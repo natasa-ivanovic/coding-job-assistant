@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.job_offer.JobOfferStatisticDTO;
 import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferRating;
 import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.repository.job_offer.JobOfferRatingRepository;
 import ftn.sbnz.repository.job_offer.JobOfferStatisticRepository;
+import ftn.sbnz.repository.job_offer.JobOfferSuggestionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 import lombok.Data;
 
@@ -20,21 +23,24 @@ public class JobOfferStatisticService {
 	
 	private JobOfferStatisticRepository repository;
 	private JobSeekerRepository jobSeekerRepository;
+	private JobOfferRatingRepository ratingRepository;
 	private JobOfferService jobOfferService;
 	private KieSessionService kieSession;
 	
 	@Autowired
 	public JobOfferStatisticService(JobOfferStatisticRepository repository,
 			JobOfferService jobOfferService, JobSeekerRepository jobSeekerRepository,
-			KieSessionService kieSession) {
+			JobOfferRatingRepository ratingRepository, KieSessionService kieSession) {
 		this.repository = repository;
 		this.jobOfferService = jobOfferService;
+		this.ratingRepository = ratingRepository;
 		this.jobSeekerRepository = jobSeekerRepository;
 		this.kieSession = kieSession;
 	}
 	
-	public JobOfferStatisticDTO create(Long jobSeekerId, Long jobOfferId) {
-		JobOffer jo = this.jobOfferService.getOffer(jobOfferId);
+	public JobOfferStatisticDTO create(Long jobSeekerId, Long jobOfferSuggestionId) {
+		JobOfferRating jor = this.ratingRepository.getOneById(jobOfferSuggestionId);
+		JobOffer jo = jor.getJobOffer();
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferStatistic statistic = new JobOfferStatistic(new Timestamp(rightNow.getTimeInMillis()));

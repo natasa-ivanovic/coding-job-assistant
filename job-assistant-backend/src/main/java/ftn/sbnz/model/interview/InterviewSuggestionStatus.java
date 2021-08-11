@@ -12,14 +12,16 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.job_offer.JobOfferDifference;
 import ftn.sbnz.model.user.JobSeeker;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "interview_suggestion_status")
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class InterviewSuggestionStatus {
