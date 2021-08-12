@@ -62,26 +62,41 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
+        
+        <v-list-group prepend-icon="mdi-account">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>My account</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item-content>
+          </template>
+
+          
         <router-link :to="{ name: 'AccountView' }" v-slot="{ navigate }">
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-account-box</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>My account</v-list-item-title>
+              <v-list-item-title>Details</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <!-- <router-link :to="{ name: 'AccountView' }" v-slot="{ navigate }">
+
+        
+        <router-link :to="{ name: 'ResumeView' }" v-slot="{ navigate }">
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-file-account</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>My account</v-list-item-title>
+              <v-list-item-title>My resume</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </router-link> -->
+        </router-link>
+        </v-list-group>
+
         <v-divider></v-divider>
 
         <v-list-group prepend-icon="mdi-school">

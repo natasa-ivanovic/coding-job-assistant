@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.user.UserDTO;
 import ftn.sbnz.dto.user.UserDetailsDTO;
+import ftn.sbnz.dto.user.UserResumeDTO;
 import ftn.sbnz.dto.user.UserTokenStateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
 import ftn.sbnz.events.UserAccountStatusEvent;
@@ -191,6 +192,17 @@ public class UserService {
 		js.setEducation(dto.getEducation());
 		js.setRemoteWork(dto.isRemoteWork());
 		js.setSalaryExpectation(dto.getSalaryExpectation());
+		this.jobSeekerRepository.save(js);
+	}
+
+	public UserResumeDTO getResume(Long userId) {
+		JobSeeker js = this.jobSeekerRepository.getOne(userId);
+		return new UserResumeDTO(js);
+	}
+
+	public void updateResume(Long userId, UserResumeDTO dto) {
+		// todo		
+		JobSeeker js = this.jobSeekerRepository.getOne(userId);
 		this.jobSeekerRepository.save(js);
 	}
 }

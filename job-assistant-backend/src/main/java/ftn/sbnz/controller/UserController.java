@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sbnz.dto.user.UserDetailsDTO;
+import ftn.sbnz.dto.user.UserResumeDTO;
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.service.UserService;
 
@@ -42,6 +43,22 @@ public class UserController {
 	public ResponseEntity<UserDetailsDTO> updateMyProfile(@AuthenticationPrincipal User user, @RequestBody UserDetailsDTO dto){
 		Long userId = user.getId();
 		userService.updateDetails(userId, dto);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/my-profile/resume")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<UserResumeDTO> getMyResume(@AuthenticationPrincipal User user){
+		Long userId = user.getId();
+		UserResumeDTO dto = userService.getResume(userId);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+
+	@PutMapping("/my-profile/resume")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<UserDetailsDTO> updateMyResume(@AuthenticationPrincipal User user,  @RequestBody UserResumeDTO dto){
+		Long userId = user.getId();
+		userService.updateResume(userId, dto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

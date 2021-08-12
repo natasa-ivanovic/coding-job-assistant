@@ -10,6 +10,7 @@ import JobOfferReviewListView from '../views/admin/JobOfferReviewListView.vue'
 
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 import AccountView from '../views/jobseeker/AccountView.vue'
+import ResumeView from '../views/jobseeker/ResumeView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
 import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
 import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
@@ -66,6 +67,12 @@ const routes = [
         component: AccountView,
         name: "AccountView",
         path: "/account",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: ResumeView,
+        name: "ResumeView",
+        path: "/resume",
         beforeEnter: guardRouteJobSeeker
       },
       {

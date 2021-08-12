@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserResumeDTO {
-	private List<WorkingExperienceDTO> workingExperience;
 	private List<CVElementProficiencyDTO> proficiencies;
 	
 	public UserResumeDTO(JobSeeker js) {
-		this.workingExperience = js.getWorkingExperience().stream().map(we -> new WorkingExperienceDTO(we)).collect(Collectors.toList());
 		this.proficiencies = js.getProficiencies().stream().map(el -> new CVElementProficiencyDTO(el)).collect(Collectors.toList());		
 	}
 }
