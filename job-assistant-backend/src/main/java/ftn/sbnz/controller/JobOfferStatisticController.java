@@ -32,10 +32,10 @@ public class JobOfferStatisticController {
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> analyze(@PathVariable("id") String jobOfferSuggestionId) {
+	public ResponseEntity<Object> analyze(@PathVariable("id") String jobOfferId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
-		JobOfferStatisticDTO dto = service.create(jobSeeker.getId(), Long.parseLong(jobOfferSuggestionId));
+		JobOfferStatisticDTO dto = service.create(jobSeeker.getId(), Long.parseLong(jobOfferId));
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 

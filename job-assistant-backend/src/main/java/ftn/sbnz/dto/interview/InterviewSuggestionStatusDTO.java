@@ -33,6 +33,7 @@ public class InterviewSuggestionStatusDTO {
 		this.proficiency = status.getInterviewSuggestion().getCvElementProficiency().getProficiency();
 		this.cvElement = status.getInterviewSuggestion().getCvElementProficiency().getCvElement().getType();
 		this.subject = status.getInterviewSuggestion().getSubject();
+		this.url = status.getInterviewSuggestion().getUrl();
 		this.description = status.getInterviewSuggestion().getDescription();
 	}
 }

@@ -38,9 +38,8 @@ public class JobOfferStatisticService {
 		this.kieSession = kieSession;
 	}
 	
-	public JobOfferStatisticDTO create(Long jobSeekerId, Long jobOfferSuggestionId) {
-		JobOfferRating jor = this.ratingRepository.getOneById(jobOfferSuggestionId);
-		JobOffer jo = jor.getJobOffer();
+	public JobOfferStatisticDTO create(Long jobSeekerId, Long jobOfferId) {
+		JobOffer jo = this.jobOfferService.getOffer(jobOfferId);
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferStatistic statistic = new JobOfferStatistic(new Timestamp(rightNow.getTimeInMillis()));
