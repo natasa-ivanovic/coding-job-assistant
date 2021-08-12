@@ -9,4 +9,7 @@ import ftn.sbnz.model.enums.SkillProficiency;
 public interface CVElementProficiencyRepository extends JpaRepository<CVElementProficiency, Long> {
 	
 	public CVElementProficiency findOneByCvElementAndProficiency(CVElement cvElement, SkillProficiency proficiency);
+
+	public CVElementProficiency findOneByCvElementNameAndProficiency(String cvElementName,
+			SkillProficiency proficiency);
 }

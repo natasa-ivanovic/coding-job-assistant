@@ -118,7 +118,7 @@
   </v-container>
 </template>
 <script>
-const apiURL = "/users/my-profile";
+const apiURL = "/api/users/my-profile";
 
 export default {
   name: "AccountForm",

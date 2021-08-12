@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import ftn.sbnz.dto.cv_element.CVElementProficiencyDTO;
 import ftn.sbnz.dto.user.UserDTO;
 import ftn.sbnz.dto.user.UserDetailsDTO;
 import ftn.sbnz.dto.user.UserResumeDTO;
@@ -23,8 +24,12 @@ import ftn.sbnz.events.UserAccountStatusEvent;
 import ftn.sbnz.events.UserLoginStatusEvent;
 import ftn.sbnz.exception.UserException;
 import ftn.sbnz.model.auth.Authority;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
+import ftn.sbnz.model.enums.SkillProficiency;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.model.user.User;
+import ftn.sbnz.repository.cv_element.CVElementProficiencyRepository;
+import ftn.sbnz.repository.cv_element.CVElementRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 import ftn.sbnz.repository.user.UserRepository;
 import ftn.sbnz.security.CustomUserDetailsService;
@@ -40,11 +45,13 @@ public class UserService {
 	private KieSessionService kieSession;
 	private AuthorityService authorityService;
 	private JobSeekerRepository jobSeekerRepository;
+	private CVElementProficiencyRepository cvElementProficiencyRepository;
 
 	@Autowired
 	public UserService(UserRepository userRepository, TokenUtils tokenUtils,
 			AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService,
-			KieSessionService kieSession, AuthorityService authorityService, JobSeekerRepository jobSeekerRepository) {
+			KieSessionService kieSession, AuthorityService authorityService, JobSeekerRepository jobSeekerRepository,
+			CVElementProficiencyRepository cvElementProficiencyRepository) {
 		this.userRepository = userRepository;
 		this.tokenUtils = tokenUtils;
 		this.authenticationManager = authenticationManager;
@@ -52,6 +59,7 @@ public class UserService {
 		this.kieSession = kieSession;
 		this.authorityService = authorityService;
 		this.jobSeekerRepository = jobSeekerRepository;
+		this.cvElementProficiencyRepository = cvElementProficiencyRepository;
 	}
 
 	public User findByUsername(String username) {
@@ -201,8 +209,16 @@ public class UserService {
 	}
 
 	public void updateResume(Long userId, UserResumeDTO dto) {
-		// todo		
+		// todo
 		JobSeeker js = this.jobSeekerRepository.getOne(userId);
+		Set<CVElementProficiency> newProficiencies = new HashSet<>();
+		for (CVElementProficiencyDTO el : dto.getProficiencies()) {
+			String cvElementName = el.getElementName();
+			SkillProficiency proficiency = el.getProficiency();
+			CVElementProficiency prof = this.cvElementProficiencyRepository.findOneByCvElementNameAndProficiency(cvElementName, proficiency);
+			newProficiencies.add(prof);
+		}
+		js.setProficiencies(newProficiencies);
 		this.jobSeekerRepository.save(js);
 	}
 }
