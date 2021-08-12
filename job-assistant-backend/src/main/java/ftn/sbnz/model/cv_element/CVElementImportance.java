@@ -32,7 +32,7 @@ public class CVElementImportance {
 	
 	@ManyToOne
 	@NonNull
-	private CVElementProficiency proficiency;
+	private CVElementProficiency cvElementProficiency;
 	
 	
 	

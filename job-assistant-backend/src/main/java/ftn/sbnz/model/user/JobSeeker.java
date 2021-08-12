@@ -1,7 +1,11 @@
 package ftn.sbnz.model.user;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -44,29 +48,28 @@ public class JobSeeker extends User{
 	@Column(name = "continuous_learning")
 	private boolean continuousLearning;
 	
-	// nekada je bilo eager
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<CVElementProficiency> proficiencies;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<CVElementProficiency> proficiencies = new HashSet<>();
 	
 	// nekada je bilo eager
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<WorkingExperience> workingExperience;
+	private List<WorkingExperience> workingExperience = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "poster")
-	private List<CompanyReview> reviews;
+	private List<CompanyReview> reviews = new ArrayList<>();
 	
 	@OneToMany
-	private List<JobOfferSuggestion> offerSuggestions;
+	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();
 	
 	@OneToMany
-	private List<JobPositionSuggestion> positionSuggestions;
+	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
 	
 	@OneToMany
-	private List<JobSeekerRanking> offerRankings;
+	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
 	
 	@OneToMany
-	private List<JobOfferStatistic> statistics;
+	private List<JobOfferStatistic> statistics = new ArrayList<>();
 	
 	@OneToMany
-	private List<InterviewSuggestionStatus> interviewSuggestions;
+	private List<InterviewSuggestionStatus> interviewSuggestions = new ArrayList<>();
 }

@@ -2,8 +2,11 @@ package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.sbnz.model.company.Company;
-import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.cv_element.CVElementImportance;
 import ftn.sbnz.model.enums.MedalRank;
 import ftn.sbnz.model.enums.SeniorityLevel;
@@ -55,11 +57,11 @@ public class JobOffer {
 	@ManyToOne
 	private JobPosition position;
 	
-	@ManyToMany
-	private List<CVElementImportance> cvElementImportances;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<CVElementImportance> cvElementImportances = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<JobSeekerRanking> rankings;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<JobSeekerRanking> rankings = new ArrayList<>();
 	
 	@OneToMany
 	private List<JobOfferStatistic> statistics = new ArrayList<>();

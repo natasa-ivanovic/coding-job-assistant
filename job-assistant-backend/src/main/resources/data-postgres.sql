@@ -1499,95 +1499,95 @@ insert into companies (name, medal) values ('Microsoft Development Center Serbia
 
 ------------------------------- IMPORTANCES -------------------------------
 -- 1 - SQL DATABASES, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (263, 7, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (263, 7, false);
 -- 2 - REST, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (299, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (299, 10, false);
 -- 3 - OBJECT ORIENTED PROGRAMMING, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (319, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (319, 10, false);
 -- 4 - DESIGN PATTERNS, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (328, 8, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (328, 8, false);
 -- 5 - JAVA, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (19, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (19, 10, false);
 -- 6 - MAVEN, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (178, 8, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (178, 8, false);
 -- 7 - SPRING BOOT, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (184, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (184, 10, false);
 -- 8 - SPRING, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (189, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (189, 9, false);
 -- 9 - ENGLISH, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (358, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (358, 10, false);
 -- 10 - TEAMWORK, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (404, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (404, 10, false);
 -- 11 - TIME MANAGEMENT, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (418, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (418, 10, false);
 -- 12 - ES6 SPECIFICATION, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (339, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (339, 9, false);
 -- 13 - SQL DATABASES, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (264, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (264, 9, false);
 -- 14 - REST, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (300, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (300, 10, false);
 -- 15 - DESIGN PATTERNS, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (330, 8, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (330, 8, false);
 -- 16 - ES6 SPECIFICATION, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (340, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (340, 9, false);
 -- 17 - OBJECT ORIENTED PROGRAMMING, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (320, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (320, 9, false);
 -- 18 - JAVASCRIPT, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (25, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (25, 10, false);
 -- 19 - JAVA, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (20, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (20, 10, false);
 -- 20 - SPRING BOOT, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (185, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (185, 10, false);
 -- 21 - SPRING, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (190, 7, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (190, 7, false);
 -- 22 - REACT, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (150, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (150, 9, false);
 -- 23 - TEAMWORK, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (405, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (405, 10, false);
 -- 24 - TIME MANAGEMENT, EXPERT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (420, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (420, 10, false);
 -- 25 - TESTING METODOLOGIES, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (311, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (311, 10, false);
 -- 26 - OBJECT ORIENTED PROGRAMMING, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (316, 8, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (316, 8, false);
 -- 27 - JAVA, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (16, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (16, 9, false);
 -- 28 - JAVASCRIPT, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (21, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (21, 9, false);
 -- 29 - JUNIT, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (156, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (156, 10, false);
 -- 30 - JASMINE, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (161, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (161, 9, false);
 -- 31 - SELENIUM, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (166, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (166, 10, false);
 -- 32 - ANGULAR, BASIC
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (116, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (116, 9, false);
 -- 33 - NOSQL DATABASES, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (274, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (274, 10, false);
 -- 34 - SQL, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (104, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (104, 10, false);
 -- 35 - AMAZON AWS, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (249, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (249, 10, false);
 -- 36 - NEURAL NETWORKS, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (343, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (343, 9, false);
 -- 37 - MACHINE LEARNING ALGORITHMS, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (348, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (348, 10, false);
 -- 38 - PYTHON, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (54, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (54, 10, false);
 -- 39 - R, VERY GOOD
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (93, 7, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (93, 7, false);
 -- 40 - PANDAS, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (194, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (194, 10, false);
 -- 41 - NUMPY, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (199, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (199, 10, false);
 -- 42 - TENSORFLOW, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (204, 8, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (204, 8, false);
 -- 43 - KERAS, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (209, 9, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (209, 9, false);
 -- 44 - SELF MOTIVATION, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (389, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (389, 10, false);
 -- 45 - PHP, EXCELLENT
-insert into cv_element_importances (proficiency_id, importance_level, optional) values (34, 10, false);
+insert into cv_element_importances (cv_element_proficiency_id, importance_level, optional) values (34, 10, false);
 
 ------------------------------- JOB OFFERS --------------------------------
 
@@ -1798,12 +1798,12 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 8);
 -------------------- LANGUAGE --------------------
 -- ENGLISH, VERY GOOD
-insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 9);
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 9);
 -------------------- SOFT SKILLS --------------------
 -- TEAM WORK, EXPERT
-insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 23);
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 23);
 -- TIME MANAGEMENT, EXPERT
-insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 24);
+insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 24);
 
 ------------------------------------------------------------------------------------------------------
 
