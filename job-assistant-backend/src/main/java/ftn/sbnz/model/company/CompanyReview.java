@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ftn.sbnz.dto.company.CompanyReviewDTO;
 import ftn.sbnz.model.enums.ReviewStatus;
 import ftn.sbnz.model.user.JobSeeker;
 import lombok.Getter;
@@ -37,6 +38,10 @@ public class CompanyReview {
 	@Column(name = "content", unique = false, nullable = false)
 	@NonNull
 	private String content;
+
+	@Column(name = "job_title", unique = false, nullable = false)
+	@NonNull
+	private String jobTitle;
 	
 	@Column(name = "salary", unique = false, nullable = false)
 	private float salary;
@@ -73,4 +78,22 @@ public class CompanyReview {
 	@ManyToOne(cascade = CascadeType.PERSIST, optional = false)
 	@JoinColumn(name = "poster_id", nullable = false, unique = false) 
 	private JobSeeker poster;
+
+	public CompanyReview(CompanyReviewDTO dto, JobSeeker poster, Company company, Timestamp date) {
+		this.poster = poster;
+		this.date = date;
+		this.company = company;
+		this.status = ReviewStatus.PENDING;
+		this.rating = dto.getRating();
+		this.content = dto.getContent();
+		this.jobTitle = dto.getJobTitle();
+		this.salary = dto.getSalary();
+		this.hired = dto.isHired();
+		this.jobOffered = dto.isJobOffered();
+		this.interviewComplexity = dto.getInterviewComplexity();
+		this.ratedUseful = dto.getRatedUseful();
+		this.ratedNotUseful = dto.getRatedNotUseful();
+		this.recommends = dto.isRecommends();
+	}
+
 }

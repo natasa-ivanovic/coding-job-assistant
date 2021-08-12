@@ -10,12 +10,14 @@ import JobOfferReviewListView from '../views/admin/JobOfferReviewListView.vue'
 
 import HomeJobSeekerView from '../views/jobseeker/HomeJobSeekerView.vue'
 import AccountView from '../views/jobseeker/AccountView.vue'
+import ResumeView from '../views/jobseeker/ResumeView.vue'
 import JobPositionRequestView from '../views/jobseeker/JobPositionRequestView.vue'
 import JobOfferRequestView from '../views/jobseeker/JobOfferRequestView.vue'
 import JobOfferStatisticView from '../views/jobseeker/JobOfferStatisticView.vue'
 import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
 import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
 import ClassroomView from '../views/classroom/ClassroomView.vue'
+import CompanyListView from '../views/jobseeker/CompanyListView.vue'
 
 Vue.use(VueRouter)
 
@@ -68,6 +70,12 @@ const routes = [
         beforeEnter: guardRouteJobSeeker
       },
       {
+        component: ResumeView,
+        name: "ResumeView",
+        path: "/resume",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
         component: JobPositionRequestView,
         name: "JobPositionRequestView",
         path: "/job-position-requests",
@@ -102,6 +110,12 @@ const routes = [
         component: ClassroomView,
         name: "ClassroomView",
         path: "/classroom",
+        beforeEnter: guardRouteJobSeeker
+      },
+      {
+        component: CompanyListView,
+        name: "CompanyListView",
+        path: "/companies",
         beforeEnter: guardRouteJobSeeker
       }
     ]

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-const apiURL = "/api/job-offer-review";
+const apiURL = "/api/company-review";
 
 export default {
   name: "ManageUsers",

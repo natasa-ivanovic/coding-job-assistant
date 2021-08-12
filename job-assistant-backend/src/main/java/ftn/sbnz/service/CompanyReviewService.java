@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.company.CompanyReviewDTO;
 import ftn.sbnz.events.UserAccountStatusEvent;
+import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.ReviewStatus;
-import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyReviewRepository;
 
@@ -40,9 +40,9 @@ public class CompanyReviewService {
 			throw new Exception("User blocked from reviewing due to too many declined reviews!");
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
 		Calendar rightNow = Calendar.getInstance();
-//		JobOffer offer = offerService.getOffer(dto.getOfferId());
-//		CompanyReview review = new CompanyReview(dto, offer, dbJobSeeker, new Timestamp(rightNow.getTimeInMillis()));
-//		repository.save(review);
+		Company company = companyService.getOne(dto.getCompanyId());
+		CompanyReview review = new CompanyReview(dto, dbJobSeeker, company, new Timestamp(rightNow.getTimeInMillis()));
+		repository.save(review);
 	}
 
 	public void approve(Long id) throws Exception {
@@ -69,11 +69,12 @@ public class CompanyReviewService {
 		kieSession.insert(review);
 		kieSession.setAgendaFocus("job-offer-status");
 		kieSession.setAgendaFocus("company-status");
-		kieSession.setAgendaFocus("job-offer-review-added");
+		kieSession.setAgendaFocus("company-review-added");
 		kieSession.fireAllRules();
 
-//		companyService.updateDBFromRule(review.getJobOffer().getCompany());
-//		offerService.updateDBFromRule(review.getJobOffer());
+		Company updated = companyService.updateDBFromRule(review.getCompany());
+		if (updated != null)
+			offerService.updateDBFromRule(updated);
 	}
 
 	private boolean userAllowedToReview(Long jobSeekerId) {

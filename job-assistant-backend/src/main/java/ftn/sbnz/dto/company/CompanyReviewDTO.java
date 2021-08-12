@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CompanyReviewDTO {
 	private Long id;
-//	private Long offerId;
-//	private String offerName;
+	private String jobTitle;
 	private String companyName;
+	private Long companyId;
 	private int rating;
 	private String content;
 	private String jobSeekerName;
@@ -27,8 +27,10 @@ public class CompanyReviewDTO {
 	
 	public CompanyReviewDTO(CompanyReview review) {
 		this.id = review.getId();
+		this.companyId = review.getCompany().getId();
 		this.companyName = review.getCompany().getName();
 		this.rating = review.getRating();
+		this.jobTitle = review.getJobTitle();
 		this.content = review.getContent();
 		this.jobSeekerName = review.getPoster().getFullName();
 		this.jobSeekerUsername = review.getPoster().getUsername();

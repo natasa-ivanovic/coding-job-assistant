@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.job_offer.JobOfferDTO;
+import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferRating;
 import ftn.sbnz.model.user.JobSeeker;
@@ -82,6 +83,22 @@ public class JobOfferService {
 		}
 	}
 
+	public void updateDBFromRule(Company company) {
+		Collection<Object> offers = kieSession.getObjectsFromSession(JobOffer.class);
+		for (Iterator<Object> it = offers.iterator(); it.hasNext();) {
+			JobOffer jo = (JobOffer) it.next();
+			if (jo.getCompany().getId() == company.getId()) {
+				if (!jo.getCompany().getMedal().equals(company.getMedal())) {
+					JobOffer offerDb = getOffer(jo.getId());
+					if (!offerDb.getMedal().equals(jo.getMedal())) {
+						offerDb.setMedal(jo.getMedal());
+						this.save(offerDb);
+					}
+				}
+			}
+		}
+	}
+
 	public List<JobOfferDTO> getAll() {
 		List<JobOffer> offers = repository.findAll();
 		return offers.stream().map(this::toDTO).collect(Collectors.toList());
@@ -105,5 +122,4 @@ public class JobOfferService {
 		}
 		return "1/1";
 	}
-
 }
