@@ -1,4 +1,4 @@
-<template>
+<!--template>
   <v-data-table
     :headers="infoHeader"
     :items="info"
@@ -38,13 +38,53 @@
       </td>
     </template>
   </v-data-table>
+</template-->
+
+<template>
+  <v-card>
+    <v-layout justify-center align-center>
+      <v-flex shrink>
+        <div>
+          <v-img
+            mx-auto
+            src="../../assets/classroom.jpg"
+            width="630px"
+            height="420px"
+          ></v-img>
+        </div>
+      </v-flex>
+    </v-layout>
+    <v-card-title class="justify-center description" style="font-size:55px"
+      >Welcome to classroom!</v-card-title
+    >
+    <v-card-text>
+      <v-row v-for="jo in info" :key="jo.id">
+        {{ jo.company }}
+        <v-col
+          style="flex: 1;"
+          sm="12"
+          md="6"
+          lg="4"
+          v-for="suggestion in jo.statuses"
+          :key="suggestion.id"
+        >
+          <interview-card v-bind:interviewSuggestion="suggestion" />
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 const apiURL = "/api/interview-suggestion";
 const checkApiURL = "/api/interview-suggestion/check/";
+import InterviewCard from "./InterviewCard.vue";
 
 export default {
+  name: "ClassroomTable",
+  components: {
+    InterviewCard,
+  },
   data() {
     return {
       expanded: [],
@@ -71,14 +111,21 @@ export default {
     });
   },
   methods: {
-      check(item) {
-          this.axios.post(checkApiURL + item.id)
-          .then((response) => {
-              item.checked = true;
-              console.log(response);
-              alert("You've successfully finished these lessons. Continue learning in order to maintain your daily streak.");
-          })
-      }
-  }
+    check(item) {
+      this.axios.post(checkApiURL + item.id).then((response) => {
+        item.checked = true;
+        console.log(response);
+        alert(
+          "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
+        );
+      });
+    },
+  },
 };
 </script>
+
+<style scoped>
+.description {
+  font-family: "Baloo2", Helvetica, Arial;
+}
+</style>
