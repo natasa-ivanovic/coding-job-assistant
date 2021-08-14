@@ -57,21 +57,28 @@
     <v-card-title class="justify-center description" style="font-size:55px"
       >Welcome to classroom!</v-card-title
     >
-    <v-card-text>
+    <v-row>
       <v-row v-for="jo in info" :key="jo.id">
-        {{ jo.company }}
-        <v-col
-          style="flex: 1;"
-          sm="12"
-          md="6"
-          lg="4"
-          v-for="suggestion in jo.statuses"
-          :key="suggestion.id"
-        >
-          <interview-card v-bind:interviewSuggestion="suggestion" />
-        </v-col>
+        <v-row class="ml-5 mb-0 description" style="font-size:30px">
+            {{ jo.company }},
+            {{ jo.position }}
+            {{ jo.seniority }}
+        </v-row>
+        <v-row >
+          <v-col
+            style="flex: 1;"
+            class="mt-0"
+            sm="12"
+            md="6"
+            lg="4"
+            v-for="suggestion in jo.statuses"
+            :key="suggestion.id"
+          >
+            <interview-card v-bind:interviewSuggestion="suggestion" />
+          </v-col>
+        </v-row>
       </v-row>
-    </v-card-text>
+    </v-row>
   </v-card>
 </template>
 

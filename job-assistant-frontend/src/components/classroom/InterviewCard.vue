@@ -1,80 +1,115 @@
 <template>
-<v-hover v-slot:default="{ hover }">
-  <v-card elevation="8" class="mx-auto my-12" max-width="372" color="grey lighten-4">
-    <!--template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template-->
-    <v-img width="100%" height="100%" :src="generatePicture(interviewSuggestion.cvElement)">
-		<v-expand-transition>
-			<div v-if="hover" class="d-flex transition-fast-in-fast-out black darken-3 v-card--reveal display-2 white--text" style="height: 100%;"> 
-				{{ generateSubject(interviewSuggestion.cvElement) }} 
-			</div>
-		</v-expand-transition>
-    </v-img>
-
-    <v-card-title>{{ interviewSuggestion.subject }}</v-card-title>
-
-    <!--v-card-text>
-      <v-row align="center" class="mx-0">
-        <v-rating
-          :value="jobOffer.offerRating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ms-4">{{ getRatingText() }}</div>
-      </v-row>
-    </v-card-text>
-    <div class="mt-6 ml-4 mr-4" style="text-align: justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
-      mi non dolor congue congue. Donec vestibulum nisi lectus.
-    </div>
-    <v-divider class="mx-4 mt-4 mb-4"></v-divider>
-    <v-card-text>
+  <v-hover v-slot:default="{ hover }">
+    <v-card
+      elevation="8"
+      class="mx-auto my-10 mt-0"
+      width="500"
+      color="grey lighten-4"
+    >
+      <v-img
+        width="100%"
+        height="140"
+        src="@/assets/bulb.jpg"
+      >
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out black darken-3 v-card--reveal display-1 white--text"
+            style="height: 100%;"
+          >
+            {{ generateSubject(interviewSuggestion.cvElement) }}
+          </div>
+        </v-expand-transition>
+      </v-img>
       <v-row>
-        <v-alert
-          dense
-          :icon="getIconForCategory(jobOffer.category)"
-          :color="getColorForCategory(jobOffer.category)"
-          style="width: 100%"
-          class="ml-2 mr-2"
-        >
-          {{ jobOffer.category.split("_").join(" ") }}
-        </v-alert>
+        <v-col cols="7">
+          <v-card-title class="mb-0 pb-0">{{
+            interviewSuggestion.subject
+          }}</v-card-title>
+          <v-card-text class="mb-0 pb-0">
+              Suggested:
+              <b>{{
+                new Date(interviewSuggestion.dateSuggested).toDateString()
+              }}</b>
+		  <v-divider class="mt-3 pt-3"></v-divider>
+          </v-card-text>
+          <v-card-title class="mb-0 pb-0 mt-0 pt-0">Description</v-card-title>
+          <v-card-text class="mb-0 pb-0">
+            <p style="text-align:justify">
+              {{ interviewSuggestion.description }}
+            </p>
+          </v-card-text>
+        </v-col>
+        <v-col>
+          <v-flex xs12 offset-xs2>
+            <v-spacer></v-spacer>
+            <v-chip-group
+              v-model="interviewSuggestion.proficiencyValue"
+              active-class="deep-purple accent-4 white--text"
+              column
+              disabled
+            >
+              <v-chip label class="chip-style">
+                <v-icon left>
+                  mdi-battery-outline
+                </v-icon>
+                BASIC
+              </v-chip>
+
+              <v-chip label class="chip-style">
+                <v-icon left>
+                  mdi-battery-medium
+                </v-icon>
+                GOOD
+              </v-chip>
+
+              <v-chip label class="chip-style">
+                <v-icon left>
+                  mdi-battery-high
+                </v-icon>
+                VERY GOOD
+              </v-chip>
+
+              <v-chip label class="chip-style">
+                <v-icon left>
+                  mdi-battery-heart-variant
+                </v-icon>
+                EXCELLENT
+              </v-chip>
+
+              <v-chip label class="chip-style">
+                <v-icon left>
+                  mdi-battery
+                </v-icon>
+                EXPERT
+              </v-chip>
+            </v-chip-group>
+          </v-flex>
+        </v-col>
       </v-row>
-    </v-card-text>
-    <div class="ml-4 mr-4" style="text-align: justify">
-      <b>{{ statusDescription(jobOffer.category) }}</b>
-    </div>
-    <v-card-actions>
-      <v-btn color="#1A237E" text @click="view"> Details </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
-    </v-card-actions>
-    <v-card-actions>
-      <v-btn v-if="!jobOffer.following" block class="primary" @click="follow()"
-        >Follow</v-btn
-      >
-      <v-alert
-        v-else
-        outlined
-        color="#1A237E"
-        dense
-        class="ml-2 mr-2 mb-0"
-        style="width: 100%; height:35.99px; text-align:center"
-      >
-        <b>YOUR POSITION: {{ jobOffer.ranking }}</b>
-      </v-alert>
-    </v-card-actions-->
-  </v-card>
-</v-hover>
+
+      <v-card-actions class="mt-0 pt-0">
+        <v-btn block class="primary"
+          ><v-icon class="pr-3">mdi-link</v-icon>Get your materials</v-btn
+        >
+      </v-card-actions>
+      <v-card-actions>
+        <v-btn v-if="!interviewSuggestion.checked" block class="success" @click="finishMaterial()"
+          ><v-icon class="pr-3">mdi-check</v-icon>Finished</v-btn
+        >
+        <v-alert
+          v-else
+          outlined
+          color="success"
+          dense
+          class="ml-0 mr-0 mb-0"
+          style="width: 100%; height:35.99px; text-align:center"
+        >
+          <b>You successfully finished this!</b>
+        </v-alert>
+      </v-card-actions>
+    </v-card>
+  </v-hover>
 </template>
 
 <script>
@@ -83,8 +118,17 @@ export default {
   data: () => ({}),
   props: {
     interviewSuggestion: Object,
+    // { text: "Date", value: "dateSuggested" },
+    //     { text: "CV Element", value: "cvElement" },
+    //     { text: "Subject", value: "subject" },
+    //     { text: "Your proficiency", value: "proficiency" },
+    //     { text: "Description", value: "description" },
+    //     { text: "Material URL", value: "url" },
   },
   methods: {
+	finishMaterial() {
+		this.interviewSuggestion.checked = true;
+	},
     generatePicture(elementType) {
       switch (elementType) {
         case "PROGRAMMING_LANGUAGE":
@@ -123,12 +167,22 @@ export default {
 }
 
 .v-card--reveal {
-    align-items: center;
-    bottom: 0;
-    justify-content: center;
-    opacity: 0.6;
-    position: absolute;
-    width: 100%;
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.6;
+  position: absolute;
+  width: 100%;
 }
 
+p {
+  color: black;
+}
+
+.chip-style {
+  width: 118px !important;
+  font-size: 13px;
+  pointer-events: none;
+  user-select: none;
+}
 </style>

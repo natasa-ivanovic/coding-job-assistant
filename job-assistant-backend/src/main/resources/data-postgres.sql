@@ -13,11 +13,11 @@ insert into user_authority (user_id, authority_id) values (1, 1);
 
 -- jobseekers
 -- password - admin1
-insert into users (name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education, continuous_learning) values ('Job', 'Seeker', 'user1@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 1, false);
+insert into users (name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education, continuous_learning) values ('Job', 'Seeker', 'user1@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 2, false);
 
 insert into user_authority (user_id, authority_id) values (2, 2);
 
-insert into users (name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education, continuous_learning) values ('Job2', 'Seeker2', 'user2@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 3, false);
+insert into users (name, surname, username, password, enabled, last_password_reset_date, role, remote_work, salary_expectation, education, continuous_learning) values ('Job2', 'Seeker2', 'user2@gmail.com', '$2y$12$LdA5w1xM5qBwt1l.Srv62etWXUpyfCbU/usi3EprOEdZ3ZbCiDx/K', true, '2020-12-07 16:00:00.508-07', 'USER', true, 1000, 2, false);
 
 insert into user_authority (user_id, authority_id) values (3, 2);
 
@@ -1330,99 +1330,99 @@ insert into cv_element_proficiencies (cv_element_id, proficiency) values (86, 5)
 
 -------------------- PROGRAMMING LANGUAGES --------------------
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (51, 'Python', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (52, 'Python', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (53, 'Python', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (54, 'Python', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (55, 'Python', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (51, 'Python', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (52, 'Python', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (53, 'Python', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (54, 'Python', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (55, 'Python', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (16, 'Java', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (17, 'Java', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (18, 'Java', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (19, 'Java', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (20, 'Java', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (16, 'Java', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (17, 'Java', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (18, 'Java', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (19, 'Java', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (20, 'Java', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (101, 'SQL', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (102, 'SQL', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (103, 'SQL', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (104, 'SQL', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (105, 'SQL', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (101, 'SQL', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (102, 'SQL', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (103, 'SQL', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (104, 'SQL', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (105, 'SQL', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (21, 'JavaScript', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (22, 'JavaScript', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (23, 'JavaScript', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (24, 'JavaScript', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (25, 'JavaScript', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (21, 'JavaScript', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (22, 'JavaScript', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (23, 'JavaScript', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (24, 'JavaScript', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (25, 'JavaScript', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (11, 'C#', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (12, 'C#', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (13, 'C#', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (14, 'C#', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (15, 'C#', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (11, 'C#', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (12, 'C#', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (13, 'C#', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (14, 'C#', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (15, 'C#', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
 -------------------- TECHNOLOGIES --------------------
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (181, 'Spring Boot', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (182, 'Spring Boot', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (183, 'Spring Boot', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (184, 'Spring Boot', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (185, 'Spring Boot', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (181, 'Spring Boot', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (182, 'Spring Boot', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (183, 'Spring Boot', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (184, 'Spring Boot', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (185, 'Spring Boot', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (186, 'Spring', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (187, 'Spring', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (188, 'Spring', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (189, 'Spring', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (190, 'Spring', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (186, 'Spring', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (187, 'Spring', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (188, 'Spring', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (189, 'Spring', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (190, 'Spring', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (156, 'JUnit', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (157, 'JUnit', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (158, 'JUnit', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (159, 'JUnit', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (160, 'JUnit', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (156, 'JUnit', 'basic url', 'basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (157, 'JUnit', 'good url', 'good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (158, 'JUnit', 'very good url', 'very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (159, 'JUnit', 'excellent url', 'excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (160, 'JUnit', 'expert url', 'expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (166, 'Selenium', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (167, 'Selenium', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (168, 'Selenium', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (169, 'Selenium', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (170, 'Selenium', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (166, 'Selenium', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (167, 'Selenium', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (168, 'Selenium', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (169, 'Selenium', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (170, 'Selenium', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (161, 'Jasmine', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (162, 'Jasmine', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (163, 'Jasmine', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (164, 'Jasmine', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (165, 'Jasmine', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (161, 'Jasmine', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (162, 'Jasmine', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (163, 'Jasmine', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (164, 'Jasmine', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (165, 'Jasmine', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (121, 'Vue', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (122, 'Vue', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (123, 'Vue', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (124, 'Vue', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (125, 'Vue', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (121, 'Vue', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (122, 'Vue', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (123, 'Vue', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (124, 'Vue', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (125, 'Vue', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (116, 'Angular', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (117, 'Angular', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (118, 'Angular', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (119, 'Angular', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (120, 'Angular', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (116, 'Angular', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (117, 'Angular', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (118, 'Angular', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (119, 'Angular', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (120, 'Angular', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (176, 'Maven', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (177, 'Maven', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (178, 'Maven', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (179, 'Maven', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (180, 'Maven', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (176, 'Maven', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (177, 'Maven', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (178, 'Maven', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (179, 'Maven', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (180, 'Maven', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
 -------------------- KNOWLEDGE --------------------
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (316, 'Object oriented programming', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (317, 'Object oriented programming', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (318, 'Object oriented programming', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (319, 'Object oriented programming', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (320, 'Object oriented programming', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (316, 'Object oriented programming', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (317, 'Object oriented programming', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (318, 'Object oriented programming', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (319, 'Object oriented programming', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (320, 'Object oriented programming', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (326, 'Design patterns', 'basic url', 'basic description'); -- basic
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (327, 'Design patterns', 'good url', 'good description'); -- good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (328, 'Design patterns', 'very good url', 'very good description'); -- very good
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (329, 'Design patterns', 'excellent url', 'excellent description'); -- excellent
-insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (330, 'Design patterns', 'expert url', 'expert description'); -- expert
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (326, 'Design patterns', 'basic url', 'Basic description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- basic
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (327, 'Design patterns', 'good url', 'Good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (328, 'Design patterns', 'very good url', 'Very good description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- very good
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (329, 'Design patterns', 'excellent url', 'Excellent description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- excellent
+insert into interview_suggestions (cv_element_proficiency_id, subject, url, description) values (330, 'Design patterns', 'expert url', 'Expert description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.'); -- expert
 
 
 ----------------------- USER PROFICIENCIES -------------------------------

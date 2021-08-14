@@ -18,6 +18,7 @@ public class InterviewSuggestionStatusDTO {
 	private Date dateChecked;
 	private Long interviewSuggestionId;
 	private SkillProficiency proficiency;
+	private int proficiencyValue;
 	private CVElementType cvElement;
 	private String subject;
 	private String url;
@@ -31,6 +32,7 @@ public class InterviewSuggestionStatusDTO {
 		this.dateChecked = this.checked ? status.getDateChecked() : null;
 		this.interviewSuggestionId = status.getInterviewSuggestion().getId();
 		this.proficiency = status.getInterviewSuggestion().getCvElementProficiency().getProficiency();
+		this.proficiencyValue = status.getInterviewSuggestion().getCvElementProficiency().getProficiency().getValue();
 		this.cvElement = status.getInterviewSuggestion().getCvElementProficiency().getCvElement().getType();
 		this.subject = status.getInterviewSuggestion().getSubject();
 		this.url = status.getInterviewSuggestion().getUrl();
