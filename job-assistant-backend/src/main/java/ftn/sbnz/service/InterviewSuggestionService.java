@@ -92,7 +92,7 @@ public class InterviewSuggestionService {
 	}
 
 	public InterviewSuggestionStatusDTO check(Long interviewSuggestionStatusId, Long jobSeekerId) {
-		InterviewSuggestionStatus iss = statusRepository.getOne(interviewSuggestionStatusId);
+		InterviewSuggestionStatus iss = statusRepository.getOneById(interviewSuggestionStatusId);
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		updateJobSeekerProficiency(iss.getInterviewSuggestion(), js);
 		Calendar rightNow = Calendar.getInstance();
@@ -140,13 +140,14 @@ public class InterviewSuggestionService {
 	private void updateJobSeekerProficiency(InterviewSuggestion suggestion, JobSeeker js) {
 		String name = suggestion.getCvElementProficiency().getCvElement().getName();
 		CVElement cvElement = cvElementRepository.findOneByName(name);
-		CVElementProficiency oldProficiency = js.getProficiencies().stream()
-				.filter(el -> el.getCvElement().getName().equals(name)).collect(Collectors.toList()).get(0);
+		List<CVElementProficiency> oldProficiencies = js.getProficiencies().stream()
+				.filter(el -> el.getCvElement().getName().equals(name)).collect(Collectors.toList());
 		SkillProficiency skillProficiency = suggestion.getCvElementProficiency().getProficiency();
 		CVElementProficiency proficiency = cvElementProficiencyRepository.findOneByCvElementAndProficiency(cvElement,
 				skillProficiency);
 		proficiency.setProficiency(skillProficiency);
-		js.getProficiencies().remove(oldProficiency);
+		if (oldProficiencies.size() != 0)
+			js.getProficiencies().remove(oldProficiencies.get(0));
 		js.getProficiencies().add(proficiency);
 	}
 

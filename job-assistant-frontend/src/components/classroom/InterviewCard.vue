@@ -94,7 +94,7 @@
         >
       </v-card-actions>
       <v-card-actions>
-        <v-btn v-if="!interviewSuggestion.checked" block class="success" @click="finishMaterial()"
+        <v-btn v-if="!interviewSuggestion.checked" block class="success" @click="finishMaterial(interviewSuggestion)"
           ><v-icon class="pr-3">mdi-check</v-icon>Finished</v-btn
         >
         <v-alert
@@ -113,35 +113,23 @@
 </template>
 
 <script>
+const apiURL = "/api/interview-suggestion/check/";
+
 export default {
   name: "InterviewCard",
   data: () => ({}),
   props: {
     interviewSuggestion: Object,
-    // { text: "Date", value: "dateSuggested" },
-    //     { text: "CV Element", value: "cvElement" },
-    //     { text: "Subject", value: "subject" },
-    //     { text: "Your proficiency", value: "proficiency" },
-    //     { text: "Description", value: "description" },
-    //     { text: "Material URL", value: "url" },
   },
   methods: {
-	finishMaterial() {
-		this.interviewSuggestion.checked = true;
-	},
-    generatePicture(elementType) {
-      switch (elementType) {
-        case "PROGRAMMING_LANGUAGE":
-          return require("@/assets/icon-large-prog-lang.png");
-        case "TECHNOLOGY":
-          return require("@/assets/icon-large-technology.png");
-        case "KNOWLEDGE":
-          return require("@/assets/icon-large-knowledge.png");
-        case "SOFT_SKILL":
-          return require("@/assets/icon-large-soft-skill.png");
-        case "LANGUAGE":
-          return require("@/assets/icon-large-language.png");
-      }
+	finishMaterial(item) {
+      this.axios.post(apiURL + item.id).then((response) => {
+        item.checked = true;
+        console.log(response);
+        alert(
+          "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
+        );
+      });
     },
     generateSubject(elementType) {
       switch (elementType) {

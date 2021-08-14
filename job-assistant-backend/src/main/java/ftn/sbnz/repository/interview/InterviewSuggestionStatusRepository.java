@@ -10,4 +10,6 @@ import ftn.sbnz.model.user.JobSeeker;
 public interface InterviewSuggestionStatusRepository extends JpaRepository<InterviewSuggestionStatus, Long> {
 
 	public List<InterviewSuggestionStatus> findAllByJobSeeker(JobSeeker js);
+
+	public InterviewSuggestionStatus getOneById(Long interviewSuggestionStatusId);
 }

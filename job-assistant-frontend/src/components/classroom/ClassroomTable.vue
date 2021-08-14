@@ -47,14 +47,14 @@
         <div>
           <v-img
             mx-auto
-            src="../../assets/classroom.jpg"
-            width="630px"
-            height="420px"
+            src="@/assets/bulb-cover.png"
+            width="1413px"
+            height="338px"
           ></v-img>
         </div>
       </v-flex>
     </v-layout>
-    <v-card-title class="justify-center description" style="font-size:55px"
+    <v-card-title class="justify-center description mt-0 pt-0" style="font-size:55px"
       >Welcome to classroom!</v-card-title
     >
     <v-row>
@@ -71,7 +71,7 @@
             sm="12"
             md="6"
             lg="4"
-            v-for="suggestion in jo.statuses"
+            v-for="suggestion in sortMaterials(jo.statuses)"
             :key="suggestion.id"
           >
             <interview-card v-bind:interviewSuggestion="suggestion" />
@@ -84,7 +84,6 @@
 
 <script>
 const apiURL = "/api/interview-suggestion";
-const checkApiURL = "/api/interview-suggestion/check/";
 import InterviewCard from "./InterviewCard.vue";
 
 export default {
@@ -94,22 +93,7 @@ export default {
   },
   data() {
     return {
-      expanded: [],
-      infoHeader: [
-        { text: "Position", value: "position" },
-        { text: "Company", value: "company" },
-        { text: "Seniority", value: "seniority" },
-        { text: "Studied", value: "studied" },
-      ],
       info: [],
-      materialHeader: [
-        { text: "Date", value: "dateSuggested" },
-        { text: "CV Element", value: "cvElement" },
-        { text: "Subject", value: "subject" },
-        { text: "Your proficiency", value: "proficiency" },
-        { text: "Description", value: "description" },
-        { text: "Material URL", value: "url" },
-      ],
     };
   },
   mounted() {
@@ -118,15 +102,11 @@ export default {
     });
   },
   methods: {
-    check(item) {
-      this.axios.post(checkApiURL + item.id).then((response) => {
-        item.checked = true;
-        console.log(response);
-        alert(
-          "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
-        );
-      });
-    },
+    sortMaterials(materials) {
+      return materials.slice().sort((a, b) => {
+        return a['proficiencyValue'] - b['proficiencyValue'];
+      })
+    }
   },
 };
 </script>
