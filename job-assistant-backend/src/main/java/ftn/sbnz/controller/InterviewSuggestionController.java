@@ -44,7 +44,7 @@ public class InterviewSuggestionController {
 	
 	@PostMapping("/check/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> check(@PathVariable("id") String InterviewSuggestionStatusId) {
+	public ResponseEntity<Object> check(@PathVariable("id") String InterviewSuggestionStatusId) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
 		InterviewSuggestionStatusDTO dto = service.check(Long.parseLong(InterviewSuggestionStatusId), jobSeeker.getId());

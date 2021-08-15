@@ -43,9 +43,8 @@ public class InterviewSuggestionService {
 	@Autowired
 	public InterviewSuggestionService(InterviewSuggestionRepository repository,
 			InterviewSuggestionStatusRepository statusRepository, JobOfferDifferenceRepository differenceRepository,
-			JobSeekerRepository jobSeekerRepository,
-			CVElementRepository cvElementRepository, CVElementProficiencyRepository cvElementProficiencyRepository,
-			KieSessionService kieSession) {
+			JobSeekerRepository jobSeekerRepository, CVElementRepository cvElementRepository,
+			CVElementProficiencyRepository cvElementProficiencyRepository, KieSessionService kieSession) {
 		this.repository = repository;
 		this.statusRepository = statusRepository;
 		this.differenceRepository = differenceRepository;
@@ -66,7 +65,7 @@ public class InterviewSuggestionService {
 		suggest(isg);
 		List<InterviewSuggestion> suggestions = isg.getInterviewSuggestions();
 		List<InterviewSuggestionStatus> statuses = new ArrayList<>();
-		for (InterviewSuggestion is: suggestions) {
+		for (InterviewSuggestion is : suggestions) {
 			InterviewSuggestionStatus isstat = new InterviewSuggestionStatus(new Timestamp(rightNow.getTimeInMillis()));
 			isstat.setChecked(false);
 			isstat.setJobSeeker(js);
@@ -79,7 +78,7 @@ public class InterviewSuggestionService {
 		}
 		differenceRepository.save(jod);
 		jobSeekerRepository.save(js);
-		
+
 		InterviewSuggestionGroupDTO dto = new InterviewSuggestionGroupDTO(statuses, offer);
 		return dto;
 
@@ -91,7 +90,7 @@ public class InterviewSuggestionService {
 		kieSession.fireAllRules();
 	}
 
-	public InterviewSuggestionStatusDTO check(Long interviewSuggestionStatusId, Long jobSeekerId) {
+	public InterviewSuggestionStatusDTO check(Long interviewSuggestionStatusId, Long jobSeekerId) throws Exception {
 		InterviewSuggestionStatus iss = statusRepository.getOneById(interviewSuggestionStatusId);
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		updateJobSeekerProficiency(iss.getInterviewSuggestion(), js);
@@ -116,12 +115,14 @@ public class InterviewSuggestionService {
 		HashMap<JobOffer, List<InterviewSuggestionStatusDTO>> map = new HashMap<>();
 		for (InterviewSuggestionStatus i : iss) {
 			JobOffer jo = i.getJobOfferDifference().getStatistic().getJobOffer();
+			HashMap<String, Object> result = checkMaterial(js, i.getInterviewSuggestion());
+			boolean forbidden = (boolean) result.get("forbidden");
 			if (!map.containsKey(jo)) {
 				List<InterviewSuggestionStatusDTO> statuses = new ArrayList<>();
-				statuses.add(new InterviewSuggestionStatusDTO(i));
+				statuses.add(new InterviewSuggestionStatusDTO(i, forbidden));
 				map.put(jo, statuses);
 			} else {
-				map.get(jo).add(new InterviewSuggestionStatusDTO(i));
+				map.get(jo).add(new InterviewSuggestionStatusDTO(i, forbidden));
 			}
 		}
 		List<InterviewSuggestionGroupDTO> dtos = new ArrayList<>();
@@ -133,22 +134,51 @@ public class InterviewSuggestionService {
 			dto.setStatuses(statuses);
 			dtos.add(dto);
 		});
-		
-		return dtos;        
+
+		return dtos;
 	}
 
-	private void updateJobSeekerProficiency(InterviewSuggestion suggestion, JobSeeker js) {
+	private void updateJobSeekerProficiency(InterviewSuggestion suggestion, JobSeeker js) throws Exception {
+		HashMap<String, Object> results = checkMaterial(js, suggestion);
+		if ((boolean) results.get("forbidden"))
+			throw new Exception("You need to study materials with lower proficiency first!");
+		
+		if (results.get("oldProficiency") != null) {
+			js.getProficiencies().remove(results.get("oldProficiency"));
+		}
+		
+		js.getProficiencies().add((CVElementProficiency) results.get("newProficiency"));
+		
+	}
+		
+	private HashMap<String, Object> checkMaterial(JobSeeker js, InterviewSuggestion suggestion) {
 		String name = suggestion.getCvElementProficiency().getCvElement().getName();
 		CVElement cvElement = cvElementRepository.findOneByName(name);
 		List<CVElementProficiency> oldProficiencies = js.getProficiencies().stream()
 				.filter(el -> el.getCvElement().getName().equals(name)).collect(Collectors.toList());
 		SkillProficiency skillProficiency = suggestion.getCvElementProficiency().getProficiency();
-		CVElementProficiency proficiency = cvElementProficiencyRepository.findOneByCvElementAndProficiency(cvElement,
+		CVElementProficiency newProficiency = cvElementProficiencyRepository.findOneByCvElementAndProficiency(cvElement,
 				skillProficiency);
-		proficiency.setProficiency(skillProficiency);
-		if (oldProficiencies.size() != 0)
-			js.getProficiencies().remove(oldProficiencies.get(0));
-		js.getProficiencies().add(proficiency);
+		newProficiency.setProficiency(skillProficiency);
+		CVElementProficiency oldProficiency = null;
+		boolean forbidden = false;
+		if (oldProficiencies.size() == 0) {
+			if (skillProficiency != SkillProficiency.BASIC) {
+				forbidden = true;
+			}
+		} else {
+			oldProficiency = oldProficiencies.get(0);
+			if (skillProficiency.getValue() != (oldProficiency.getProficiency().getValue() + 1))
+				forbidden = true;
+		}
+		
+		
+		HashMap<String, Object> results = new HashMap<>();
+		results.put("forbidden", forbidden);
+		results.put("newProficiency", newProficiency);
+		results.put("oldProficiency", oldProficiency);
+		
+		return results;
 	}
 
 }

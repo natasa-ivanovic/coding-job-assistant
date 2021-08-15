@@ -1,45 +1,3 @@
-<!--template>
-  <v-data-table
-    :headers="infoHeader"
-    :items="info"
-    :expanded.sync="expanded"
-    item-key="id"
-    show-expand
-    class="elevation-1"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Materials</v-toolbar-title>
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.dateSuggested`]="{ item }">
-      {{ new Date(item.dateSuggested).toDateString() }}
-    </template>
-    <template v-slot:[`item.studied`]="{ item }">
-      <v-btn icon :disabled="item.checked" @click="check(item)">
-        <v-icon>
-          mdi-check-bold
-        </v-icon>
-      </v-btn>
-    </template>
-    <template v-slot:expanded-item="{ headers, item }">
-      <td :colspan="headers.length">
-        <v-data-table
-          :headers="materialHeader"
-          :items="item.statuses"
-          item-key="name"
-          class="elevation-0 mt-3 mb-3"
-          hide-default-footer
-        >
-          <template v-slot:[`item.url`]="{ item }">
-            <a>{{ item.url }}</a>
-          </template>
-        </v-data-table>
-      </td>
-    </template>
-  </v-data-table>
-</template-->
-
 <template>
   <v-card>
     <v-layout justify-center align-center>
@@ -57,6 +15,13 @@
     <v-card-title class="justify-center description mt-0 pt-0" style="font-size:55px"
       >Welcome to classroom!</v-card-title
     >
+    <v-row class="ml-5 mr-5">
+      <v-progress-linear
+        indeterminate
+        color="teal"
+        :active="show"
+      ></v-progress-linear>
+    </v-row>
     <v-row>
       <v-row v-for="jo in info" :key="jo.id">
         <v-row class="ml-5 mb-0 description" style="font-size:30px">
@@ -74,7 +39,7 @@
             v-for="suggestion in sortMaterials(jo.statuses)"
             :key="suggestion.id"
           >
-            <interview-card v-bind:interviewSuggestion="suggestion" />
+            <interview-card v-bind:interviewSuggestion="suggestion" @materialFinished="handleMaterialFinished"/>
           </v-col>
         </v-row>
       </v-row>
@@ -94,18 +59,28 @@ export default {
   data() {
     return {
       info: [],
+      show: false,
     };
   },
   mounted() {
-    this.axios.get(apiURL).then((response) => {
-      this.info = response.data;
-    });
+    this.getAllMaterials();
   },
   methods: {
     sortMaterials(materials) {
       return materials.slice().sort((a, b) => {
         return a['proficiencyValue'] - b['proficiencyValue'];
       })
+    },
+    getAllMaterials() {
+        this.show = true;
+        this.axios.get(apiURL).then((response) => {
+        this.info = response.data;
+        this.show = false;
+      });
+    },
+    handleMaterialFinished() {
+      this.info = [];
+      this.getAllMaterials();
     }
   },
 };

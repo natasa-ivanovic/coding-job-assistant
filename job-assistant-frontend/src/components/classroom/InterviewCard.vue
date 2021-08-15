@@ -6,11 +6,7 @@
       width="500"
       color="grey lighten-4"
     >
-      <v-img
-        width="100%"
-        height="140"
-        src="@/assets/bulb.jpg"
-      >
+      <v-img width="100%" height="140" src="@/assets/bulb.jpg">
         <v-expand-transition>
           <div
             v-if="hover"
@@ -27,11 +23,11 @@
             interviewSuggestion.subject
           }}</v-card-title>
           <v-card-text class="mb-0 pb-0">
-              Suggested:
-              <b>{{
-                new Date(interviewSuggestion.dateSuggested).toDateString()
-              }}</b>
-		  <v-divider class="mt-3 pt-3"></v-divider>
+            Suggested:
+            <b>{{
+              new Date(interviewSuggestion.dateSuggested).toDateString()
+            }}</b>
+            <v-divider class="mt-3 pt-3"></v-divider>
           </v-card-text>
           <v-card-title class="mb-0 pb-0 mt-0 pt-0">Description</v-card-title>
           <v-card-text class="mb-0 pb-0">
@@ -94,7 +90,12 @@
         >
       </v-card-actions>
       <v-card-actions>
-        <v-btn v-if="!interviewSuggestion.checked" block class="success" @click="finishMaterial(interviewSuggestion)"
+        <v-btn
+          v-if="!interviewSuggestion.checked"
+          :disabled="interviewSuggestion.forbiddenMaterial"
+          block
+          class="success"
+          @click="finishMaterial(interviewSuggestion)"
           ><v-icon class="pr-3">mdi-check</v-icon>Finished</v-btn
         >
         <v-alert
@@ -122,15 +123,22 @@ export default {
     interviewSuggestion: Object,
   },
   methods: {
-	finishMaterial(item) {
-      this.axios.post(apiURL + item.id).then((response) => {
-        item.checked = true;
-        console.log(response);
-        alert(
-          "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
-        );
-      });
+    finishMaterial(item) {
+      this.axios
+        .post(apiURL + item.id)
+        .then((response) => {
+          item.checked = true;
+          console.log(response);
+          alert(
+            "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
+          );
+          this.$emit("materialFinished");
+        })
+        .catch(() => {
+          alert("You need to study materials with lower proficiency first!");
+        });
     },
+
     generateSubject(elementType) {
       switch (elementType) {
         case "PROGRAMMING_LANGUAGE":

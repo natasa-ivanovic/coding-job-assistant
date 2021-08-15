@@ -23,6 +23,7 @@ public class InterviewSuggestionStatusDTO {
 	private String subject;
 	private String url;
 	private String description;
+	private boolean forbiddenMaterial;
 //	private InterviewSuggestionDTO interviewSuggestion;
 		
 	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status) {
@@ -37,5 +38,20 @@ public class InterviewSuggestionStatusDTO {
 		this.subject = status.getInterviewSuggestion().getSubject();
 		this.url = status.getInterviewSuggestion().getUrl();
 		this.description = status.getInterviewSuggestion().getDescription();
+	}
+	
+	public InterviewSuggestionStatusDTO(InterviewSuggestionStatus status, boolean forbiddenMaterial) {
+		this.id = status.getId();
+		this.checked = status.isChecked();
+		this.dateSuggested = status.getDateSuggested();
+		this.dateChecked = this.checked ? status.getDateChecked() : null;
+		this.interviewSuggestionId = status.getInterviewSuggestion().getId();
+		this.proficiency = status.getInterviewSuggestion().getCvElementProficiency().getProficiency();
+		this.proficiencyValue = status.getInterviewSuggestion().getCvElementProficiency().getProficiency().getValue() - 1;
+		this.cvElement = status.getInterviewSuggestion().getCvElementProficiency().getCvElement().getType();
+		this.subject = status.getInterviewSuggestion().getSubject();
+		this.url = status.getInterviewSuggestion().getUrl();
+		this.description = status.getInterviewSuggestion().getDescription();
+		this.forbiddenMaterial = forbiddenMaterial;
 	}
 }
