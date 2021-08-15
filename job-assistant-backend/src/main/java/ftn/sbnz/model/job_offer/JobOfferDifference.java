@@ -38,7 +38,7 @@ public class JobOfferDifference {
 	
 	@Column(name = "cv_element_type")
 	private CVElementType cvElementType;
-	
+		
 	@ManyToOne
 	private JobOfferStatistic statistic; 
 	

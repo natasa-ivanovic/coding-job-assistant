@@ -66,22 +66,42 @@ public class InterviewSuggestionService {
 		List<InterviewSuggestion> suggestions = isg.getInterviewSuggestions();
 		List<InterviewSuggestionStatus> statuses = new ArrayList<>();
 		for (InterviewSuggestion is : suggestions) {
-			InterviewSuggestionStatus isstat = new InterviewSuggestionStatus(new Timestamp(rightNow.getTimeInMillis()));
-			isstat.setChecked(false);
-			isstat.setJobSeeker(js);
-			isstat.setJobOfferDifference(jod);
-			isstat.setInterviewSuggestion(is);
-			isstat = statusRepository.save(isstat);
-			jod.getInterviewSuggestionStatuses().add(isstat);
-			js.getInterviewSuggestions().add(isstat);
-			statuses.add(isstat);
+			boolean exists = checkIfMaterialAlreadyExists(js, is, offer);
+			if(!exists) {
+				InterviewSuggestionStatus isstat = new InterviewSuggestionStatus(new Timestamp(rightNow.getTimeInMillis()));
+				isstat.setChecked(false);
+				isstat.setJobSeeker(js);
+				isstat.setJobOfferDifference(jod);
+				isstat.setInterviewSuggestion(is);
+				isstat = statusRepository.save(isstat);
+				jod.getInterviewSuggestionStatuses().add(isstat);
+				js.getInterviewSuggestions().add(isstat);
+				statuses.add(isstat);				
+			}
 		}
-		differenceRepository.save(jod);
-		jobSeekerRepository.save(js);
+		
+		if (statuses.size() != 0) {
+			differenceRepository.save(jod);
+			jobSeekerRepository.save(js);
+			
+			InterviewSuggestionGroupDTO dto = new InterviewSuggestionGroupDTO(statuses, offer);
+			return dto;			
+		}
+		
+		return null; //moze metoda bez problema i da bude void?
 
-		InterviewSuggestionGroupDTO dto = new InterviewSuggestionGroupDTO(statuses, offer);
-		return dto;
+	}
 
+	private boolean checkIfMaterialAlreadyExists(JobSeeker js, InterviewSuggestion suggestion, JobOffer jo) {
+		List<InterviewSuggestionStatus> statuses = js.getInterviewSuggestions().stream().filter(
+				el -> el.getJobOfferDifference().getStatistic().getJobOffer().equals(jo)).collect(Collectors.toList());
+		if (statuses.size() == 0)
+			return false;
+		List<Long> suggestions = statuses.stream().map(el -> el.getInterviewSuggestion().getId()).collect(Collectors.toList());
+		if (suggestions.contains(suggestion.getId()))
+			return true;
+		return false;
+		
 	}
 
 	public void suggest(InterviewSuggestionGroup group) {
@@ -90,18 +110,13 @@ public class InterviewSuggestionService {
 		kieSession.fireAllRules();
 	}
 
-	public InterviewSuggestionStatusDTO check(Long interviewSuggestionStatusId, Long jobSeekerId) throws Exception {
+	public void check(Long interviewSuggestionStatusId, Long jobSeekerId) throws Exception {
 		InterviewSuggestionStatus iss = statusRepository.getOneById(interviewSuggestionStatusId);
 		JobSeeker js = (JobSeeker) this.jobSeekerRepository.getOne(jobSeekerId);
 		updateJobSeekerProficiency(iss.getInterviewSuggestion(), js);
-		Calendar rightNow = Calendar.getInstance();
-		iss.setChecked(true);
-		iss.setDateChecked(new Timestamp(rightNow.getTimeInMillis()));
+		updateInterviewSuggestionStatus(iss.getInterviewSuggestion(), js);
 		StudiedTodayEvent event = new StudiedTodayEvent(js.getId());
-		iss = statusRepository.save(iss);
 		triggerEvent(event);
-		InterviewSuggestionStatusDTO dto = new InterviewSuggestionStatusDTO(iss);
-		return dto;
 	}
 
 	public void triggerEvent(StudiedTodayEvent event) {
@@ -142,15 +157,26 @@ public class InterviewSuggestionService {
 		HashMap<String, Object> results = checkMaterial(js, suggestion);
 		if ((boolean) results.get("forbidden"))
 			throw new Exception("You need to study materials with lower proficiency first!");
-		
+
 		if (results.get("oldProficiency") != null) {
 			js.getProficiencies().remove(results.get("oldProficiency"));
 		}
-		
+
 		js.getProficiencies().add((CVElementProficiency) results.get("newProficiency"));
-		
+
 	}
-		
+
+	private void updateInterviewSuggestionStatus(InterviewSuggestion suggestion, JobSeeker js) {
+		List<InterviewSuggestionStatus> statuses = this.statusRepository.findAllByJobSeekerAndInterviewSuggestion(js,
+				suggestion);
+		for (InterviewSuggestionStatus status : statuses) {
+			Calendar rightNow = Calendar.getInstance();
+			status.setChecked(true);
+			status.setDateChecked(new Timestamp(rightNow.getTimeInMillis()));
+			statusRepository.save(status);
+		}
+	}
+
 	private HashMap<String, Object> checkMaterial(JobSeeker js, InterviewSuggestion suggestion) {
 		String name = suggestion.getCvElementProficiency().getCvElement().getName();
 		CVElement cvElement = cvElementRepository.findOneByName(name);
@@ -171,13 +197,12 @@ public class InterviewSuggestionService {
 			if (skillProficiency.getValue() != (oldProficiency.getProficiency().getValue() + 1))
 				forbidden = true;
 		}
-		
-		
+
 		HashMap<String, Object> results = new HashMap<>();
 		results.put("forbidden", forbidden);
 		results.put("newProficiency", newProficiency);
 		results.put("oldProficiency", oldProficiency);
-		
+
 		return results;
 	}
 

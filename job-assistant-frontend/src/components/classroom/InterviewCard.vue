@@ -96,7 +96,7 @@
           block
           class="success"
           @click="finishMaterial(interviewSuggestion)"
-          ><v-icon class="pr-3">mdi-check</v-icon>Finished</v-btn
+          ><v-icon class="pr-3">mdi-check</v-icon>Complete</v-btn
         >
         <v-alert
           v-else

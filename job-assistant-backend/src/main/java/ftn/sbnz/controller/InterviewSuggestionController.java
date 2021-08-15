@@ -47,8 +47,8 @@ public class InterviewSuggestionController {
 	public ResponseEntity<Object> check(@PathVariable("id") String InterviewSuggestionStatusId) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
-		InterviewSuggestionStatusDTO dto = service.check(Long.parseLong(InterviewSuggestionStatusId), jobSeeker.getId());
-		return new ResponseEntity<>(dto, HttpStatus.OK);
+		service.check(Long.parseLong(InterviewSuggestionStatusId), jobSeeker.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping()
