@@ -2,7 +2,6 @@
   <v-row class="mr-5 ml-5 mt-9">
     <v-col cols="2">
       <h3>{{ difference.subject }}</h3>
-      <h2>{{ difference.id }} </h2>
     </v-col>
     <v-col cols="9">
       <v-range-slider

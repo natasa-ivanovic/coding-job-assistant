@@ -18,10 +18,16 @@ import JobPositionListView from '../views/jobseeker/JobPositionListView.vue'
 import JobOfferListView from '../views/jobseeker/JobOfferListView.vue'
 import ClassroomView from '../views/classroom/ClassroomView.vue'
 import CompanyListView from '../views/jobseeker/CompanyListView.vue'
+import SplashScreen from '../views/SplashScreen.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    component: SplashScreen,
+    name: "SplashScreen",
+    path: "/welcome",
+  },
   {
     component: LoginView,
     name: "LoginView",
