@@ -40,7 +40,7 @@ public class JobOfferService {
 	}
 
 	public JobOffer getOffer(Long id) {
-		return repository.getOne(id);
+		return repository.getOneById(id);
 	}
 
 	public void save(JobOffer jo) {

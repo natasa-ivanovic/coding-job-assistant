@@ -1,16 +1,17 @@
 <template>
-  <v-container fluid fill-height class="indigo accent-1">
-    <v-container
-      class="white">
-      <v-row>
-        <v-col no-gutters cols="12" md>
-          <img src="../../assets/login.png" />
-        </v-col>
-        <v-col no-gutters cols="12" md>
-          <LoginForm />
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-container
+    fluid
+    fill-height
+    class="main-screen"
+    style="justify-content: center;"
+  >
+  <div>
+    <v-row>
+      <v-col cols="12">
+        <LoginForm />
+      </v-col>
+    </v-row>
+  </div>
   </v-container>
 </template>
 
@@ -23,8 +24,12 @@ export default {
 </script>
 
 <style scoped>
-img {
-  height: 100%;
-  width: 100%;
+.main-screen {
+  background: rgb(238, 174, 209);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 209, 1) 14%,
+    rgba(148, 187, 233, 1) 93%
+  );
 }
 </style>
