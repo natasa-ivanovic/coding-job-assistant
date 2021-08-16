@@ -26,7 +26,7 @@ const routes = [
   {
     component: SplashScreen,
     name: "SplashScreen",
-    path: "/welcome",
+    path: "/",
   },
   {
     component: LoginView,

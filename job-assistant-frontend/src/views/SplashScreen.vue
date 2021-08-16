@@ -13,6 +13,7 @@
           :size="200"
           :width="20"
           :value="value"
+          indeterminate
           color="pink"
         >
           <v-icon size="100">mdi-magnify</v-icon>
@@ -27,7 +28,7 @@
     fill-height
     style="justify-content: center;"
   >
-    <v-card width="1700px" height="850px" :elevation="24">
+    <v-card width="1700px" :elevation="24">
       <v-card-title
         class="description mt-3 justify-center"
         style="font-size:60px"
@@ -42,7 +43,7 @@
         <v-col
           style="flex: 1;"
           sm="11"
-          md="5"
+          md="6"
           lg="3"
           v-for="i in info"
           :key="i.id"
@@ -85,40 +86,40 @@ export default {
       info: [
         {
           id: 1,
-          title: "Moze da popuni svoj cv",
-          subtitle: "Neki kratak opis naslova",
+          title: "Fill in your resume",
+          subtitle: "Enter your skills and work experience",
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in libero ac nulla auctor mollis id id felis. Pellentesque rutrum quis velit eget elementum.",
+            "First things first - enter your previous working experiences and fill in your resume! The more accurate you are about your knowledge, the better your matches will be!",
           highlight: "Nesto jako kul",
           image: require("@/assets/resume1.jpg"),
           step: 1,
         },
         {
           id: 2,
-          title: "Moze da odredi job position",
-          subtitle: "Neki kratak opis naslova",
+          title: "Find your dream job position",
+          subtitle: "Start out in an adequate field",
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in libero ac nulla auctor mollis id id felis. Pellentesque rutrum quis velit eget elementum.",
+            "Starting out can be tough - but it doesn't have to be! Our system will match your technical skills and knowledge with the best positions so you start out your career right!",
           highlight: "Nesto jako kul",
           image: require("@/assets/job-position.jpg"),
           step: 2,
         },
         {
           id: 3,
-          title: "Moze da odredi job offer",
-          subtitle: "Neki kratak opis naslova",
+          title: "Find your dream job offer",
+          subtitle: "Join a place where you belong",
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in libero ac nulla auctor mollis id id felis. Pellentesque rutrum quis velit eget elementum.",
+            "We believe that there's a pair for everyone. That's why our system will find the most fitting job offers for the job positions you are best suited for, to make sure you feel at home!",
           highlight: "Nesto jako kul",
           image: require("@/assets/job-offer.jpg"),
           step: 3,
         },
         {
           id: 4,
-          title: "Moze da uci u ucionici",
-          subtitle: "Neki kratak opis naslova",
+          title: "Hone in your skills",
+          subtitle: "We are all constantly learning",
           description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in libero ac nulla auctor mollis id id felis. Pellentesque rutrum quis velit eget elementum.",
+            "In case there's a job offer you aren't quite ready for yet, our system will offer you help. This way you can get all the required resources to improve your knowledge and get your dream job!",
           highlight: "Nesto jako kul",
           image: require("@/assets/classroom.jpg"),
           step: 4,
@@ -131,12 +132,14 @@ export default {
   },
   mounted() {
     this.interval = setInterval(() => {
+      console.log(this.value);
       if (this.value === 100) {
         this.loading = false;
-        return (this.value = 0);
+        this.value = 0;
+        clearInterval(this.interval);
       }
-      this.value += 20;
-    }, 1000);
+      this.value += 10;
+    }, 50);
   },
   methods: {
     register() {

@@ -14,16 +14,16 @@
         {{ info.description }}
       </v-row>
     </v-card-text>
-	<v-card-text style="width: 360px;">
+	<v-card-text class="pt-0 pb-0">
 		<v-stepper :value="info.step" class="elevation-0">
     		<v-stepper-header elevation="0">
-				<v-stepper-step step="1">
+				<v-stepper-step step="1" class="pt-0 pb-0 pl-2 pr-2">
 				</v-stepper-step>
-				<v-stepper-step step="2">
+				<v-stepper-step step="2" class="pt-0 pb-0 pl-2 pr-2">
 				</v-stepper-step>
-				<v-stepper-step step="3">
+				<v-stepper-step step="3" class="pt-0 pb-0 pl-2 pr-2">
 				</v-stepper-step>
-				<v-stepper-step step="4">
+				<v-stepper-step step="4" class="pt-0 pb-0 pl-2 pr-2">
 				</v-stepper-step>
     		</v-stepper-header>
   		</v-stepper>
