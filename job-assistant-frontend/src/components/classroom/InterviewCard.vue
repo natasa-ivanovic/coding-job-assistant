@@ -10,8 +10,16 @@
         <v-expand-transition>
           <div
             v-if="hover"
-            class="d-flex transition-fast-in-fast-out black darken-3 v-card--reveal display-1 white--text"
-            style="height: 100%;"
+            class="
+              d-flex
+              transition-fast-in-fast-out
+              black
+              darken-3
+              v-card--reveal
+              display-1
+              white--text
+            "
+            style="height: 100%"
           >
             {{ generateSubject(interviewSuggestion.cvElement) }}
           </div>
@@ -31,7 +39,7 @@
           </v-card-text>
           <v-card-title class="mb-0 pb-0 mt-0 pt-0">Description</v-card-title>
           <v-card-text class="mb-0 pb-0">
-            <p style="text-align:justify">
+            <p style="text-align: justify">
               {{ interviewSuggestion.description }}
             </p>
           </v-card-text>
@@ -46,37 +54,27 @@
               disabled
             >
               <v-chip label class="chip-style">
-                <v-icon left>
-                  mdi-battery-outline
-                </v-icon>
+                <v-icon left> mdi-battery-outline </v-icon>
                 BASIC
               </v-chip>
 
               <v-chip label class="chip-style">
-                <v-icon left>
-                  mdi-battery-medium
-                </v-icon>
+                <v-icon left> mdi-battery-medium </v-icon>
                 GOOD
               </v-chip>
 
               <v-chip label class="chip-style">
-                <v-icon left>
-                  mdi-battery-high
-                </v-icon>
+                <v-icon left> mdi-battery-high </v-icon>
                 VERY GOOD
               </v-chip>
 
               <v-chip label class="chip-style">
-                <v-icon left>
-                  mdi-battery-heart-variant
-                </v-icon>
+                <v-icon left> mdi-battery-heart-variant </v-icon>
                 EXCELLENT
               </v-chip>
 
               <v-chip label class="chip-style">
-                <v-icon left>
-                  mdi-battery
-                </v-icon>
+                <v-icon left> mdi-battery </v-icon>
                 EXPERT
               </v-chip>
             </v-chip-group>
@@ -104,7 +102,7 @@
           color="success"
           dense
           class="ml-0 mr-0 mb-0"
-          style="width: 100%; height:35.99px; text-align:center"
+          style="width: 100%; height: 35.99px; text-align: center"
         >
           <b>You successfully finished this!</b>
         </v-alert>
@@ -129,13 +127,15 @@ export default {
         .then((response) => {
           item.checked = true;
           console.log(response);
-          alert(
+          this.$root.snackbar.success(
             "You've successfully finished these lessons. Continue learning in order to maintain your daily streak."
           );
           this.$emit("materialFinished");
         })
         .catch(() => {
-          alert("You need to study materials with lower proficiency first!");
+          this.$root.snackbar.error(
+            "You need to study materials with lower proficiency first!"
+          );
         });
     },
 

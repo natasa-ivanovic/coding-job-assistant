@@ -126,13 +126,15 @@ export default {
         .post(apiURL + "/" + key, resetPassword)
         .then((response) => {
           this.loading = false;
-          alert("You've successfully changed your password!");
+          this.$root.snackbar.success(
+            "You've successfully changed your password!"
+          );
           this.$refs.form.reset();
           console.log(response);
         })
         .catch((error) => {
           this.loading = false;
-          alert("Invalid key or username!");
+          this.$root.snackbar.error("Invalid key or username!");
           console.log(error.data);
         });
     },

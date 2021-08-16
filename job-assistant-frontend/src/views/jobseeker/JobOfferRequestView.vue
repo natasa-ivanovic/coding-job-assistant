@@ -110,7 +110,7 @@ export default {
           this.lastDate = response.data.date;
         })
         .catch((error) => {
-          alert(error);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
   },

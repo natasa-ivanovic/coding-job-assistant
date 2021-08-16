@@ -102,7 +102,8 @@ export default {
         this.date = response.data.date;
       })
       .catch((error) => {
-        alert(error);
+        // TODO proveriti jel ovo okej
+        this.$root.snackbar.error(error);
       });
   },
   methods: {},

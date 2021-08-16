@@ -132,7 +132,7 @@ export default {
       })
         .then(() => {
           this.loading = false;
-          alert(
+          this.$root.snackbar.success(
             "Successfully sent review! Please wait for the admin to approve it."
           );
           this.resetForm();
@@ -140,7 +140,7 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-          alert(error.response.data.message);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
     resetForm: function () {

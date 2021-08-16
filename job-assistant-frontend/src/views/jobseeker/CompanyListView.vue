@@ -84,7 +84,7 @@ export default {
           this.companies = response.data;
         })
         .catch((error) => {
-          alert(error);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
 

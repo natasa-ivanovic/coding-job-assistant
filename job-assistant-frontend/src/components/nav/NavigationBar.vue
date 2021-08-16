@@ -35,7 +35,7 @@
           </v-list-item>
         </router-link>
         <router-link
-          :to="{ name: 'JobOfferReviewListView' }"
+          :to="{ name: 'CompanyReviewListView' }"
           v-slot="{ navigate }"
         >
           <v-list-item @click="navigate">

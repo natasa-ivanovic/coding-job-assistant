@@ -140,9 +140,8 @@ export default {
           }
         })
         .catch((error) => {
-          //TODO sredi ovo na snackbarove u nekom trenutku
           this.loading = false;
-          alert(error.response.data.message);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
   },

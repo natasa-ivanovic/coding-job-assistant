@@ -170,21 +170,19 @@ export default {
       }
     //   if (this.score <= 2) {
     //     this.loading = false;
-    //     alert("Your password is weak! Use numbers and special characters!");
     //     return;
     //   }
       this.axios
         .post(apiURL, this.user)
         .then(() => {
           this.loading = false;
-          alert("You've successfully registered to your account");
+          this.$root.snackbar.success("You've successfully registered to your account");
           this.$refs.form.reset();
           console.log(response);
         })
         .catch((error) => {
           this.loading = false;
-          alert(error.response.data.message);
-          console.log(error.data);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
     onScore({ score, strength }) {

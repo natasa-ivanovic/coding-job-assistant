@@ -6,7 +6,7 @@ import RegisterView from "../views/auth/RegisterView.vue";
 import ResetPasswordView from "../views/auth/ResetPasswordView.vue";
 
 import HomeAdminView from "../views/admin/HomeAdminView.vue";
-import JobOfferReviewListView from "../views/admin/JobOfferReviewListView.vue";
+import CompanyReviewListView from "../views/admin/CompanyReviewListView.vue";
 
 import HomeJobSeekerView from "../views/jobseeker/HomeJobSeekerView.vue";
 import AccountView from "../views/jobseeker/AccountView.vue";
@@ -57,9 +57,9 @@ const routes = [
         beforeEnter: guardRouteAdmin,
       },
       {
-        component: JobOfferReviewListView,
-        name: "JobOfferReviewListView",
-        path: "/job-offer-reviews",
+        component: CompanyReviewListView,
+        name: "CompanyReviewListView",
+        path: "/company-reviews",
         beforeEnter: guardRouteAdmin,
       },
       // jobseeker routes
