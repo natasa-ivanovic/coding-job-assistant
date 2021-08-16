@@ -1458,8 +1458,8 @@ insert into users_proficiencies (job_seeker_id, proficiencies_id) values (2, 420
 
 
 -- user with id 2 - 'Job Seeker'
-
-insert into working_experiences (id, months, seniority, position_id) values (1, 20, 1, 1); -- Backend Junior Dev 20 months, Java
+-- id = 1
+insert into working_experiences (months, seniority, position_id) values (20, 1, 1); -- Backend Junior Dev 20 months, Java
 -- prog lang - java
 insert into working_experiences_cv_elements (working_experience_id, cv_elements_id) values (1, 4);
 -- technology - spring boot

@@ -28,10 +28,17 @@ public class CVElementController {
 		this.service = service;
 	}
 	
+	@GetMapping("/by-type")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+	public ResponseEntity<Map<String, List<CVElementDTO>>> getAllByType() {
+		Map<String, List<CVElementDTO>> dtos = service.getAllByType();
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+
 	@GetMapping
 	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-	public ResponseEntity<Map<String, List<CVElementDTO>>> getAll() {
-		Map<String, List<CVElementDTO>> dtos = service.getAllByType();
+	public ResponseEntity<List<CVElementDTO>> getAll() {
+		List<CVElementDTO> dtos = service.getAll();
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 }

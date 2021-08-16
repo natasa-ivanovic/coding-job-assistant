@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,15 @@ public class CVElementService {
 			}
 		}
 		return map;
+	}
+
+	private CVElementDTO toDTO(CVElement el) {
+		return new CVElementDTO(el);
+	}
+	
+	public List<CVElementDTO> getAll() {
+		List<CVElement> elements = this.repository.findAll();
+		return elements.stream().map(this::toDTO).collect(Collectors.toList());
 	}
 
 }

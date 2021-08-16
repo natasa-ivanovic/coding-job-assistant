@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ftn.sbnz.dto.user.WorkingExperienceDTO;
 import ftn.sbnz.model.cv_element.CVElement;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class WorkingExperience {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -44,4 +46,10 @@ public class WorkingExperience {
 	@ManyToOne
 	private JobPosition position;
 	
+	public WorkingExperience(WorkingExperienceDTO el, List<CVElement> cvElements, JobPosition position) {
+		this.months = el.getMonths();
+		this.seniority = el.getSeniority();
+		this.cvElements = cvElements;
+		this.position = position;
+	}
 }

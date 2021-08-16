@@ -10,4 +10,6 @@ public interface JobPositionRepository extends JpaRepository<JobPosition, Long> 
 
 	List<JobPosition> findAll();
 
+	JobPosition findOneByTitle(String title);
+
 }

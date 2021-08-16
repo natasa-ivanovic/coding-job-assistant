@@ -109,8 +109,8 @@
   </v-container>
 </template>
 <script>
-const apiURL = "/api/users/my-profile";
-const apiCVElements = "/api/cv-elements";
+const apiURL = "/api/users/my-profile/resume";
+const apiCVElements = "/api/cv-elements/by-type";
 
 export default {
   name: "ResumeForm",
@@ -184,7 +184,7 @@ export default {
   methods: {
     getResume: function () {
       this.axios({
-        url: apiURL + "/resume",
+        url: apiURL,
         method: "GET",
       }).then((response) => {
         this.proficiencies = response.data.proficiencies;
@@ -272,7 +272,7 @@ export default {
       let changedProf = Object.assign([], this.proficiencies);
       this.loading = true;
       this.axios({
-        url: apiURL + "/resume",
+        url: apiURL,
         method: "PUT",
         data: { proficiencies: changedProf },
       }).then(() => {
