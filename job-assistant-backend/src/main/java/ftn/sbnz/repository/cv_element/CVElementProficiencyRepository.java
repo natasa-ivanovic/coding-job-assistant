@@ -10,4 +10,7 @@ import ftn.sbnz.model.user.JobSeeker;
 public interface CVElementProficiencyRepository extends JpaRepository<CVElementProficiency, Long> {
 	
 	public CVElementProficiency findOneByCvElementAndProficiency(CVElement cvElement, SkillProficiency proficiency);
+
+	public CVElementProficiency findOneByCvElementNameAndProficiency(String cvElementName,
+			SkillProficiency proficiency);
 }

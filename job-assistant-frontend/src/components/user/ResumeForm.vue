@@ -11,7 +11,7 @@
             <v-list-item-title v-text="p.elementName"></v-list-item-title>
           </v-list-item-content>
 
-          <v-list-item-content>
+          <v-list-item-content style="flex: 2">
             <v-slider
               v-model="p.proficiency"
               :tick-labels="labels"
@@ -20,12 +20,51 @@
               ticks="always"
               tick-size="5"
               :readonly="!editing"
-              thumb-label="always"
             >
             </v-slider>
           </v-list-item-content>
           <v-list-item-icon>
-            <v-btn icon @click="deleteItem(p.id)"> <v-icon> mdi-delete </v-icon> </v-btn>
+            <v-btn :disabled="!editing" icon @click="deleteItem(p.id)">
+              <v-icon v-show="editing"> mdi-delete </v-icon>
+            </v-btn>
+          </v-list-item-icon>
+        </v-list-item>
+        <v-list-item v-if="editing">
+          <v-list-item-avatar>
+            <v-img :src="getPicture(newElement.elementType)"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-autocomplete
+              v-model="newElement.elementType"
+              placeholder="Type"
+              :items="cvElementTypes"
+            />
+          </v-list-item-content>
+
+          <v-list-item-content class="ml-2">
+            <v-autocomplete
+              v-model="newElement.elementName"
+              placeholder="Element"
+              :items="getElementsForType(newElement.elementType)"
+              item-text="name"
+              item-value="value"
+              :rules="[rules.required]"
+            />
+          </v-list-item-content>
+
+          <v-list-item-content class="ml-2">
+            <v-autocomplete
+              v-model="newElement.proficiency"
+              placeholder="Proficiency"
+              :items="possibleProficiencies"
+              :rules="[rules.required]"
+            >
+            </v-autocomplete>
+          </v-list-item-content>
+          <v-list-item-icon>
+            <v-btn icon @click="addItem(newElement)">
+              <v-icon> mdi-check </v-icon>
+            </v-btn>
           </v-list-item-icon>
         </v-list-item>
         <v-row v-if="!editing">
@@ -70,7 +109,8 @@
   </v-container>
 </template>
 <script>
-const apiURL = "/users/my-profile";
+const apiURL = "/api/users/my-profile";
+const apiCVElements = "/api/cv-elements";
 
 export default {
   name: "ResumeForm",
@@ -80,17 +120,66 @@ export default {
       loading: false,
       editing: false,
       proficiencies: [],
-      labels: [
-        "Basic",
-        "Good",
-        "Very good",
-        "Excellent",
-        "Expert",
+      rules: {
+        required: (value) => !!value || "Field is required.",
+      },
+      labels: ["Basic", "Good", "Very good", "Excellent", "Expert"],
+      newElement: {
+        elementType: "PROGRAMMING_LANGUAGE",
+        elementName: "",
+        id: 0,
+        proficiency: 0,
+      },
+      cvElements: {},
+      cvElementTypes: [
+        {
+          text: "Programming language",
+          value: "PROGRAMMING_LANGUAGE",
+        },
+        {
+          text: "Technology",
+          value: "TECHNOLOGY",
+        },
+        {
+          text: "Knowledge",
+          value: "KNOWLEDGE",
+        },
+        {
+          text: "Language",
+          value: "LANGUAGE",
+        },
+        {
+          text: "Soft skill",
+          value: "SOFT_SKILL",
+        },
+      ],
+      possibleProficiencies: [
+        {
+          text: "Basic",
+          value: "1",
+        },
+        {
+          text: "Good",
+          value: "2",
+        },
+        {
+          text: "Very good",
+          value: "3",
+        },
+        {
+          text: "Excellent",
+          value: "4",
+        },
+        {
+          text: "Expert",
+          value: "5",
+        },
       ],
     };
   },
   mounted: function () {
     this.getResume();
+    this.getAllCvElements();
   },
   methods: {
     getResume: function () {
@@ -102,6 +191,15 @@ export default {
         this.proficiencies.forEach((p) => {
           p.proficiency = this.proficiencyEnumToNumber(p.proficiency);
         });
+        this.proficiencies.sort(this.elementTypeSort);
+      });
+    },
+    getAllCvElements: function () {
+      this.axios({
+        url: apiCVElements,
+        method: "GET",
+      }).then((response) => {
+        this.cvElements = response.data;
       });
     },
     proficiencyEnumToNumber: function (enumValue) {
@@ -132,29 +230,85 @@ export default {
           return require("@/assets/icon-small-soft-skill.png");
       }
     },
+    getElementsForType: function (type) {
+      const elements = this.cvElements[type];
+      const availableElements = elements.filter((el) => {
+        let exists = false;
+        this.proficiencies.forEach((p) => {
+          if (p.elementName == el.name) exists = true;
+        });
+        return !exists;
+      });
+      return availableElements;
+    },
+    addItem: function (newItem) {
+      this.$refs.form.validate();
+      if (!this.valid) {
+        return;
+      }
+      const itemId = this.cvElements[newItem.elementType].find(
+        (el) => el.name == newItem.elementName
+      ).id;
+      const itemToAdd = Object.assign({}, newItem);
+      itemToAdd.id = (itemId - 1) * 5 + parseInt(newItem.proficiency);
+      // reset newItem
+      this.newElement.elementType = "PROGRAMMING_LANGUAGE";
+      this.newElement.elementName = "";
+      this.newElement.proficiency = 0;
+      this.proficiencies.push(itemToAdd);
+      this.$refs.form.resetValidation();
+    },
     deleteItem: function (id) {
       this.proficiencies = this.proficiencies.filter((item) => item.id != id);
     },
     startEditing: function () {
-      this.profSnapshot = Object.assign({}, this.proficiencies);
+      this.profSnapshot = [];
+      this.proficiencies.forEach((el) => {
+        this.profSnapshot.push(Object.assign({}, el));
+      });
       this.editing = true;
     },
     saveChanges: function () {
-      let changedProf = Object.assign({}, this.proficiencies);
+      let changedProf = Object.assign([], this.proficiencies);
       this.loading = true;
       this.axios({
         url: apiURL + "/resume",
         method: "PUT",
-        data: changedProf,
+        data: { proficiencies: changedProf },
       }).then(() => {
+        this.proficiencies.sort(this.elementTypeSort);
         this.editing = false;
         this.loading = false;
       });
     },
     discardChanges: function () {
-      this.proficiencies = Object.assign({}, this.profSnapshot);
-      this.profSnapshot = {};
+      this.proficiencies = Object.assign([], this.profSnapshot);
+      this.profSnapshot = [];
       this.editing = false;
+    },
+    elementTypeEnumToNumber: function (enumValue) {
+      switch (enumValue) {
+        case "PROGRAMMING_LANGUAGE":
+          return 0;
+        case "TECHNOLOGY":
+          return 1;
+        case "KNOWLEDGE":
+          return 2;
+        case "LANGUAGE":
+          return 3;
+        case "SOFT_SKILL":
+          return 4;
+      }
+    },
+    elementTypeSort: function (e1, e2) {
+      if (e1.elementType == e2.elementType) {
+        return e1.elementName > e2.elementName;
+      } else {
+        return (
+          this.elementTypeEnumToNumber(e1.elementType) >
+          this.elementTypeEnumToNumber(e2.elementType)
+        );
+      }
     },
   },
 };
