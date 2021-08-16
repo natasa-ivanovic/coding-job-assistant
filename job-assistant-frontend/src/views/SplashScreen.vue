@@ -132,7 +132,6 @@ export default {
   },
   mounted() {
     this.interval = setInterval(() => {
-      console.log(this.value);
       if (this.value === 100) {
         this.loading = false;
         this.value = 0;
