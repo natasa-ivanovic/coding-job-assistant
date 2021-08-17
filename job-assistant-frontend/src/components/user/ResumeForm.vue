@@ -302,12 +302,9 @@ export default {
     },
     elementTypeSort: function (e1, e2) {
       if (e1.elementType == e2.elementType) {
-        return e1.elementName > e2.elementName;
+        return e1.elementName > e2.elementName ? 1 : -1;
       } else {
-        return (
-          this.elementTypeEnumToNumber(e1.elementType) >
-          this.elementTypeEnumToNumber(e2.elementType)
-        );
+        return (this.elementTypeEnumToNumber(e1.elementType) >this.elementTypeEnumToNumber(e2.elementType)) ? 1 : -1;
       }
     },
   },
