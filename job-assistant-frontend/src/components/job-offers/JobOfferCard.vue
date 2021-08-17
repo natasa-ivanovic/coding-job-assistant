@@ -22,7 +22,7 @@
       jobOffer.company
     }}</v-card-subtitle>
 
-    <v-card-text>
+    <!-- <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
           :value="jobOffer.offerRating"
@@ -35,8 +35,8 @@
 
         <div class="grey--text ms-4">{{ getRatingText() }}</div>
       </v-row>
-    </v-card-text>
-    <div class="mt-6 ml-4 mr-4" style="text-align: justify">
+    </v-card-text> -->
+    <div class="mt-2 ml-4 mr-4" style="text-align: justify">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
       mi non dolor congue congue. Donec vestibulum nisi lectus.
     </div>
@@ -126,17 +126,17 @@ export default {
       else if (category == "LOW_COMPETITION") return "mdi-flag-checkered";
       else if (category == "BEST_MATCH") return "mdi-check";
     },
-    getRatingText() {
-      if (this.jobOffer.offerRating >= 4.0) {
-        return "Great reviews!";
-      } else if (this.jobOffer.offerRating >= 3) {
-        return "Average reviews!";
-      } else if (this.jobOffer.offerRating != 0) {
-        return "Bad reviews!";
-      } else {
-        return "No reviews so far!";
-      }
-    },
+    // getRatingText() {
+    //   if (this.jobOffer.offerRating >= 4.0) {
+    //     return "Great reviews!";
+    //   } else if (this.jobOffer.offerRating >= 3) {
+    //     return "Average reviews!";
+    //   } else if (this.jobOffer.offerRating != 0) {
+    //     return "Bad reviews!";
+    //   } else {
+    //     return "No reviews so far!";
+    //   }
+    // },
     showStatistic() {
       this.$router.push({
         name: "JobOfferStatisticView",

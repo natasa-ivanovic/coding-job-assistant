@@ -52,6 +52,8 @@ public class JobPositionSuggestionService {
 		kieSession.setAgendaFocus("jps-p1");
 		kieSession.fireAllRules();
 		
+		suggestion.setFinished(true);
+		
 		suggestion.getPositionRatings().sort(Comparator.reverseOrder());
 		
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {

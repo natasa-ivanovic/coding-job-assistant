@@ -31,7 +31,7 @@ rule "JobPositionSuggestion - phase 1"
 	agenda-group "jps-p1"
 	lock-on-active
     when
-        $jps: JobPositionSuggestion($user: jobSeeker, $posRatings: positionRatings) 
+        $jps: JobPositionSuggestion($user: jobSeeker, $posRatings: positionRatings, finished == false) 
         and
 		forall(JobPositionRating(rating == 0) from $posRatings) 
         and
@@ -63,13 +63,13 @@ rule "JobPositionSuggestion - phase 2 - programming language"
 	lock-on-active
     when
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0) 
+        							$positionRatings.size() != 0, finished == false) 
 		and
 		$u_progLanguages: List() from accumulate(CVElementProficiency($cvElement: cvElement, cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
 										from $user.proficiencies,
 										collectList($cvElement.getName())) 
 		and
-		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages contains subtitle) 
+		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages contains subtitle) from $positionRatings
 		and
 		$progLangProf: CVElementProficiency(cvElement.getName() == $jpr.subtitle, 
 											cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE) 
@@ -90,13 +90,13 @@ rule "JobPositionSuggestion - phase 2 - delete empty"
 	lock-on-active
     when
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0) 
+        							$positionRatings.size() != 0, finished == false) 
 		and
 		$u_progLanguages: List() from accumulate(CVElementProficiency($cvElement: cvElement, cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
 										from $user.proficiencies,
 										collectList($cvElement.getName())) 
 		and
-		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages not contains subtitle)
+		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages not contains subtitle) from $positionRatings
     then
 		System.out.println("Removing JPS with name " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle());
 		delete($jpr);
@@ -112,7 +112,7 @@ rule "JobPositionSuggestion - phase 3 - technology"
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) 
 		and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0, $positionRatings contains $jpr) 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) 
 		and
 		$job_technologies: List() from accumulate(CVElement($technologyName: name, type == CVElementType.TECHNOLOGY)
 										from $jobPosition.cvElements,
@@ -137,7 +137,7 @@ rule "JobPositionSuggestion - phase 3 - knowledge"
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) 
 		and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0, $positionRatings contains $jpr) 
+        							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) 
 		and
 		$job_knowledge: List() from accumulate(CVElement($knowledgeName: name, type == CVElementType.KNOWLEDGE)
 										from $jobPosition.cvElements,
@@ -163,7 +163,7 @@ rule "JobPositionSuggestion - phase 4 - Junior"
     when
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+        							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
 					from $user.getWorkingExperience(),
 					$effectiveMonths: sum($seniority.getValue() * $months)
@@ -187,7 +187,7 @@ rule "JobPositionSuggestion - phase 4 - Medior"
     when
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+        							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
 					from $user.getWorkingExperience(),
 					$effectiveMonths: sum($seniority.getValue() * $months)
@@ -211,7 +211,7 @@ rule "JobPositionSuggestion - phase 4 - Senior"
     when
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
-        							$positionRatings.size() != 0, $positionRatings contains $jpr) and
+        							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
 		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
 					from $user.getWorkingExperience(),
 					$effectiveMonths: sum($seniority.getValue() * $months)
