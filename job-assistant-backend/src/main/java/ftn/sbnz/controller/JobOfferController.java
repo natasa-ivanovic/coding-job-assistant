@@ -34,11 +34,20 @@ public class JobOfferController {
 	
 	@PostMapping("/follow/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Object> follow(@PathVariable("id") String jobOfferRatingId) {
+	public ResponseEntity<Object> follow(@PathVariable("id") String jobOfferRatingId) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
-		String position = service.follow(Long.parseLong(jobOfferRatingId), jobSeeker.getId());
+		Long position = service.follow(Long.parseLong(jobOfferRatingId), jobSeeker.getId());
 		return new ResponseEntity<>(position, HttpStatus.OK);
+	}
+	
+	@PostMapping("/unfollow/{id}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<Object> unfollow(@PathVariable("id") String jobOfferRatingId) throws Exception {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
+		service.unfollow(Long.parseLong(jobOfferRatingId), jobSeeker.getId());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping

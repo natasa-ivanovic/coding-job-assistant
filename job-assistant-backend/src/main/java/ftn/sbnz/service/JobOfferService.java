@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_offer.JobOfferDTO;
 import ftn.sbnz.model.company.Company;
@@ -47,10 +48,15 @@ public class JobOfferService {
 		this.repository.save(jo);
 	}
 
-	public String follow(Long jobOfferRatingId, Long userId) {
+	public Long follow(Long jobOfferRatingId, Long userId) throws Exception {
 		JobOfferRating jor = jobOfferRatingRepository.getOne(jobOfferRatingId);
 		JobOffer jo = jor.getJobOffer();
 		JobSeeker js = jobSeekerRepository.getOne(userId);
+		// check if already following that offer
+		JobSeekerRanking ranking = jobSeekerRankingRepository.findOneByJobSeekerAndJobOffer(js, jo);
+		if (ranking != null) {
+			throw new Exception("Already following this job offer!");
+		}
 		JobSeekerRanking jsr = new JobSeekerRanking();
 		jsr.setJobOffer(jo);
 		jsr.setJobSeeker(js);
@@ -65,8 +71,27 @@ public class JobOfferService {
 		kieSession.fireAllRules();
 		updateDBFromRule(jo);
 		
-		return sortRankings(jo.getRankings(), userId);
+		return jobSeekerRankingCreated.getId();
 	}
+	
+	@Transactional
+	public void unfollow(Long jobOfferRatingId, Long userId) throws Exception {
+		JobOfferRating jor = jobOfferRatingRepository.getOne(jobOfferRatingId);
+		JobOffer jo = jor.getJobOffer();
+		JobSeeker js = jobSeekerRepository.getOne(userId);
+		// check if not following that offer
+		JobSeekerRanking ranking = jobSeekerRankingRepository.findOneByJobSeekerAndJobOffer(js, jo);
+		if (ranking == null) {
+			throw new Exception("Not following this job offer!");
+		}
+		js.getOfferRankings().remove(ranking);
+		jo.getRankings().remove(ranking);
+		repository.save(jo);
+		jobSeekerRepository.save(js);
+		jobSeekerRankingRepository.deleteById(ranking.getId());
+		System.out.println("Successfully unfollowed xd");
+	}
+	
 
 	public void updateDBFromRule(JobOffer jobOfferDb) {
 		Collection<Object> offers = kieSession.getObjectsFromSession(JobOffer.class);
@@ -75,7 +100,6 @@ public class JobOfferService {
 			if (jo.getId() == jobOfferDb.getId()) {
 				if (!jo.getMedal().equals(jobOfferDb.getMedal())) {
 					jobOfferDb.setMedal(jo.getMedal());
-					;
 					this.save(jo);
 				}
 				return;
