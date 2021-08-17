@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_offer.JobOfferStatisticDTO;
 import ftn.sbnz.model.job_offer.JobOffer;
@@ -18,7 +19,7 @@ import ftn.sbnz.repository.user.JobSeekerRepository;
 import lombok.Data;
 
 @Service
-@Data
+@Transactional
 public class JobOfferStatisticService {
 	
 	private JobOfferStatisticRepository repository;

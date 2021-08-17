@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_offer.JobOfferRatingDTO;
 import ftn.sbnz.dto.job_offer.JobOfferSuggestionDTO;
@@ -20,6 +21,7 @@ import ftn.sbnz.repository.job_offer.JobOfferSuggestionRepository;
 import ftn.sbnz.repository.user.JobSeekerRankingRepository;
 
 @Service
+@Transactional
 public class JobOfferSuggestionService {
 
 	private JobOfferSuggestionRepository repository;

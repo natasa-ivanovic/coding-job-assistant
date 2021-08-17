@@ -2,11 +2,13 @@ package ftn.sbnz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.model.auth.Authority;
 import ftn.sbnz.repository.auth.AuthorityRepository;
 
 @Service
+@Transactional
 public class AuthorityService {
 
     private AuthorityRepository authRepository;

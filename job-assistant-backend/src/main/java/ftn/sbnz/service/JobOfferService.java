@@ -21,6 +21,7 @@ import ftn.sbnz.repository.user.JobSeekerRankingRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 
 @Service
+@Transactional
 public class JobOfferService {
 
 	private JobOfferRepository repository;
@@ -74,7 +75,7 @@ public class JobOfferService {
 		return jobSeekerRankingCreated.getId();
 	}
 	
-	@Transactional
+	
 	public void unfollow(Long jobOfferRatingId, Long userId) throws Exception {
 		JobOfferRating jor = jobOfferRatingRepository.getOne(jobOfferRatingId);
 		JobOffer jo = jor.getJobOffer();

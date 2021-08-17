@@ -37,10 +37,10 @@ public class Company {
 	@NonNull
 	private MedalRank medal;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany
 	private List<JobOffer> jobOffers;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+	@OneToMany(mappedBy = "company")
 	private List<CompanyReview> companyReviews;
 	
 	public float getAverageRating() {

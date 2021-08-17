@@ -48,15 +48,15 @@ public class JobSeeker extends User{
 	@Column(name = "continuous_learning")
 	private boolean continuousLearning;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<CVElementProficiency> proficiencies = new HashSet<>();
-	
-	// nekada je bilo eager
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<WorkingExperience> workingExperience = new ArrayList<>();
-	
 	@OneToMany(mappedBy = "poster")
 	private List<CompanyReview> reviews = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<CVElementProficiency> proficiencies = new HashSet<>();
+
+	@OneToMany
+	private List<WorkingExperience> workingExperience = new ArrayList<>();
+	
 	
 	@OneToMany
 	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();

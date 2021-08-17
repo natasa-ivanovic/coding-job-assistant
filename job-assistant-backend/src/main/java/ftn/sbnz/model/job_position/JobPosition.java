@@ -33,7 +33,7 @@ public class JobPosition {
 	@NonNull
 	private String title;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<CVElement> cvElements = new HashSet<>();
 
 }

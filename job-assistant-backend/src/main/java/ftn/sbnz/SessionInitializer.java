@@ -44,6 +44,7 @@ public class SessionInitializer {
 			session.insert(js);
 		}
 	}
+	
 	private static void addJobPositionsToContext(ApplicationContext context, KieSessionService session) {
 		JobPositionRepository repo = context.getBean(JobPositionRepository.class);
 		List<JobPosition> positions = repo.findAll();
