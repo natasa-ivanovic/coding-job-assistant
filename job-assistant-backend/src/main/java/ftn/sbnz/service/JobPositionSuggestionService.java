@@ -73,4 +73,13 @@ public class JobPositionSuggestionService {
 		}
 	}
 
+	public boolean hasLastSuggestion(JobSeeker jobSeeker) {
+		List<JobPositionSuggestionDTO> list = this.repository.findAllByJobSeeker(jobSeeker);
+		if (list.size() == 0) {
+			return false;
+		} else {
+			return false;
+		}
+	}
+
 }

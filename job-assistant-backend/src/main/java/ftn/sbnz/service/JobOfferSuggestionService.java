@@ -22,18 +22,23 @@ public class JobOfferSuggestionService {
 	private JobOfferRatingRepository ratingRepository;
 	private UserService userService;
 	private KieSessionService kieSession;
+	private JobPositionSuggestionService positionSuggestionService;
 	
 	@Autowired
 	public JobOfferSuggestionService(JobOfferSuggestionRepository repository, JobOfferRatingRepository ratingRepository, UserService userService, 
-			KieSessionService kieSession) {
+			KieSessionService kieSession, JobPositionSuggestionService positionSuggestionService) {
 		this.repository = repository;
 		this.ratingRepository = ratingRepository;
 		this.userService = userService;
 		this.kieSession = kieSession;
+		this.positionSuggestionService = positionSuggestionService;
 	}
 	
 	public JobOfferSuggestionDTO create(JobSeeker jobSeeker) {
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
+		if (!this.positionSuggestionService.hasLastSuggestion(dbJobSeeker)) {
+			this.positionSuggestionService.create(dbJobSeeker);
+		}
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferSuggestion suggestion = new JobOfferSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
