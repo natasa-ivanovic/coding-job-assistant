@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.enums.JobOfferCategory;
 import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -28,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JobOfferRating {
+public class JobOfferRating implements Comparable<JobOfferRating>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -51,5 +52,9 @@ public class JobOfferRating {
 
 	@OneToMany
 	private List<JobOfferStatistic> statistic = new ArrayList<>();
-	
+
+	@Override
+	public int compareTo(JobOfferRating o) {
+		return this.getRating() - o.getRating();
+	}
 }

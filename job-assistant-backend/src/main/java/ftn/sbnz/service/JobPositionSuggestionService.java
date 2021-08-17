@@ -2,6 +2,7 @@ package ftn.sbnz.service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,9 @@ public class JobPositionSuggestionService {
 		kieSession.setAgendaFocus("jps-p2");
 		kieSession.setAgendaFocus("jps-p1");
 		kieSession.fireAllRules();
-
+		
+		suggestion.getPositionRatings().sort(Comparator.reverseOrder());
+		
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {
 			this.ratingRepository.save(rating);
 		}

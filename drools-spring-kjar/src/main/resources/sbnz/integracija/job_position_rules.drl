@@ -42,7 +42,7 @@ rule "JobPositionSuggestion - phase 1"
         $position: JobPosition ($p_progLanguages: cvElements,
 							    $u_progLanguages intersects $p_progLanguages) 
         and
-		$progLang: CVElement() from $p_progLanguages
+		$progLang: CVElement(type == CVElementType.PROGRAMMING_LANGUAGE) from $p_progLanguages
     then
 		JobPositionRating $jpr = new JobPositionRating();
 		$jpr.setRating(0);
@@ -71,7 +71,9 @@ rule "JobPositionSuggestion - phase 2 - programming language"
 		and
 		$jpr: JobPositionRating(rating == 0, seniority == SeniorityLevel.NONE, $u_progLanguages contains subtitle) 
 		and
-		$progLangProf: CVElementProficiency(cvElement.getName() == $jpr.subtitle) from $user.proficiencies
+		$progLangProf: CVElementProficiency(cvElement.getName() == $jpr.subtitle, 
+											cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE) 
+										from $user.proficiencies
     then
 		int $progLangValue = $progLangProf.getProficiency().getValue() + 1;
 		String $newDescription = "Programming language - " + $progLangProf.getCvElement().getName() + " (" + $progLangProf.getProficiency().toString() + ")\n";
