@@ -3,6 +3,7 @@ package ftn.sbnz.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,19 +30,25 @@ public class JobOfferSuggestionService {
 	private JobSeekerRankingRepository rankingRepository;
 	private UserService userService;
 	private KieSessionService kieSession;
+	private JobPositionSuggestionService positionSuggestionService;
 
 	@Autowired
 	public JobOfferSuggestionService(JobOfferSuggestionRepository repository, JobOfferRatingRepository ratingRepository,
-			JobSeekerRankingRepository rankingRepository, UserService userService, KieSessionService kieSession) {
+			JobSeekerRankingRepository rankingRepository, UserService userService, KieSessionService kieSession,
+			JobPositionSuggestionService positionSuggestionService) {
 		this.repository = repository;
 		this.ratingRepository = ratingRepository;
 		this.rankingRepository = rankingRepository;
 		this.userService = userService;
 		this.kieSession = kieSession;
+		this.positionSuggestionService = positionSuggestionService;
 	}
 
 	public JobOfferSuggestionDTO create(JobSeeker jobSeeker) {
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
+		if (!this.positionSuggestionService.hasLastSuggestion(dbJobSeeker)) {
+			this.positionSuggestionService.create(dbJobSeeker);
+		}
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferSuggestion suggestion = new JobOfferSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
@@ -53,6 +60,8 @@ public class JobOfferSuggestionService {
 		kieSession.setAgendaFocus("jos-p2");
 		kieSession.setAgendaFocus("jos-p1");
 		kieSession.fireAllRules();
+
+		suggestion.getOfferRatings().sort(Comparator.reverseOrder());
 
 		for (JobOfferRating rating : suggestion.getOfferRatings()) {
 			this.ratingRepository.save(rating);

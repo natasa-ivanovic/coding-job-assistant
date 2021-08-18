@@ -109,7 +109,8 @@ export default {
       })
       .catch((error) => {
         this.show = false;
-        alert(error);
+        // TODO proveriti jel ovo okej
+        this.$root.snackbar.error(error);
       });
   },
   methods: {},

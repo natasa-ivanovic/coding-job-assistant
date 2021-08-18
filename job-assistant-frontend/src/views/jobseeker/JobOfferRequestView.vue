@@ -121,7 +121,7 @@ export default {
         })
         .catch((error) => {
           this.show = false;
-          alert(error);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
   },

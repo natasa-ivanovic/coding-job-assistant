@@ -43,4 +43,7 @@ public class JobPositionSuggestion {
 	@NonNull
 	private JobSeeker jobSeeker;
 	
+	@Column(name = "finished")
+	private boolean finished;
+	
 }

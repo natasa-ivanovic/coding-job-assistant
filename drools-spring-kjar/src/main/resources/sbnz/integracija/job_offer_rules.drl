@@ -140,7 +140,8 @@ rule "JobOfferSuggestion - phase 2 - mandatory programming languages (not exist)
 		$offerProgImportance: 
 					CVElementImportance(
                         optional == false, 
-                        $userProgrammingLang not contains cvElementProficiency.getCvElement().getName()
+                        $userProgrammingLang not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.PROGRAMMING_LANGUAGE
                     )
 					from $progImportances
 	then
@@ -264,7 +265,8 @@ rule "JobOfferSuggestion - phase 3 - technology (not exist)"
 		and
 		$offerTechImportance: 
 					CVElementImportance(
-                        $userTech not contains cvElementProficiency.getCvElement().getName())
+                        $userTech not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.TECHNOLOGY)
 					from $techImportances
 	then
 		int $points = $offerTechImportance.getImportanceLevel() * $offerTechImportance.getCvElementProficiency().getProficiency().getValue() * (-1);
@@ -346,7 +348,8 @@ rule "JobOfferSuggestion - phase 4 - knowledge (not exist)"
 		and
 		$offerKnowledgeImportance: 
 					CVElementImportance(
-                        $userKnowledge contains cvElementProficiency.getCvElement().getName()
+                        $userKnowledge not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.KNOWLEDGE
                     )
 					from $knowledgeImportances
 	then

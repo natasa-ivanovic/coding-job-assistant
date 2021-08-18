@@ -1,5 +1,10 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="400">
+  <v-card
+    elevation="8"
+    :loading="loading"
+    class="mx-auto my-12"
+    max-width="400"
+  >
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -8,10 +13,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      src="@/assets/job-position.jpg"
-      height="210"
-    ></v-img>
+    <v-img src="@/assets/job-position.jpg" height="210"></v-img>
 
     <v-card-title>{{ jobPosition.title }}</v-card-title>
     <v-card-subtitle>{{ jobPosition.subtitle }}</v-card-subtitle>
@@ -95,11 +97,11 @@ export default {
     view: () => {
       console.log(view);
     },
-    getIcon: function (val) {
+    getIcon: function(val) {
       if (val == this.userProf) return this.iconUser;
       else return this.iconJob;
     },
-    formatDescription: function (desc) {
+    formatDescription: function(desc) {
       const list = [];
       desc.split("\n").forEach((el) => {
         if (el.length == 0) return;
@@ -110,21 +112,20 @@ export default {
       if (list.length > 5) return list.splice(0, 5);
       else return list;
     },
-    getRating: function () {
+    getRating: function() {
       if (this.maxRating != 0) {
-        const percentage = (this.jobPosition.rating * 100) / this.maxRating
+        const percentage = (this.jobPosition.rating * 100) / this.maxRating;
         return percentage / 20;
-      }
-      else return 0;
+      } else return 0;
     },
-    getRatingText: function () {
+    getRatingText: function() {
       const rating = this.getRating();
       if (rating >= 4.0) {
-        return "Excellent match!"
+        return "Excellent match!";
       } else if (rating >= 2) {
-        return "Decent match!"
+        return "Decent match!";
       } else {
-        return "Potentially useful!"
+        return "Potentially useful!";
       }
     },
   },

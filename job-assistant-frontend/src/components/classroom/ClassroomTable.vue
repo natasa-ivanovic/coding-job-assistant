@@ -22,7 +22,18 @@
         :active="show"
       ></v-progress-linear>
     </v-row>
-    <v-row>
+    <v-row v-if="info.length == 0 && !show">
+      <v-col cols="12">
+        <v-alert class="ml-3 mr-3" type="info" color="indigo accent-3">
+          No classroom materials currently available! Please visit your Job Offer suggestions and click the Evaluate button to decide on what you should study next.
+        <v-btn class="mt-3" color="white" outlined to="/job-offer-requests"
+        >
+        Take me there!
+        </v-btn>
+        </v-alert>
+      </v-col>
+    </v-row>
+    <v-row v-else>
       <v-row v-for="jo in info" :key="jo.id">
         <v-row class="ml-5 mb-0 description" style="font-size:30px">
             {{ jo.company }},

@@ -4,7 +4,7 @@
       <v-col cols="8">
         <v-card>
           <v-card-title>
-            <v-col>Job offer reviews</v-col>
+            <v-col>Company reviews</v-col>
             <v-col>
               <v-text-field
                 v-model="search"
@@ -50,14 +50,12 @@
 const apiURL = "/api/company-review";
 
 export default {
-  name: "ManageUsers",
+  name: "CompanyReviewListForm",
   components: {},
   data() {
     return {
       search: "",
       headers: [
-        { text: "Job offer id", value: "offerId" },
-        { text: "Job position", value: "offerName" },
         { text: "Company", value: "companyName" },
         { text: "Rating", value: "rating" },
         { text: "Poster name", value: "jobSeekerName" },
@@ -81,7 +79,7 @@ export default {
           this.reviews = response.data;
         })
         .catch((error) => {
-          alert(error);
+          this.$root.snackbar.warning(error);
         });
     },
     approveReview(item) {
@@ -89,10 +87,10 @@ export default {
         .post(apiURL + "/approve/" + item.id)
         .then((response) => {
             item.status = "APPROVED";
-          alert("Successfully approved review!");
+            this.$root.snackbar.success("Successfully approved review!");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
     declineReview(item) {
@@ -100,10 +98,10 @@ export default {
         .post(apiURL + "/decline/" + item.id)
         .then((response) => {
             item.status = "DECLINED";
-          alert("Successfully declined review!");
+            this.$root.snackbar.success("Successfully declined review!");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
   },

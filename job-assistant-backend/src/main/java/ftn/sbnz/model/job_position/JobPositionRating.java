@@ -1,9 +1,7 @@
 package ftn.sbnz.model.job_position;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JobPositionRating {
+public class JobPositionRating implements Comparable<JobPositionRating> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,7 +27,7 @@ public class JobPositionRating {
 	@Column(name = "rating", unique = false, nullable = false)
 	private int rating;
 
-	@Column(name = "description", unique = false, nullable = false)
+	@Column(name = "description", unique = false, nullable = false, columnDefinition = "TEXT")
 	@NonNull
 	private String description;
 
@@ -46,5 +44,12 @@ public class JobPositionRating {
 	
 	@ManyToOne
 	private JobPosition jobPosition;
+
+	@Override
+	public int compareTo(JobPositionRating o) {
+		return this.getRating() - o.getRating();
+	}
+	
+	
 
 }

@@ -2,6 +2,7 @@ package ftn.sbnz.service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,11 @@ public class JobPositionSuggestionService {
 		kieSession.setAgendaFocus("jps-p2");
 		kieSession.setAgendaFocus("jps-p1");
 		kieSession.fireAllRules();
-
+		
+		suggestion.setFinished(true);
+		
+		suggestion.getPositionRatings().sort(Comparator.reverseOrder());
+		
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {
 			this.ratingRepository.save(rating);
 		}
@@ -69,6 +74,15 @@ public class JobPositionSuggestionService {
 					.sorted((item1, item2) -> Long.compare(item2.getDate().getTime(), item1.getDate().getTime()))
 					.collect(Collectors.toList());
 			return list.get(0);
+		}
+	}
+
+	public boolean hasLastSuggestion(JobSeeker jobSeeker) {
+		List<JobPositionSuggestionDTO> list = this.repository.findAllByJobSeeker(jobSeeker);
+		if (list.size() == 0) {
+			return false;
+		} else {
+			return false;
 		}
 	}
 
