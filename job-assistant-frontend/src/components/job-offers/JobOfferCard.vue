@@ -15,7 +15,7 @@
 
     <v-img
       height="250"
-      src="https://image.freepik.com/free-vector/team-leader-teamwork-concept_74855-6671.jpg"
+      src="@/assets/job-offer.jpg"
     ></v-img>
     <v-card-title>{{ jobOffer.position }}</v-card-title>
     <v-card-subtitle style="font-size: 15px">{{

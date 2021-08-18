@@ -9,8 +9,8 @@
     </template>
 
     <v-img
-      height="150"
-      src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg"
+      src="@/assets/job-position.jpg"
+      height="210"
     ></v-img>
 
     <v-card-title>{{ jobPosition.title }}</v-card-title>
@@ -47,7 +47,7 @@
     <v-card-text>
       <v-chip-group
         v-model="jobPosition.seniority"
-        active-class="blue accent-4 white--text"
+        active-class="indigo accent-1 black--text"
         column
       >
         <v-chip class="custom-chip chip-disabled" value="JUNIOR" label

@@ -26,28 +26,6 @@ public class JobOfferSuggestionDTO {
 		this.offerRatings = ratings;
 	}
 	
-//	public JobOfferSuggestionDTO(JobOfferSuggestion suggestion) {
-//		this.id = suggestion.getId();
-//		this.date = suggestion.getDate();
-//		this.offerRatings = new ArrayList<>();
-//		for (JobOfferRating d : suggestion.getOfferRatings()) {
-//			String position = sortRankings(d.getJobOffer().getRankings(), suggestion.getJobSeeker().getId());
-//			this.offerRatings.add(new JobOfferRatingDTO(d, suggestion.getJobSeeker())); //position));			
-//		}
-//	}
-//	
-//	public JobOfferSuggestionDTO(List<JobOfferSuggestion> suggestions) {
-//		for (JobOfferSuggestion jos: suggestions) {
-//			this.id = jos.getId();
-//			this.date = jos.getDate();
-//			this.offerRatings = new ArrayList<>();
-//			for (JobOfferRating d : jos.getOfferRatings()) {
-//				String position = sortRankings(d.getJobOffer().getRankings(), jos.getJobSeeker().getId());
-//				this.offerRatings.add(new JobOfferRatingDTO(d, jos.getJobSeeker())); //position));			
-//			}
-//		}
-//	}
-	
 //	private String sortRankings(List<JobSeekerRanking> rankings, Long jobSeekerId) {
 //		int numOfPeople = rankings.size();
 //		if (numOfPeople > 0) {
