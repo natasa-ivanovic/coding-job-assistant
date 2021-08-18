@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import ftn.sbnz.dto.company.CompanyDTO;
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.enums.MedalRank;
 import ftn.sbnz.repository.company.CompanyRepository;
 
 @Service
@@ -54,6 +56,29 @@ public class CompanyService {
 	
 	public List<CompanyDTO> getAll() {
 		return this.repository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
+	}
+
+	public Long create(CompanyDTO dto) throws Exception {
+		Company check = repository.findOneByName(dto.getName());
+		if (check != null)
+			throw new Exception("Company name is not unique!");
+		Company c = new Company(dto.getName(), MedalRank.NONE);
+		c = this.repository.save(c);
+		return c.getId();
+	}
+
+	public void edit(CompanyDTO dto, Long id) throws Exception {
+		Company check = repository.findOneByName(dto.getName());
+		if (check != null)
+			throw new Exception("Company name is not unique!");
+		Company c = this.repository.getOne(id);
+		c.setName(dto.getName());
+		this.repository.save(c);
+	}
+
+	public void delete(Long id) {
+		this.repository.deleteById(id);
+		
 	}
 
 }

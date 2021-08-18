@@ -47,6 +47,45 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
+        <router-link
+          :to="{ name: 'CVElementListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-message-draw</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>CV Elements</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link
+          :to="{ name: 'JobPositionAdminListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-message-draw</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Job Positions</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link
+          :to="{ name: 'CompanyAdminListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-message-draw</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Companies</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list-item-group>
     </v-list>
     <!-- user nav -->

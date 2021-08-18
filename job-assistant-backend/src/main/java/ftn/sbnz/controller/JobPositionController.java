@@ -8,11 +8,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.sbnz.dto.company.CompanyDTO;
 import ftn.sbnz.dto.job_position.JobPositionDTO;
+import ftn.sbnz.dto.job_position.JobPositionElementsDTO;
 import ftn.sbnz.service.JobPositionService;
 
 @RestController
@@ -32,6 +39,36 @@ public class JobPositionController {
 	public ResponseEntity<List<JobPositionDTO>> getAll() {
 		List<JobPositionDTO> dtos = service.getAll();
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+
+	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Object> create(@RequestBody JobPositionDTO dto) {
+		service.create(dto);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Object> edit(@RequestBody JobPositionDTO dto, @PathVariable Long id) {
+		service.edit(dto, id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PutMapping("/elements/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Object> editElements(@RequestBody JobPositionElementsDTO dto, @PathVariable Long id) {
+		service.editElements(dto, id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
+		service.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

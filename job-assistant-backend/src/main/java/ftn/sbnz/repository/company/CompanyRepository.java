@@ -6,4 +6,6 @@ import ftn.sbnz.model.company.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
+	Company findOneByName(String name);
+
 }
