@@ -75,7 +75,7 @@ public class CVElementService {
 
 	public void edit(CVElementDTO dto, Long id) throws Exception {
 		CVElement check = repository.findOneByName(dto.getName());
-		if (check != null)
+		if (check != null && check.getId() != id)
 			throw new Exception("CV Element name is not unique!");
 		CVElement element = repository.getOne(id);
 		element.setName(dto.getName());

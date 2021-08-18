@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.company.CompanyDTO;
 import ftn.sbnz.model.company.Company;
-import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.MedalRank;
 import ftn.sbnz.repository.company.CompanyRepository;
 
@@ -31,23 +31,7 @@ public class CompanyService {
 	public void save(Company c) {
 		this.repository.save(c);
 	}
-
-	public Company updateDBFromRule(Company companyDb) {
-		Collection<Object> companies = kieSession.getObjectsFromSession(Company.class);
-		for (Iterator<Object> it = companies.iterator(); it.hasNext();) {
-			Company c = (Company) it.next();
-			if (companyDb.getId() == c.getId()) {
-				if (!companyDb.getMedal().equals(c.getMedal())) {
-					companyDb.setMedal(c.getMedal());;
-					this.save(c);
-					return c;
-				}
-				return null;
-			}
-		}
-		return null;
-	}
-
+	
 	public Company getOne(Long companyId) {
 		return this.repository.getOne(companyId);
 	}
@@ -66,21 +50,45 @@ public class CompanyService {
 			throw new Exception("Company name is not unique!");
 		Company c = new Company(dto.getName(), MedalRank.NONE);
 		c = this.repository.save(c);
+		this.kieSession.insert(c);
 		return c.getId();
 	}
 
 	public void edit(CompanyDTO dto, Long id) throws Exception {
 		Company check = repository.findOneByName(dto.getName());
-		if (check != null)
+		if (check != null && check.getId() != id)
 			throw new Exception("Company name is not unique!");
 		Company c = this.repository.getOne(id);
 		c.setName(dto.getName());
+		this.kieSession.removeCompanyById(c.getId());
+		this.kieSession.insert(c);
 		this.repository.save(c);
 	}
 
-	public void delete(Long id) {
+	public void delete(Long id) throws Exception {
+		Company c = this.repository.getOne(id);
+		if (c.getJobOffers().size() != 0)
+			throw new Exception("Company has job offers!");
+		for (CompanyReview review : c.getCompanyReviews()) {
+			this.kieSession.removeCompanyReviewById(review.getId());			
+		}
 		this.repository.deleteById(id);
-		
+		this.kieSession.removeCompanyById(id);
 	}
 
+	public Company updateDBFromRule(Company companyDb) {
+		Collection<Object> companies = kieSession.getObjectsFromSession(Company.class);
+		for (Iterator<Object> it = companies.iterator(); it.hasNext();) {
+			Company c = (Company) it.next();
+			if (companyDb.getId() == c.getId()) {
+				if (!companyDb.getMedal().equals(c.getMedal())) {
+					companyDb.setMedal(c.getMedal());;
+					this.save(c);
+					return c;
+				}
+				return null;
+			}
+		}
+		return null;
+	}
 }

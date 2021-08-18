@@ -200,7 +200,7 @@ export default {
           this.closeDelete();
         })
         .catch((error) => {
-          this.$root.snackbar.error("Could not delete! Item is in use.");
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
 
