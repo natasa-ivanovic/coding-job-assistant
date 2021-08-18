@@ -1,5 +1,12 @@
 <template>
   <v-container fill-height align="center" justify="center">
+    <v-row class="ml-3 mr-3">
+      <v-progress-linear
+        indeterminate
+        color="teal"
+        :active="show"
+      ></v-progress-linear>
+    </v-row>
     <v-form v-model="valid" ref="form" style="flex: 1">
       <v-list>
         <v-list-item v-for="p in proficiencies" :key="p.id">
@@ -120,6 +127,7 @@ export default {
       loading: false,
       editing: false,
       proficiencies: [],
+      show: false,
       rules: {
         required: (value) => !!value || "Field is required.",
       },
@@ -177,12 +185,13 @@ export default {
       ],
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.getResume();
     this.getAllCvElements();
   },
   methods: {
-    getResume: function () {
+    getResume: function() {
+      this.show = true;
       this.axios({
         url: apiURL,
         method: "GET",
@@ -192,17 +201,20 @@ export default {
           p.proficiency = this.proficiencyEnumToNumber(p.proficiency);
         });
         this.proficiencies.sort(this.elementTypeSort);
+        this.show = false;
       });
     },
-    getAllCvElements: function () {
+    getAllCvElements: function() {
+      this.show = true;
       this.axios({
         url: apiCVElements,
         method: "GET",
       }).then((response) => {
         this.cvElements = response.data;
+        this.show = false;
       });
     },
-    proficiencyEnumToNumber: function (enumValue) {
+    proficiencyEnumToNumber: function(enumValue) {
       switch (enumValue) {
         case "BASIC":
           return 1;
@@ -216,7 +228,7 @@ export default {
           return 5;
       }
     },
-    getPicture: function (type) {
+    getPicture: function(type) {
       switch (type) {
         case "PROGRAMMING_LANGUAGE":
           return require("@/assets/icon-small-prog-lang.png");
@@ -230,7 +242,7 @@ export default {
           return require("@/assets/icon-small-soft-skill.png");
       }
     },
-    getElementsForType: function (type) {
+    getElementsForType: function(type) {
       const elements = this.cvElements[type];
       const availableElements = elements.filter((el) => {
         let exists = false;
@@ -241,7 +253,7 @@ export default {
       });
       return availableElements;
     },
-    addItem: function (newItem) {
+    addItem: function(newItem) {
       this.$refs.form.validate();
       if (!this.valid) {
         return;
@@ -258,17 +270,17 @@ export default {
       this.proficiencies.push(itemToAdd);
       this.$refs.form.resetValidation();
     },
-    deleteItem: function (id) {
+    deleteItem: function(id) {
       this.proficiencies = this.proficiencies.filter((item) => item.id != id);
     },
-    startEditing: function () {
+    startEditing: function() {
       this.profSnapshot = [];
       this.proficiencies.forEach((el) => {
         this.profSnapshot.push(Object.assign({}, el));
       });
       this.editing = true;
     },
-    saveChanges: function () {
+    saveChanges: function() {
       let changedProf = Object.assign([], this.proficiencies);
       this.loading = true;
       this.axios({
@@ -281,12 +293,12 @@ export default {
         this.loading = false;
       });
     },
-    discardChanges: function () {
+    discardChanges: function() {
       this.proficiencies = Object.assign([], this.profSnapshot);
       this.profSnapshot = [];
       this.editing = false;
     },
-    elementTypeEnumToNumber: function (enumValue) {
+    elementTypeEnumToNumber: function(enumValue) {
       switch (enumValue) {
         case "PROGRAMMING_LANGUAGE":
           return 0;
@@ -300,11 +312,14 @@ export default {
           return 4;
       }
     },
-    elementTypeSort: function (e1, e2) {
+    elementTypeSort: function(e1, e2) {
       if (e1.elementType == e2.elementType) {
         return e1.elementName > e2.elementName ? 1 : -1;
       } else {
-        return (this.elementTypeEnumToNumber(e1.elementType) >this.elementTypeEnumToNumber(e2.elementType)) ? 1 : -1;
+        return this.elementTypeEnumToNumber(e1.elementType) >
+          this.elementTypeEnumToNumber(e2.elementType)
+          ? 1
+          : -1;
       }
     },
   },

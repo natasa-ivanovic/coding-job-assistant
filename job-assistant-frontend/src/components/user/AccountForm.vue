@@ -1,5 +1,12 @@
 <template>
   <v-container fill-height align="center" justify="center">
+    <v-row class="ml-3 mr-3">
+      <v-progress-linear
+        indeterminate
+        color="teal"
+        :active="show"
+      ></v-progress-linear>
+    </v-row>
     <v-form v-model="valid" ref="form" style="flex: 1">
       <v-row>
         <v-col>
@@ -132,12 +139,12 @@ export default {
         salaryExpectation: 0,
         education: 0,
       },
+      show: false,
       userSnapshot: {},
       rules: {
         required: (value) => !!value || "Field is required.",
         email: (value) => {
-          const pattern =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
       },
@@ -155,11 +162,12 @@ export default {
       loading: false,
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.getProfile();
   },
   methods: {
-    getProfile: function () {
+    getProfile: function() {
+      this.show = true;
       this.axios({
         url: apiURL + "/details",
         method: "GET",
@@ -169,9 +177,10 @@ export default {
           response.data.education
         );
         console.log(this.user.education);
+        this.show = false;
       });
     },
-    educationEnumToNumber: function (enumValue) {
+    educationEnumToNumber: function(enumValue) {
       switch (enumValue) {
         case "SELF_TAUGHT":
           return 0;
@@ -185,11 +194,11 @@ export default {
           return 4;
       }
     },
-    startEditing: function () {
+    startEditing: function() {
       this.userSnapshot = Object.assign({}, this.user);
       this.editing = true;
     },
-    saveChanges: function () {
+    saveChanges: function() {
       let changedUser = Object.assign({}, this.user);
       this.loading = true;
       this.axios({
@@ -201,7 +210,7 @@ export default {
         this.loading = false;
       });
     },
-    discardChanges: function () {
+    discardChanges: function() {
       this.user = Object.assign({}, this.userSnapshot);
       this.userSnapshot = {};
       this.editing = false;

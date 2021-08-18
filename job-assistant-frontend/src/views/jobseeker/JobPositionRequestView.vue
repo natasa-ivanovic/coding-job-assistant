@@ -3,8 +3,8 @@
     <v-row justify="center">
       <v-col cols="10">
         <v-card>
-          <v-card-title>
-            <v-col> 
+          <v-card-title class="description ml-3" style="font-size:40px">
+            <v-col>
               Job positions
             </v-col>
             <v-col>
@@ -17,30 +17,61 @@
               ></v-text-field>
             </v-col>
           </v-card-title>
-          <v-row class="ml-7 mb-3" v-if="lastDate">
-            Here are your suggestions from {{new Date(lastDate).toDateString()}}
+          <v-row class="ml-9 mr-9">
+            <v-progress-linear
+              indeterminate
+              color="indigo accent-1"
+              :active="show"
+            ></v-progress-linear>
           </v-row>
-          <v-row class="ml-5">
-            <v-btn color="primary" class="mx-2" @click="requestNewPrediction">Request recommendations</v-btn>
+          <v-card-text v-if="lastDate">
+            <v-row>
+              <v-alert
+                icon="mdi-calendar"
+                outlined
+                color="black"
+                dense
+                class="ml-5 mr-5"
+                style="width: 100%;"
+              >
+                Here are your suggestions from date:
+                {{ new Date(lastDate).toDateString() }}.
+              </v-alert>
+            </v-row>
+          </v-card-text>
+          <v-row class="ml-7">
+            <v-btn color="indigo accent-1" class="mx-2" @click="requestNewPrediction"
+              >Request recommendations</v-btn
+            >
           </v-row>
           <v-card-text>
             <v-row v-if="!loaded">
               <v-col cols="12">
-                <v-alert class="ml-3 mr-3" type="info">
-                  No job position recommendations in recent memory! Please request a new set of recommendations.
+                <v-alert class="ml-2 mr-3" color="indigo accent-3" type="info">
+                  No job position recommendations in recent memory! Please
+                  request a new set of recommendations.
                 </v-alert>
               </v-col>
             </v-row>
             <v-row v-else>
-              <v-col style="flex: 1;" sm="12" md="6" lg="4" v-for="jp in jobPositions" :key="jp.id">
-                <job-position-card v-bind:jobPosition="jp" v-bind:maxRating="maxRating" />
+              <v-col
+                style="flex: 1;"
+                sm="12"
+                md="6"
+                lg="4"
+                v-for="jp in jobPositions"
+                :key="jp.id"
+              >
+                <job-position-card
+                  v-bind:jobPosition="jp"
+                  v-bind:maxRating="maxRating"
+                />
               </v-col>
             </v-row>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
-
   </v-container>
 </template>
 
@@ -60,48 +91,8 @@ export default {
       loaded: false,
       search: "",
       lastDate: null,
-      jobPositions: [
-        // {
-        //   id: 1,
-        //   rating: 69,
-        //   description:
-        //     "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-        //   title: "Frontend Developer",
-        //   subtitle: "JavaScript",
-        //   seniority: "JUNIOR",
-        //   jobPositionId: 2,
-        // },
-        // {
-        //   id: 2,
-        //   rating: 77,
-        //   description:
-        //     "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-        //   title: "Backend Developer",
-        //   subtitle: "JavaScript",
-        //   seniority: "MEDIOR",
-        //   jobPositionId: 2,
-        // },
-        // {
-        //   id: 3,
-        //   rating: 77,
-        //   description:
-        //     "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-        //   title: "Backend Developer",
-        //   subtitle: "JavaScript",
-        //   seniority: "SENIOR",
-        //   jobPositionId: 2,
-        // },
-        // {
-        //   id: 4,
-        //   rating: 77,
-        //   description:
-        //     "Programming language - JavaScript (GOOD)\nTechnology - Vue (GOOD)\nKnowledge - REST (EXCELLENT)\n",
-        //   title: "Backend Developer",
-        //   subtitle: "JavaScript",
-        //   seniority: "JUNIOR",
-        //   jobPositionId: 2,
-        // },
-      ],
+      jobPositions: [],
+      show: false
     };
   },
   mounted() {
@@ -109,13 +100,14 @@ export default {
   },
   computed: {
     maxRating: function() {
-      const allRatings = []
-      this.jobPositions.forEach(jp => allRatings.push(jp.rating))
+      const allRatings = [];
+      this.jobPositions.forEach((jp) => allRatings.push(jp.rating));
       return Math.max(...allRatings);
-    }
+    },
   },
   methods: {
-    getLastRequest: function () {
+    getLastRequest: function() {
+      this.show = true;
       this.axios
         .get(lastURL)
         .then((response) => {
@@ -123,12 +115,15 @@ export default {
           this.lastDate = response.data.date;
           console.log(response.data.date);
           this.loaded = true;
+          this.show = false;
         })
         .catch((error) => {
           this.loaded = false;
+          this.show = false;
         });
     },
-    requestNewPrediction: function () {
+    requestNewPrediction: function() {
+      this.show = true;
       this.axios
         .post(requestURL)
         .then((response) => {
@@ -136,14 +131,15 @@ export default {
           this.lastDate = response.data.date;
           console.log(response.data.date);
           this.loaded = true;
+          this.show = false;
         })
         .catch((error) => {
           this.loaded = false;
+          this.show = false;
         });
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

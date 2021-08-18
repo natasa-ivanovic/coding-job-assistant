@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_position.JobPositionDTO;
 import ftn.sbnz.dto.job_position.JobPositionElementsDTO;
@@ -28,12 +29,14 @@ public class JobPositionService {
 		this.cvElementRepository = cvElementRepository;
 	}
 
+	@Transactional
 	public List<JobPositionDTO> getAll() {
 		List<JobPosition> positions = repository.findAll();
 		return positions.stream().map(this::toDTO).collect(Collectors.toList());
 	}
 	
-	private JobPositionDTO toDTO(JobPosition jp) {
+	@Transactional
+	public JobPositionDTO toDTO(JobPosition jp) {
 		return new JobPositionDTO(jp);
 	}
 

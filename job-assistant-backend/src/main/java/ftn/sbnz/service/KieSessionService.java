@@ -8,10 +8,12 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.events.InvalidLoginEvent;
 
 @Service
+@Transactional
 public class KieSessionService {
 
 	private KieContainer kieContainer;

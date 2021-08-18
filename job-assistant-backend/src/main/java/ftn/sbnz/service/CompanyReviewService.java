@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.company.CompanyReviewDTO;
 import ftn.sbnz.events.UserAccountStatusEvent;
@@ -17,6 +18,7 @@ import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyReviewRepository;
 
 @Service
+@Transactional
 public class CompanyReviewService {
 
 	private CompanyReviewRepository repository;

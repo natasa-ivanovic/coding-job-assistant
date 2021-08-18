@@ -15,7 +15,7 @@
 
     <v-img
       height="250"
-      src="https://image.freepik.com/free-vector/team-leader-teamwork-concept_74855-6671.jpg"
+      src="@/assets/job-offer.jpg"
     ></v-img>
     <v-card-title>{{ jobOffer.position }}</v-card-title>
     <v-card-subtitle style="font-size: 15px">{{
@@ -62,11 +62,17 @@
       <v-spacer></v-spacer>
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
-    <v-card-actions>
-      <v-btn v-if="!jobOffer.following" block class="primary" @click="follow()"
+    <v-card-actions v-if="!jobOffer.following">
+      <v-btn  block class="primary" @click="follow()"
         >Follow</v-btn
       >
-      <v-alert
+    </v-card-actions>
+    <v-card-actions v-else>
+          <v-btn width="48%" class="primary" @click="unfollow()">Unfollow</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn width="48%" class="purple white--text">Leaderboard</v-btn>
+  
+      <!-- <v-alert
         v-else
         outlined
         color="#1A237E"
@@ -76,13 +82,13 @@
       >
         <b>YOUR POSITION:
         {{ jobOffer.ranking }}</b>
-      </v-alert>
+      </v-alert> -->
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-const apiURL = "/api/job-offer/follow/";
+const apiURL = "/api/job-offer/";
 
 export default {
   name: "JobOfferCard",
@@ -145,7 +151,7 @@ export default {
     },
     follow() {
       this.axios
-        .post(apiURL + this.jobOffer.id)
+        .post(apiURL + "follow/" + this.jobOffer.id)
         .then((response) => {
           this.jobOffer.ranking =  response.data;
           this.jobOffer.following = true;
@@ -154,6 +160,16 @@ export default {
           console.log(error);
         });
     },
+    unfollow() {
+      this.axios
+        .post(apiURL + "unfollow/" + this.jobOffer.id)
+        .then(() => {
+          this.jobOffer.following = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
   },
 };
 </script>

@@ -47,6 +47,7 @@ import ftn.sbnz.security.CustomUserDetailsService;
 import ftn.sbnz.security.TokenUtils;
 
 @Service
+@Transactional
 public class UserService {
 
 	private UserRepository userRepository;
@@ -246,7 +247,7 @@ public class UserService {
 		return new UserExperienceDTO(js);
 	}
 
-	@Transactional
+	
 	public void updateWorkingExperience(Long userId, UserExperienceDTO dto) {
 		JobSeeker js = this.jobSeekerRepository.getOne(userId);
 		List<WorkingExperience> newExperience = new ArrayList<>();

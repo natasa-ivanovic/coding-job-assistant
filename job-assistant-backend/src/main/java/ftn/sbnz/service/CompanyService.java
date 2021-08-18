@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.company.CompanyDTO;
 import ftn.sbnz.model.company.Company;
@@ -15,6 +16,7 @@ import ftn.sbnz.model.enums.MedalRank;
 import ftn.sbnz.repository.company.CompanyRepository;
 
 @Service
+@Transactional
 public class CompanyService {
 
 	private CompanyRepository repository;

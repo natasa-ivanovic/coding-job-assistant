@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.cv_element.CVElementDTO;
 import ftn.sbnz.model.cv_element.CVElement;
@@ -17,6 +18,7 @@ import ftn.sbnz.repository.cv_element.CVElementProficiencyRepository;
 import ftn.sbnz.repository.cv_element.CVElementRepository;
 
 @Service
+@Transactional
 public class CVElementService {
 
 	private CVElementRepository repository;
@@ -45,7 +47,7 @@ public class CVElementService {
 		return map;
 	}
 
-	private CVElementDTO toDTO(CVElement el) {
+	public CVElementDTO toDTO(CVElement el) {
 		return new CVElementDTO(el);
 	}
 	

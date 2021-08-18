@@ -47,7 +47,7 @@ public class JobOfferRating implements Comparable<JobOfferRating>{
 	@ManyToOne
 	private JobOffer jobOffer;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 
 	@OneToMany

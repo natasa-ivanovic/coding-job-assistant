@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.interview.InterviewSuggestionGroupDTO;
 import ftn.sbnz.dto.interview.InterviewSuggestionStatusDTO;
@@ -30,6 +31,7 @@ import ftn.sbnz.repository.job_offer.JobOfferDifferenceRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
 
 @Service
+@Transactional
 public class InterviewSuggestionService {
 
 	private InterviewSuggestionRepository repository;

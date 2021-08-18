@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "cv_element_importances")
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CVElementImportance {
 	
 	@Id
@@ -31,7 +30,6 @@ public class CVElementImportance {
 	private boolean optional;
 	
 	@ManyToOne
-	@NonNull
 	private CVElementProficiency cvElementProficiency;
 	
 	
