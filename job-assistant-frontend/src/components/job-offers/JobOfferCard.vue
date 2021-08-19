@@ -20,10 +20,9 @@
           </div>
         </v-expand-transition>
       </v-img>
-      <v-card-title>{{ jobOffer.positionName }}</v-card-title>
-      <v-card-subtitle style="font-size: 15px">{{
-        jobOffer.companyName
-      }}
+      <v-card-title>{{ jobOffer.positionName }}<v-spacer /><v-icon :color="getColor(jobOffer.medal)" size="50">mdi-medal</v-icon></v-card-title>
+      <v-card-subtitle style="font-size: 15px" class="black--text"
+        >{{ jobOffer.companyName }}
       </v-card-subtitle>
 
       <div class="mt-2 ml-4 mr-4" style="text-align: justify">
@@ -32,22 +31,22 @@
       </div>
 
       <v-card-text>
-            <v-chip-group
-            v-model="jobOffer.seniority"
-            active-class="indigo accent-1 black--text"
-            column
-            >
-            <v-chip class="custom-chip chip-disabled" value="JUNIOR" label
-                >Junior</v-chip
-            >
-            <v-chip class="custom-chip chip-disabled" value="MEDIOR" label
-                >Medior</v-chip
-            >
-            <v-chip class="custom-chip chip-disabled" value="SENIOR" label
-                >Senior</v-chip
-            >
-            </v-chip-group>
-    </v-card-text>
+        <v-chip-group
+          v-model="jobOffer.seniority"
+          active-class="indigo accent-1 black--text"
+          column
+        >
+          <v-chip class="custom-chip chip-disabled" value="JUNIOR" label
+            >Junior</v-chip
+          >
+          <v-chip class="custom-chip chip-disabled" value="MEDIOR" label
+            >Medior</v-chip
+          >
+          <v-chip class="custom-chip chip-disabled" value="SENIOR" label
+            >Senior</v-chip
+          >
+        </v-chip-group>
+      </v-card-text>
 
       <v-card-actions>
         <v-dialog v-model="dialog" width="900px">
@@ -66,13 +65,16 @@
         </v-dialog>
         <v-spacer />
         <v-btn color="indigo accent-1" width="49%">
-              Company
-            </v-btn>
+          Company
+        </v-btn>
       </v-card-actions>
       <v-card-actions>
-          <v-btn color="purple lighten-3" block>
-              <v-icon class="pl-0 ml-0 pr-3">mdi-seal</v-icon>Leaderboard<v-icon class="pr-0 mr-0 pl-3">mdi-seal</v-icon>
-            </v-btn>
+        <v-btn color="purple" text width="100%">
+          <v-icon class="pl-0 ml-0 pr-3">mdi-seal</v-icon> Go To Leaderboard<v-icon
+            class="pr-0 mr-0 pl-3"
+            >mdi-seal</v-icon
+          >
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-hover>
@@ -109,8 +111,16 @@ export default {
     // private List<CVElementImportanceDTO> languageImportances;
   },
   methods: {
-    view: () => {
-      console.log(view);
+    getColor(color) {
+      switch (color) {
+        case "BRONZE":
+          return "#A55131";
+        case "SILVER":
+          return "grey";
+        case "GOLD":
+          return "yellow darken-2";
+      }
+      return "white";
     },
   },
 };
