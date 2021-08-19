@@ -17,11 +17,13 @@ public class JobOfferRatingDTO {
 	private String description;
 	private String category;
 	private Long jobOfferId;
+	private JobOfferDTO jobOffer;
 	private boolean following;
 	
 	public JobOfferRatingDTO(JobOfferRating jobOfferRating, JobSeeker js, boolean following) {
 		this.id = jobOfferRating.getId();
 		this.jobOfferId = jobOfferRating.getJobOffer().getId();
+		this.jobOffer = new JobOfferDTO(jobOfferRating.getJobOffer());
 		this.position = jobOfferRating.getJobOffer().getPosition().getTitle();
 		this.company = jobOfferRating.getJobOffer().getCompany().getName();
 		this.description = jobOfferRating.getDescription();

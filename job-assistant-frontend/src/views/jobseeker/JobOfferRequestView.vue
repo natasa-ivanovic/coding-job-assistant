@@ -40,7 +40,11 @@
             </v-row>
           </v-card-text>
           <v-row class="ml-7">
-            <v-btn color="indigo accent-1" class="mx-2" @click="requestSuggestions()"
+            <v-btn
+              color="indigo accent-1"
+              class="mx-2"
+              @click="requestSuggestions()"
+              :disabled="show"
               >Request recommendations</v-btn
             >
           </v-row>
@@ -62,7 +66,7 @@
                 v-for="jo in jobOffers"
                 :key="jo.id"
               >
-                <job-offer-card v-bind:jobOffer="jo" />
+                <job-offer-suggestion-card v-bind:jobOfferRating="jo" />
               </v-col>
             </v-row>
           </v-card-text>
@@ -73,13 +77,13 @@
 </template>
 
 <script>
-import JobOfferCard from "../../components/job-offers/JobOfferCard.vue";
+import JobOfferSuggestionCard from "../../components/job-offers/JobOfferSuggestionCard.vue";
 
 const apiURL = "/api/job-offer-suggestion";
 
 export default {
   components: {
-    JobOfferCard,
+    JobOfferSuggestionCard,
   },
   name: "JobOfferRequestView",
   data() {
@@ -88,7 +92,7 @@ export default {
       jobOffers: [],
       alert: false,
       lastDate: null,
-      show: false
+      show: false,
     };
   },
   mounted() {

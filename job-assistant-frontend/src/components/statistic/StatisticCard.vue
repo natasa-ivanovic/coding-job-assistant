@@ -15,7 +15,7 @@
         <div>
           <v-tabs v-model="tab" centered slider-color="blue" class="mb-5">
             <v-tab v-if="programming">Programming languages</v-tab>
-            <v-tab v-if="technology">Technology</v-tab>
+            <v-tab v-if="technology">Technologies</v-tab>
             <v-tab v-if="knowledge">Knowledge</v-tab>
             <v-tab v-if="softSkill">Soft skills</v-tab>
             <v-tab v-if="language">Languages</v-tab>

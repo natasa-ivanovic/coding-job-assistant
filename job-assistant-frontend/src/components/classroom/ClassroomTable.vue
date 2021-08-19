@@ -42,7 +42,7 @@
         </v-row>
         <v-row >
           <v-col
-            style="flex: 1;"
+            style="flex: 1"
             class="mt-0"
             sm="12"
             md="6"

@@ -40,7 +40,11 @@
             </v-row>
           </v-card-text>
           <v-row class="ml-7">
-            <v-btn color="indigo accent-1" class="mx-2" @click="requestNewPrediction"
+            <v-btn
+              color="indigo accent-1"
+              class="mx-2"
+              @click="requestNewPrediction"
+              :disabled="show"
               >Request recommendations</v-btn
             >
           </v-row>
@@ -92,7 +96,7 @@ export default {
       search: "",
       lastDate: null,
       jobPositions: [],
-      show: false
+      show: false,
     };
   },
   mounted() {
