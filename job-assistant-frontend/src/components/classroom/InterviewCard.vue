@@ -4,6 +4,7 @@
       elevation="8"
       class="mx-auto my-10 mt-0"
       width="500"
+      min-width="400"
       color="grey lighten-4"
     >
       <v-img width="100%" height="140" src="@/assets/bulb.jpg">
@@ -143,15 +144,10 @@ export default {
       switch (elementType) {
         case "PROGRAMMING_LANGUAGE":
           return "PROGRAMMING LANGUAGE";
-        case "TECHNOLOGY":
-          return "TECHNOLOGY";
-        case "KNOWLEDGE":
-          return "KNOWLEDGE";
         case "SOFT_SKILL":
           return "SOFT SKILL";
-        case "LANGUAGE":
-          return "LANGUAGE";
       }
+      return elementType;
     },
   },
 };

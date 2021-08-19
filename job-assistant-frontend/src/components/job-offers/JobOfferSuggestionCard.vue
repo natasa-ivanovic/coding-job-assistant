@@ -17,9 +17,9 @@
       height="250"
       src="@/assets/job-offer.jpg"
     ></v-img>
-    <v-card-title>{{ jobOffer.position }}</v-card-title>
+    <v-card-title>{{ jobOfferRating.position }}</v-card-title>
     <v-card-subtitle style="font-size: 15px">{{
-      jobOffer.company
+      jobOfferRating.company
     }}</v-card-subtitle>
 
     <!-- <v-card-text>
@@ -45,24 +45,38 @@
       <v-row>
         <v-alert
           dense
-          :icon="getIconForCategory(jobOffer.category)"
-          :color="getColorForCategory(jobOffer.category)"
+          :icon="getIconForCategory(jobOfferRating.category)"
+          :color="getColorForCategory(jobOfferRating.category)"
           style="width: 100%"
           class="ml-2 mr-2"
         >
-          {{ jobOffer.category.split("_").join(" ") }}
+          {{ jobOfferRating.category.split("_").join(" ") }}
         </v-alert>
       </v-row>
     </v-card-text>
     <div class="ml-4 mr-4" style="text-align: justify">
-      <b>{{ statusDescription(jobOffer.category) }}</b>
+      <b>{{ statusDescription(jobOfferRating.category) }}</b>
     </div>
     <v-card-actions>
-      <v-btn color="#1A237E" text @click="view"> Details </v-btn>
+      <v-dialog
+        v-model="dialog"
+        width="900px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="#1A237E" text v-bind="attrs"
+          v-on="on"> Details </v-btn>
+        </template>
+        <job-offer-details-card 
+          v-bind:programmingImportances="jobOfferRating.jobOffer.programmingImportances"
+          v-bind:technologyImportances="jobOfferRating.jobOffer.technologyImportances"
+          v-bind:knowledgeImportances="jobOfferRating.jobOffer.knowledgeImportances"
+          v-bind:softSkillImportances="jobOfferRating.jobOffer.softSkillImportances"
+          v-bind:languageImportances="jobOfferRating.jobOffer.languageImportances"/>
+      </v-dialog>
       <v-spacer></v-spacer>
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
-    <v-card-actions v-if="!jobOffer.following">
+    <v-card-actions v-if="!jobOfferRating.following">
       <v-btn  block class="primary" @click="follow()"
         >Follow</v-btn
       >
@@ -71,33 +85,27 @@
           <v-btn width="48%" class="primary" @click="unfollow()">Unfollow</v-btn>
           <v-spacer></v-spacer>
           <v-btn width="48%" class="purple white--text">Leaderboard</v-btn>
-  
-      <!-- <v-alert
-        v-else
-        outlined
-        color="#1A237E"
-        dense
-        class="ml-2 mr-2 mb-0"
-        style="width: 100%; height:35.99px; text-align:center"
-      >
-        <b>YOUR POSITION:
-        {{ jobOffer.ranking }}</b>
-      </v-alert> -->
     </v-card-actions>
   </v-card>
+
 </template>
 
 <script>
+import JobOfferDetailsCard from "@/components/job-offers/JobOfferDetailsCard.vue";
 const apiURL = "/api/job-offer/";
 
 export default {
-  name: "JobOfferCard",
+  name: "JobOfferSuggestionCard",
   data: () => ({
     loading: false,
     position: "",
+    dialog: false
   }),
+  components: {
+    JobOfferDetailsCard
+  },
   props: {
-    jobOffer: Object,
+    jobOfferRating: Object,
     // private Long id;
     // private String position;
     // private String company;
@@ -146,15 +154,15 @@ export default {
     showStatistic() {
       this.$router.push({
         name: "JobOfferStatisticView",
-        params: { id: this.jobOffer["jobOfferId"] },
+        params: { id: this.jobOfferRating["jobOfferId"] },
       });
     },
     follow() {
       this.axios
         .post(apiURL + "follow/" + this.jobOffer.id)
         .then((response) => {
-          this.jobOffer.ranking =  response.data;
-          this.jobOffer.following = true;
+          this.jobOfferRating.ranking =  response.data;
+          this.jobOfferRating.following = true;
         })
         .catch((error) => {
           console.log(error);
@@ -162,9 +170,9 @@ export default {
     },
     unfollow() {
       this.axios
-        .post(apiURL + "unfollow/" + this.jobOffer.id)
+        .post(apiURL + "unfollow/" + this.jobOfferRating.id)
         .then(() => {
-          this.jobOffer.following = false;
+          this.jobOfferRating.following = false;
         })
         .catch((error) => {
           console.log(error);

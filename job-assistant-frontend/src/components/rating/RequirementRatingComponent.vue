@@ -31,15 +31,15 @@ export default {
       if (this.data.value) {
         switch (this.data.value) {
           case "BASIC":
-            return 0;
-          case "GOOD":
             return 1;
-          case "VERY_GOOD":
+          case "GOOD":
             return 2;
-          case "EXCELLENT":
+          case "VERY_GOOD":
             return 3;
-          case "EXPERT":
+          case "EXCELLENT":
             return 4;
+          case "EXPERT":
+            return 5;
         }
       }
     },
