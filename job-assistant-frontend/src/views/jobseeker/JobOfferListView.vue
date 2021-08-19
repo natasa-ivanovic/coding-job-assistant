@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row align="center" justify="center">
-      <v-col cols="8">
+      <v-col cols="10">
         <v-card>
           <v-card-title>
             <v-col> Job offers </v-col>
@@ -15,21 +15,18 @@
               ></v-text-field>
             </v-col>
           </v-card-title>
-          <v-data-table :headers="headers" :items="offers" :search="search">
-            <template v-slot:[`item.seniority`]="{ item }">
-              {{
-                item.seniority.charAt(0) + item.seniority.slice(1).toLowerCase()
-              }}
-            </template>
-            <template v-slot:[`item.datePosted`]="{ item }">
-              {{ new Date(item.datePosted).toDateString() }}
-            </template>
-            <template v-slot:[`item.medal`]="{ item }">
-              <v-icon v-if="item.medal != 'NONE'" :color="getColor(item.medal)">
-                mdi-medal
-              </v-icon>
-            </template>
-          </v-data-table>
+		  <v-row>
+              <v-col
+                style="flex: 1;"
+                sm="12"
+                md="6"
+                lg="4"
+                v-for="jo in offers"
+                :key="jo.id"
+              >
+                <job-offer-card v-bind:jobOffer="jo" />
+              </v-col>
+            </v-row>
         </v-card>
       </v-col>
     </v-row>
@@ -38,19 +35,16 @@
 
 <script>
 const apiURL = "/api/job-offer";
+import JobOfferCard from "@/components/job-offers/JobOfferCard.vue";
 
 export default {
-  name: "ManageUsers",
+  name: "JobOfferListView",
+  components: {
+	  JobOfferCard
+  },
   data() {
     return {
       search: "",
-      headers: [
-        { text: "Job position", value: "positionName" },
-        { text: "Company", value: "companyName" },
-        { text: "Seniority", value: "seniority" },
-        { text: "Posted on", value: "datePosted" },
-        { text: "Medal", value: "medal" },
-      ],
       offers: [],
     };
   },

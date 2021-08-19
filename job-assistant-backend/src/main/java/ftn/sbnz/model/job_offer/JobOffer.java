@@ -60,7 +60,7 @@ public class JobOffer {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<CVElementImportance> cvElementImportances = new HashSet<>();
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<JobSeekerRanking> rankings = new ArrayList<>();
 	
 	@OneToMany
