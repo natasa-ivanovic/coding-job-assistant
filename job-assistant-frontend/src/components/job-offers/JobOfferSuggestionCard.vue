@@ -21,21 +21,6 @@
     <v-card-subtitle style="font-size: 15px">{{
       jobOfferRating.company
     }}</v-card-subtitle>
-
-    <!-- <v-card-text>
-      <v-row align="center" class="mx-0">
-        <v-rating
-          :value="jobOffer.offerRating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ms-4">{{ getRatingText() }}</div>
-      </v-row>
-    </v-card-text> -->
     <div class="mt-2 ml-4 mr-4" style="text-align: justify">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
       mi non dolor congue congue. Donec vestibulum nisi lectus.
@@ -77,14 +62,14 @@
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
     <v-card-actions v-if="!jobOfferRating.following">
-      <v-btn  block class="primary" @click="follow()"
+      <v-btn  block color="indigo accent-1" @click="follow()"
         >Follow</v-btn
       >
     </v-card-actions>
     <v-card-actions v-else>
-          <v-btn width="48%" class="primary" @click="unfollow()">Unfollow</v-btn>
+          <v-btn width="48%" color="indigo accent-1" @click="unfollow()">Unfollow</v-btn>
           <v-spacer></v-spacer>
-          <v-btn width="48%" class="purple white--text">Leaderboard</v-btn>
+          <v-btn width="48%" class="purple lighten-3">Leaderboard</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -159,7 +144,7 @@ export default {
     },
     follow() {
       this.axios
-        .post(apiURL + "follow/" + this.jobOffer.id)
+        .post(apiURL + "follow/" + this.jobOfferRating.id)
         .then((response) => {
           this.jobOfferRating.ranking =  response.data;
           this.jobOfferRating.following = true;
