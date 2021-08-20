@@ -61,19 +61,19 @@ public class SessionInitializer {
 		}
 	}
 	
-	private static void addCompanyReviewsToContext(ApplicationContext context, KieSessionService session) {
-		CompanyReviewRepository repo = context.getBean(CompanyReviewRepository.class);
-		List<CompanyReview> list = repo.findAll();
-		for (CompanyReview r : list) {
-			session.insert(r);
-		}
-	}
-	
 	private static void addJobOffersToContext(ApplicationContext context, KieSessionService session) {
 		JobOfferRepository jobOfferRepo = context.getBean(JobOfferRepository.class);
 		List<JobOffer> offers = jobOfferRepo.findAll();
 		for (JobOffer jo : offers) {
 			session.insert(jo);
+		}
+	}
+	
+	private static void addCompanyReviewsToContext(ApplicationContext context, KieSessionService session) {
+		CompanyReviewRepository repo = context.getBean(CompanyReviewRepository.class);
+		List<CompanyReview> list = repo.findAll();
+		for (CompanyReview r : list) {
+			session.insert(r);
 		}
 	}
 	

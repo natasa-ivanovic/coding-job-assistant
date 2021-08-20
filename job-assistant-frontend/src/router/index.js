@@ -7,6 +7,9 @@ import ResetPasswordView from "../views/auth/ResetPasswordView.vue";
 
 import HomeAdminView from "../views/admin/HomeAdminView.vue";
 import CompanyReviewListView from "../views/admin/CompanyReviewListView.vue";
+import CVElementListView from "../views/admin/CVElementListView.vue";
+import JobPositionAdminListView from "../views/admin/JobPositionListView.vue";
+import CompanyAdminListView from "../views/admin/CompanyListView.vue";
 
 import HomeJobSeekerView from "../views/jobseeker/HomeJobSeekerView.vue";
 import AccountView from "../views/jobseeker/AccountView.vue";
@@ -53,13 +56,31 @@ const routes = [
       {
         component: HomeAdminView,
         name: "HomeAdminView",
-        path: "/home",
+        path: "/admin/home",
         beforeEnter: guardRouteAdmin,
       },
       {
         component: CompanyReviewListView,
         name: "CompanyReviewListView",
-        path: "/company-reviews",
+        path: "/admin/company-reviews",
+        beforeEnter: guardRouteAdmin,
+      },
+      {
+        component: CVElementListView,
+        name: "CVElementListView",
+        path: "/admin/cv-elements",
+        beforeEnter: guardRouteAdmin,
+      },
+      {
+        component: JobPositionAdminListView,
+        name: "JobPositionAdminListView",
+        path: "/admin/job-positions",
+        beforeEnter: guardRouteAdmin,
+      },
+      {
+        component: CompanyAdminListView,
+        name: "CompanyAdminListView",
+        path: "/admin/companies",
         beforeEnter: guardRouteAdmin,
       },
       // jobseeker routes

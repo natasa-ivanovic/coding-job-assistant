@@ -156,7 +156,6 @@ rule "JobPositionSuggestion - phase 3 - knowledge"
 end
 
 
-salience 0
 rule "JobPositionSuggestion - phase 4 - Junior"
 	agenda-group "jps-p4"
 	lock-on-active
@@ -164,12 +163,13 @@ rule "JobPositionSuggestion - phase 4 - Junior"
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
         							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
-		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-					from $user.getWorkingExperience(),
-					$effectiveMonths: sum($seniority.getValue() * $months)
-					) and
-		eval($effectiveMonths < 18)
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position.title == $jobPosition.title) 
+					from $user.getWorkingExperience();
+					$effectiveMonths: sum((int) ($seniority.getValue() * $months));
+					$effectiveMonths < 18
+					)
     then
+		System.out.println("jEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.JUNIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;
@@ -180,7 +180,6 @@ rule "JobPositionSuggestion - phase 4 - Junior"
 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
 end
 
-salience 50
 rule "JobPositionSuggestion - phase 4 - Medior"
 	agenda-group "jps-p4"
 	lock-on-active
@@ -188,12 +187,13 @@ rule "JobPositionSuggestion - phase 4 - Medior"
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
         							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
-		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-					from $user.getWorkingExperience(),
-					$effectiveMonths: sum($seniority.getValue() * $months)
-					) and
-		eval($effectiveMonths >= 18 && $effectiveMonths < 36)
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position.title == $jobPosition.title) 
+					from $user.getWorkingExperience();
+					$effectiveMonths: sum((int) ($seniority.getValue() * $months));
+					$effectiveMonths >= 18, $effectiveMonths < 36
+					)
     then
+		System.out.println("mEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.MEDIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;
@@ -204,7 +204,6 @@ rule "JobPositionSuggestion - phase 4 - Medior"
 		System.out.println("Updated JobPositionSuggestion " + $jpr.getTitle() + ", subtitle " + $jpr.getSubtitle() + " with seniority level - " + $newLevel + " and points " + $newRating);
 end
 
-salience 100
 rule "JobPositionSuggestion - phase 4 - Senior"
 	agenda-group "jps-p4"
 	lock-on-active
@@ -212,12 +211,13 @@ rule "JobPositionSuggestion - phase 4 - Senior"
 		$jpr: JobPositionRating(rating != 0, seniority == SeniorityLevel.NONE, $jobPosition: jobPosition) and
         $jps: JobPositionSuggestion($positionRatings: positionRatings, $user: jobSeeker, 
         							$positionRatings.size() != 0, $positionRatings contains $jpr, finished == false) and
-		accumulate(WorkingExperience($months: months, $seniority: seniority, position == $jobPosition.title) 
-					from $user.getWorkingExperience(),
-					$effectiveMonths: sum($seniority.getValue() * $months)
-					) and
-		eval($effectiveMonths >= 36)
+		accumulate(WorkingExperience($months: months, $seniority: seniority, position.title == $jobPosition.title) 
+					from $user.getWorkingExperience();
+					$effectiveMonths: sum((int) ($seniority.getValue() * $months));
+					$effectiveMonths >= 36
+					)
     then
+		System.out.println("sEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.SENIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;

@@ -1,5 +1,7 @@
 package ftn.sbnz.repository.cv_element;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ftn.sbnz.model.cv_element.CVElement;
@@ -13,4 +15,6 @@ public interface CVElementProficiencyRepository extends JpaRepository<CVElementP
 
 	public CVElementProficiency findOneByCvElementNameAndProficiency(String cvElementName,
 			SkillProficiency proficiency);
+
+	public List<CVElementProficiency> findAllByCvElementId(Long id);
 }
