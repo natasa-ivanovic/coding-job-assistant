@@ -20,7 +20,13 @@
           </div>
         </v-expand-transition>
       </v-img>
-      <v-card-title>{{ jobOffer.positionName }}<v-spacer /><v-icon :color="getColor(jobOffer.medal)" size="50">mdi-medal</v-icon></v-card-title>
+      <v-card-title
+        >{{ jobOffer.positionName }}<v-spacer /><v-icon
+          :color="getColor(jobOffer.medal)"
+          size="50"
+          >mdi-medal</v-icon
+        ></v-card-title
+      >
       <v-card-subtitle style="font-size: 15px" class="black--text"
         >{{ jobOffer.companyName }}
       </v-card-subtitle>
@@ -69,12 +75,15 @@
         </v-btn>
       </v-card-actions>
       <v-card-actions>
-        <v-btn color="purple" text width="100%">
-          <v-icon class="pl-0 ml-0 pr-3">mdi-seal</v-icon> Go To Leaderboard<v-icon
-            class="pr-0 mr-0 pl-3"
-            >mdi-seal</v-icon
-          >
-        </v-btn>
+        <v-dialog v-model="dialogLeaderboard" width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="purple" text width="100%" v-bind="attrs" v-on="on">
+              <v-icon class="pl-0 ml-0 pr-3">mdi-seal</v-icon> Go To
+              Leaderboard<v-icon class="pr-0 mr-0 pl-3">mdi-seal</v-icon>
+            </v-btn>
+          </template>
+          <job-offer-leaderboard v-bind:jobOfferId="jobOffer.id" />
+        </v-dialog>
       </v-card-actions>
     </v-card>
   </v-hover>
@@ -82,7 +91,7 @@
 
 <script>
 import JobOfferDetailsCard from "@/components/job-offers/JobOfferDetailsCard.vue";
-const apiURL = "/api/job-offer/";
+import JobOfferLeaderboard from "@/components/job-offers/JobOfferLeaderboard.vue";
 
 export default {
   name: "JobOfferCard",
@@ -90,25 +99,14 @@ export default {
     loading: false,
     position: "",
     dialog: false,
+    dialogLeaderboard: false
   }),
   components: {
     JobOfferDetailsCard,
+    JobOfferLeaderboard,
   },
   props: {
     jobOffer: Object,
-    // private Long id;
-    // private SeniorityLevel seniority;
-    // private MedalRank medal;
-    // private Date datePosted;
-    // private String companyName;
-    // private String companyId;
-    // private String positionName;
-    // private String positionId;
-    // private List<CVElementImportanceDTO> programmingImportances;
-    // private List<CVElementImportanceDTO> technologyImportances;
-    // private List<CVElementImportanceDTO> knowledgeImportances;
-    // private List<CVElementImportanceDTO> softSkillImportances;
-    // private List<CVElementImportanceDTO> languageImportances;
   },
   methods: {
     getColor(color) {

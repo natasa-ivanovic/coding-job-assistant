@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_offer.JobOfferDTO;
+import ftn.sbnz.dto.user.JobSeekerDTO;
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_offer.JobOfferRating;
@@ -71,11 +72,10 @@ public class JobOfferService {
 		kieSession.setAgendaFocus("job-offer-status");
 		kieSession.fireAllRules();
 		updateDBFromRule(jo);
-		
+		System.out.println("Successfully followed job offer: " + jo.getPosition().getTitle() + " in " + jo.getCompany().getName());
 		return jobSeekerRankingCreated.getId();
 	}
-	
-	
+
 	public void unfollow(Long jobOfferRatingId, Long userId) throws Exception {
 		JobOfferRating jor = jobOfferRatingRepository.getOne(jobOfferRatingId);
 		JobOffer jo = jor.getJobOffer();
@@ -90,9 +90,23 @@ public class JobOfferService {
 		repository.save(jo);
 		jobSeekerRepository.save(js);
 		jobSeekerRankingRepository.deleteById(ranking.getId());
-		System.out.println("Successfully unfollowed xd");
 	}
 	
+	public List<JobSeekerDTO> getLeaderboard(Long jobOfferId) throws Exception {
+		JobOffer jo = getOffer(jobOfferId);
+		if (jo == null) {
+			throw new Exception("Invalid job offer id!");
+		}
+
+		List<JobSeekerRanking> rankings = jo.getRankings().stream()
+				.sorted((item1, item2) -> Long.compare(item2.getRanking(), item1.getRanking()))
+				.collect(Collectors.toList());
+
+		List<JobSeekerDTO> followers = rankings.stream().map(el -> new JobSeekerDTO(el.getJobSeeker()))
+				.collect(Collectors.toList());
+
+		return followers;
+	}
 
 	public void updateDBFromRule(JobOffer jobOfferDb) {
 		Collection<Object> offers = kieSession.getObjectsFromSession(JobOffer.class);
@@ -147,4 +161,5 @@ public class JobOfferService {
 		}
 		return "1/1";
 	}
+
 }

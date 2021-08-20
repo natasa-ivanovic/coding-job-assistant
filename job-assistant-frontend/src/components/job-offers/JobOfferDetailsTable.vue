@@ -4,14 +4,13 @@
     :items="importances"
     :items-per-page="4"
     class="mr-5 ml-5"
-    align="center"
   >
     <template v-slot:[`item.cvElementName`]="{ item }">
       <b>{{ item["cvElementName"] }}</b>
     </template>
-	<template v-slot:[`item.proficiency`]="{ item }">
-		{{ formatProficiency(item["proficiency"]) }}
-	</template>
+    <template v-slot:[`item.proficiency`]="{ item }">
+      {{ formatProficiency(item["proficiency"]) }}
+    </template>
     <template v-slot:[`item.importanceLevel`]="{ item }">
       <v-rating
         class="ml-0 pl-0"
@@ -22,9 +21,9 @@
         length="10"
       ></v-rating>
     </template>
-	<template v-slot:[`item.optional`]="{ item }">
-		<v-icon>{{ checkIfRequired(item) }}</v-icon>
-	</template>
+    <template v-slot:[`item.optional`]="{ item }">
+      <v-icon>{{ checkIfRequired(item) }}</v-icon>
+    </template>
   </v-data-table>
 </template>
 
@@ -43,18 +42,18 @@ export default {
     ],
   }),
   methods: {
-	  checkIfRequired(item) {
-		  if (item.optional == true) {
-			  return "mdi-close-thick"
-		  }
-		  return "mdi-check-bold"
-	  },
-	  formatProficiency(proficiency) {
-		  if (proficiency == "VERY_GOOD") {
-			  return "VERY GOOD";
-		  }
-		  return proficiency;
-	  }
-  }
-}
+    checkIfRequired(item) {
+      if (item.optional == true) {
+        return "mdi-close-thick";
+      }
+      return "mdi-check-bold";
+    },
+    formatProficiency(proficiency) {
+      if (proficiency == "VERY_GOOD") {
+        return "VERY GOOD";
+      }
+      return proficiency;
+    },
+  },
+};
 </script>

@@ -13,10 +13,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      height="250"
-      src="@/assets/job-offer.jpg"
-    ></v-img>
+    <v-img height="250" src="@/assets/job-offer.jpg"></v-img>
     <v-card-title>{{ jobOfferRating.position }}</v-card-title>
     <v-card-subtitle style="font-size: 15px">{{
       jobOfferRating.company
@@ -43,40 +40,54 @@
       <b>{{ statusDescription(jobOfferRating.category) }}</b>
     </div>
     <v-card-actions>
-      <v-dialog
-        v-model="dialog"
-        width="900px"
-      >
+      <v-dialog v-model="dialog" width="900px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="#1A237E" text v-bind="attrs"
-          v-on="on"> Details </v-btn>
+          <v-btn color="#1A237E" text v-bind="attrs" v-on="on"> Details </v-btn>
         </template>
-        <job-offer-details-card 
-          v-bind:programmingImportances="jobOfferRating.jobOffer.programmingImportances"
-          v-bind:technologyImportances="jobOfferRating.jobOffer.technologyImportances"
-          v-bind:knowledgeImportances="jobOfferRating.jobOffer.knowledgeImportances"
-          v-bind:softSkillImportances="jobOfferRating.jobOffer.softSkillImportances"
-          v-bind:languageImportances="jobOfferRating.jobOffer.languageImportances"/>
+        <job-offer-details-card
+          v-bind:programmingImportances="
+            jobOfferRating.jobOffer.programmingImportances
+          "
+          v-bind:technologyImportances="
+            jobOfferRating.jobOffer.technologyImportances
+          "
+          v-bind:knowledgeImportances="
+            jobOfferRating.jobOffer.knowledgeImportances
+          "
+          v-bind:softSkillImportances="
+            jobOfferRating.jobOffer.softSkillImportances
+          "
+          v-bind:languageImportances="
+            jobOfferRating.jobOffer.languageImportances
+          "
+        />
       </v-dialog>
       <v-spacer></v-spacer>
       <v-btn color="#1A237E" text @click="showStatistic()"> Evaluate </v-btn>
     </v-card-actions>
     <v-card-actions v-if="!jobOfferRating.following">
-      <v-btn  block color="indigo accent-1" @click="follow()"
-        >Follow</v-btn
-      >
+      <v-btn block color="indigo accent-1" @click="follow()">Follow</v-btn>
     </v-card-actions>
     <v-card-actions v-else>
-          <v-btn width="48%" color="indigo accent-1" @click="unfollow()">Unfollow</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn width="48%" class="purple lighten-3">Leaderboard</v-btn>
+      <v-btn width="48%" color="indigo accent-1" @click="unfollow()"
+        >Unfollow</v-btn
+      >
+      <v-spacer></v-spacer>
+      <v-dialog v-model="dialogLeaderboard" width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn width="48%" class="purple lighten-3" v-bind="attrs" v-on="on"
+            >Leaderboard</v-btn
+          >
+        </template>
+        <job-offer-leaderboard v-bind:jobOfferId="jobOfferRating.jobOfferId" />
+      </v-dialog>
     </v-card-actions>
   </v-card>
-
 </template>
 
 <script>
 import JobOfferDetailsCard from "@/components/job-offers/JobOfferDetailsCard.vue";
+import JobOfferLeaderboard from "@/components/job-offers/JobOfferLeaderboard.vue";
 const apiURL = "/api/job-offer/";
 
 export default {
@@ -84,20 +95,15 @@ export default {
   data: () => ({
     loading: false,
     position: "",
-    dialog: false
+    dialog: false,
+    dialogLeaderboard: false
   }),
   components: {
-    JobOfferDetailsCard
+    JobOfferDetailsCard,
+    JobOfferLeaderboard,
   },
   props: {
     jobOfferRating: Object,
-    // private Long id;
-    // private String position;
-    // private String company;
-    // private int rating;
-    // private String description;
-    // private String category;
-    // private Long jobOfferId;
   },
   methods: {
     view: () => {
@@ -125,17 +131,6 @@ export default {
       else if (category == "LOW_COMPETITION") return "mdi-flag-checkered";
       else if (category == "BEST_MATCH") return "mdi-check";
     },
-    // getRatingText() {
-    //   if (this.jobOffer.offerRating >= 4.0) {
-    //     return "Great reviews!";
-    //   } else if (this.jobOffer.offerRating >= 3) {
-    //     return "Average reviews!";
-    //   } else if (this.jobOffer.offerRating != 0) {
-    //     return "Bad reviews!";
-    //   } else {
-    //     return "No reviews so far!";
-    //   }
-    // },
     showStatistic() {
       this.$router.push({
         name: "JobOfferStatisticView",
@@ -146,7 +141,7 @@ export default {
       this.axios
         .post(apiURL + "follow/" + this.jobOfferRating.id)
         .then((response) => {
-          this.jobOfferRating.ranking =  response.data;
+          this.jobOfferRating.ranking = response.data;
           this.jobOfferRating.following = true;
         })
         .catch((error) => {
@@ -161,8 +156,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        })
-    }
+        });
+    },
   },
 };
 </script>
