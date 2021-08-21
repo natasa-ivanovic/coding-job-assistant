@@ -90,7 +90,6 @@ export default {
           subtitle: "Enter your skills and work experience",
           description:
             "First things first - enter your previous working experiences and fill in your resume! The more accurate you are about your knowledge, the better your matches will be!",
-          highlight: "Nesto jako kul",
           image: require("@/assets/resume1.jpg"),
           step: 1,
         },
@@ -100,7 +99,6 @@ export default {
           subtitle: "Start out in an adequate field",
           description:
             "Starting out can be tough - but it doesn't have to be! Our system will match your technical skills and knowledge with the best positions so you start out your career right!",
-          highlight: "Nesto jako kul",
           image: require("@/assets/job-position.jpg"),
           step: 2,
         },
@@ -110,7 +108,6 @@ export default {
           subtitle: "Join a place where you belong",
           description:
             "We believe that there's a pair for everyone. That's why our system will find the most fitting job offers for the job positions you are best suited for, to make sure you feel at home!",
-          highlight: "Nesto jako kul",
           image: require("@/assets/job-offer.jpg"),
           step: 3,
         },
@@ -120,7 +117,6 @@ export default {
           subtitle: "We are all constantly learning",
           description:
             "In case there's a job offer you aren't quite ready for yet, our system will offer you help. This way you can get all the required resources to improve your knowledge and get your dream job!",
-          highlight: "Nesto jako kul",
           image: require("@/assets/classroom.jpg"),
           step: 4,
         },

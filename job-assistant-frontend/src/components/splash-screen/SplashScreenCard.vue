@@ -28,6 +28,15 @@
     		</v-stepper-header>
   		</v-stepper>
 	</v-card-text>
+  <v-card-actions v-if="info.link">
+    <v-row align="center" justify="center">
+        <router-link :to="{ name: info.link }" style="text-decoration: none"
+          ><p class="description" style="font-size: 20px">
+            Go there!
+          </p></router-link
+        >
+    </v-row>
+  </v-card-actions>
   </v-card>
 </template>
 

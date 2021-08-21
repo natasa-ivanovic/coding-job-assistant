@@ -64,5 +64,14 @@ public class JobOfferController {
 		List<JobSeekerDTO> dto = service.getLeaderboard(Long.parseLong(jobOfferId));
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+	
+	@GetMapping("/following")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<List<JobOfferDTO>> getFollowingOffers() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
+		List<JobOfferDTO> dto = service.getFollowingOffers(jobSeeker.getId());
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 
 }

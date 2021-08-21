@@ -72,7 +72,8 @@ public class JobOfferService {
 		kieSession.setAgendaFocus("job-offer-status");
 		kieSession.fireAllRules();
 		updateDBFromRule(jo);
-		System.out.println("Successfully followed job offer: " + jo.getPosition().getTitle() + " in " + jo.getCompany().getName());
+		System.out.println(
+				"Successfully followed job offer: " + jo.getPosition().getTitle() + " in " + jo.getCompany().getName());
 		return jobSeekerRankingCreated.getId();
 	}
 
@@ -91,7 +92,7 @@ public class JobOfferService {
 		jobSeekerRepository.save(js);
 		jobSeekerRankingRepository.deleteById(ranking.getId());
 	}
-	
+
 	public List<JobSeekerDTO> getLeaderboard(Long jobOfferId) throws Exception {
 		JobOffer jo = getOffer(jobOfferId);
 		if (jo == null) {
@@ -106,6 +107,13 @@ public class JobOfferService {
 				.collect(Collectors.toList());
 
 		return followers;
+	}
+
+	public List<JobOfferDTO> getFollowingOffers(Long jobSeekerId) {
+		JobSeeker js = jobSeekerRepository.findOneById(jobSeekerId);
+		List<JobOfferDTO> dto = js.getOfferRankings().stream().map(el -> new JobOfferDTO(el.getJobOffer()))
+				.collect(Collectors.toList());
+		return dto;
 	}
 
 	public void updateDBFromRule(JobOffer jobOfferDb) {
@@ -145,21 +153,6 @@ public class JobOfferService {
 
 	private JobOfferDTO toDTO(JobOffer jo) {
 		return new JobOfferDTO(jo);
-	}
-
-	private String sortRankings(List<JobSeekerRanking> rankings, Long jobSeekerId) {
-		int numOfPeople = rankings.size();
-		if (numOfPeople > 0) {
-			rankings = rankings.stream().sorted((item1, item2) -> Long.compare(item2.getRanking(), item1.getRanking()))
-					.collect(Collectors.toList());
-			for (int i = 0; i < numOfPeople; i++) {
-				if (rankings.get(i).getJobSeeker().getId() == jobSeekerId) {
-					int position = i + 1;
-					return position + "/" + numOfPeople;
-				}
-			}
-		}
-		return "1/1";
 	}
 
 }
