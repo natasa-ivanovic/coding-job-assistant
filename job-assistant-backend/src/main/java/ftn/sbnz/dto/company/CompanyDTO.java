@@ -12,12 +12,14 @@ public class CompanyDTO {
 	private String name;
 	private MedalRank medal;
 	private float rating;
+	private int offersNumber;
 	
 	public CompanyDTO(Company c) {
 		this.id = c.getId();
 		this.name = c.getName();
 		this.medal = c.getMedal();
 		this.rating = c.getAverageRating();
+		this.offersNumber = c.getJobOffers().size();
 	}
 
 }

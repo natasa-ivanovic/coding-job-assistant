@@ -21,7 +21,7 @@
     <v-row v-if="offers.length" align="center" justify="center">
       <v-col cols="12">
         <v-card elevation="0" class="blue-grey lighten-5">
-          <v-card-title class="justify-center description" style="font-size:40px"><b>Job offers that you're following</b></v-card-title>
+          <v-card-title class="justify-center description" style="font-size:45px">Job offers that you're following</v-card-title>
           <v-row class="mt-0 pt-0">
             <v-col
               style="flex: 1;"
