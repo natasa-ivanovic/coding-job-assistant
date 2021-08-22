@@ -54,7 +54,7 @@ public class JobSeeker extends User{
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<CVElementProficiency> proficiencies = new HashSet<>();
 
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	private List<WorkingExperience> workingExperience = new ArrayList<>();
 	
 	@OneToMany

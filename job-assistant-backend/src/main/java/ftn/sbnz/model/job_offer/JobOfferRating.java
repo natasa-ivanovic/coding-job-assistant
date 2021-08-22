@@ -1,4 +1,4 @@
-                                          package ftn.sbnz.model.job_offer;
+package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +17,6 @@ import javax.persistence.Table;
 
 import ftn.sbnz.model.enums.JobOfferCategory;
 import ftn.sbnz.model.interview.InterviewSuggestion;
-import ftn.sbnz.model.job_position.JobPositionRating;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

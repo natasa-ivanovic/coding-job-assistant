@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package sbnz.rules;
 
 import ftn.sbnz.events.StudiedTodayEvent;
 import ftn.sbnz.model.user.JobSeeker;

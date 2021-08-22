@@ -120,9 +120,15 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.maven.shared</groupId>
+		    <artifactId>maven-invoker</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
 			
         <dependency>
-	  		<groupId>sbnz.integracija</groupId>
+	  		<groupId>sbnz</groupId>
 	  		<artifactId>drools-spring-kjar</artifactId>
 	  		<type>jar</type>
 	  		<version>0.0.1-SNAPSHOT</version>

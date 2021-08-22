@@ -52,6 +52,7 @@ public class JobOfferSuggestionService {
 		Calendar rightNow = Calendar.getInstance();
 		JobOfferSuggestion suggestion = new JobOfferSuggestion(new Timestamp(rightNow.getTimeInMillis()), dbJobSeeker);
 		kieSession.insert(suggestion);
+		kieSession.setAgendaFocus("jos-p8");
 		kieSession.setAgendaFocus("jos-p7");
 		kieSession.setAgendaFocus("jos-p6");
 		kieSession.setAgendaFocus("jos-p5");
@@ -60,6 +61,8 @@ public class JobOfferSuggestionService {
 		kieSession.setAgendaFocus("jos-p2");
 		kieSession.setAgendaFocus("jos-p1");
 		kieSession.fireAllRules();
+		
+		suggestion.setFinished(true);
 
 		suggestion.getOfferRatings().sort(Comparator.reverseOrder());
 

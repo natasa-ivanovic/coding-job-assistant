@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package sbnz.rules;
 
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.company.CompanyReview;

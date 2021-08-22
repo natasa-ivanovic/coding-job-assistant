@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package sbnz.rules;
 
 import ftn.sbnz.events.MaliciousReviewerEvent;
 import ftn.sbnz.events.DisabledUserEvent;

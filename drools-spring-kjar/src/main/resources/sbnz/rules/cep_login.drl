@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package sbnz.rules;
 
 import ftn.sbnz.model.user.JobSeeker;
 

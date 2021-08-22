@@ -12,15 +12,19 @@ import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.repository.company.CompanyRepository;
 import ftn.sbnz.repository.company.CompanyReviewRepository;
+import ftn.sbnz.repository.company.CompanyStatusConfigRepository;
 import ftn.sbnz.repository.interview.InterviewSuggestionRepository;
 import ftn.sbnz.repository.job_offer.JobOfferRepository;
+import ftn.sbnz.repository.job_offer.JobOfferStatusConfigRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
+import ftn.sbnz.repository.user.WorkingExperienceRepository;
 import ftn.sbnz.service.KieSessionService;
 
 public class SessionInitializer {
 	public static void initializeSession(ApplicationContext context) {
 		KieSessionService kieSession = context.getBean(KieSessionService.class);
+		compileTemplates(context, kieSession);
 		initializeGlobals(kieSession);
 		addJobSeekersToContext(context, kieSession);
 		addJobPositionsToContext(context, kieSession);
@@ -30,6 +34,19 @@ public class SessionInitializer {
 		addInterviewSuggestionsToContext(context, kieSession);
 	}
 
+	private static void compileTemplates(ApplicationContext context, KieSessionService session) {
+		WorkingExperienceRepository repo = context.getBean(WorkingExperienceRepository.class);
+		session.createTemplateWorkingExperience(repo.findAll());
+		
+		CompanyStatusConfigRepository compStatusRepo = context.getBean(CompanyStatusConfigRepository.class);
+		session.createTemplateCompanyStatus(compStatusRepo.findAll());
+		
+		JobOfferStatusConfigRepository offerStatusRepo = context.getBean(JobOfferStatusConfigRepository.class);
+		session.createTemplateJobOfferStatus(offerStatusRepo.findAll());
+	
+		session.recompileRules();
+	}
+	
 	private static void initializeGlobals(KieSessionService session) {
 		session.setGlobal("programmingLanguageCoefficient", new Integer(10));
 		session.setGlobal("technologyCoefficient", new Integer(8));

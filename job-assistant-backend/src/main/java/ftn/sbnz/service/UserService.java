@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -247,9 +249,10 @@ public class UserService {
 		return new UserExperienceDTO(js);
 	}
 
-	
 	public void updateWorkingExperience(Long userId, UserExperienceDTO dto) {
 		JobSeeker js = this.jobSeekerRepository.getOne(userId);
+		List<Long> oldExperiences = js.getWorkingExperience().stream().map(el -> el.getId())
+				.collect(Collectors.toList());
 		List<WorkingExperience> newExperience = new ArrayList<>();
 		for (WorkingExperienceDTO el : dto.getWorkingExperience()) {
 			List<CVElement> cvElements = new ArrayList<>();
@@ -258,15 +261,21 @@ public class UserService {
 				cvElements.add(element);
 			}
 			JobPosition position = this.jobPositionRepository.findOneByTitle(el.getPositionName());
-			WorkingExperience exp = new WorkingExperience(el, cvElements, position);
+			WorkingExperience exp = new WorkingExperience(el, cvElements, position, js);
 			exp = this.workingExperienceRepository.save(exp);
 			newExperience.add(exp);
 		}
-		List<WorkingExperience> oldExperiences = js.getWorkingExperience();
 		js.setWorkingExperience(newExperience);
 		this.jobSeekerRepository.save(js);
-		for (WorkingExperience el : oldExperiences) {
-			this.workingExperienceRepository.deleteById(el.getId());
+		for (Long el : oldExperiences) {
+			this.workingExperienceRepository.deleteById(el);
 		}
+	}
+
+	@Async
+	public void compileTemplate() {
+		List<WorkingExperience> newList = this.workingExperienceRepository.findAll();
+		this.kieSession.createTemplateWorkingExperience(newList);
+		this.kieSession.recompileRules();
 	}
 }
