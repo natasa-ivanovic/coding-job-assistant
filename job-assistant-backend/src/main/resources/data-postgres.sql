@@ -1,6 +1,13 @@
 insert into authorities (name) values ('ROLE_ADMIN');
 insert into authorities (name) values ('ROLE_USER');
 
+insert into company_status_config (company_medal, total_reviews, total_hired, average_rating, rated_positive_difference) values (1, 2, 0, 0, 5);
+insert into company_status_config (company_medal, total_reviews, total_hired, average_rating, rated_positive_difference) values (2, 3, 2, 3, 5);
+insert into company_status_config (company_medal, total_reviews, total_hired, average_rating, rated_positive_difference) values (3, 5, 3, 3.5, 5);
+
+insert into job_offer_status_config (offer_medal, company_medal, total_followers, days_since_posted) values (1, 1, 1, 7);
+insert into job_offer_status_config (offer_medal, company_medal, total_followers, days_since_posted) values (2, 2, 2, 14);
+insert into job_offer_status_config (offer_medal, company_medal, total_followers, days_since_posted) values (3, 3, 3, 21);
 
 ------------------------------- USERS -------------------------------
 

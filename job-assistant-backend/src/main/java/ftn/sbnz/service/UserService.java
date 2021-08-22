@@ -275,6 +275,7 @@ public class UserService {
 	@Async
 	public void compileTemplate() {
 		List<WorkingExperience> newList = this.workingExperienceRepository.findAll();
-		this.kieSession.compileTemplateWorkingExperience(newList);
+		this.kieSession.createTemplateWorkingExperience(newList);
+		this.kieSession.recompileRules();
 	}
 }

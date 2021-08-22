@@ -1,0 +1,96 @@
+package sbnz.rules;
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.company.CompanyReview;
+import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
+import java.time.LocalDate;
+import java.sql.Timestamp;
+
+rule "Company Status - GOLD"
+agenda-group "company-status"
+when
+    company: Company(medal == MedalRank.SILVER, companyId: id) and
+        accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
+                    sum: sum(rating),
+                    count: count(1);
+                    (sum/count) > 3.5) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalReviews: count(1);
+                    totalReviews >= 5) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalHired: count(1);
+                    totalHired >= 3)
+    then
+        System.out.println("Company " + company.getName() + " status set to GOLD");
+        modify (company) {
+            setMedal(MedalRank.GOLD)
+        }
+end
+
+rule "Company Status - SILVER"
+agenda-group "company-status"
+when
+    company: Company(medal == MedalRank.BRONZE, companyId: id) and
+        accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
+                    sum: sum(rating),
+                    count: count(1);
+                    (sum/count) > 3.0) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalReviews: count(1);
+                    totalReviews >= 3) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalHired: count(1);
+                    totalHired >= 2)
+    then
+        System.out.println("Company " + company.getName() + " status set to SILVER");
+        modify (company) {
+            setMedal(MedalRank.SILVER)
+        }
+end
+
+rule "Company Status - BRONZE"
+agenda-group "company-status"
+when
+    company: Company(medal == MedalRank.NONE, companyId: id) and
+        accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
+                    sum: sum(rating),
+                    count: count(1);
+                    (sum/count) > 0.0) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalReviews: count(1);
+                    totalReviews >= 2) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > 5);
+                    totalHired: count(1);
+                    totalHired >= 0)
+    then
+        System.out.println("Company " + company.getName() + " status set to BRONZE");
+        modify (company) {
+            setMedal(MedalRank.BRONZE)
+        }
+end
+
+

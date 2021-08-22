@@ -4,7 +4,7 @@ positionId
 seniority
 userId
 
-package sbnz.integracija;
+package sbnz.rules;
 
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.model.user.WorkingExperience;

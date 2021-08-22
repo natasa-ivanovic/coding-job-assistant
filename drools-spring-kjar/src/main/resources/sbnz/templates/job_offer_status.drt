@@ -1,0 +1,48 @@
+template header
+offerMedal
+previousMedal
+companyMedal
+totalFollowers
+daysSincePosted
+
+package sbnz.rules;
+
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.user.JobSeekerRanking;
+import ftn.sbnz.model.enums.MedalRank;
+
+import java.time.LocalDate;
+import java.sql.Timestamp;
+
+template "Job Offer Status Medal"
+
+rule "Job Offer Status - @{offerMedal}"
+agenda-group "job-offer-status"
+when
+    jobOffer: JobOffer(companyId: company.getId(), offerId: id,
+                            datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(@{daysSincePosted}).atStartOfDay())),
+                            medal == MedalRank.@{previousMedal})
+        and
+        company: Company(id == companyId, medal.getValue() >= MedalRank.@{companyMedal}.getValue())
+        and
+        Number(intValue >= @{totalFollowers}) from accumulate (JobSeekerRanking(jobOffer.getId() == offerId), count(1))
+    then
+        modify(jobOffer) {
+            setMedal(MedalRank.@{offerMedal})
+        }
+        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to @{offerMedal}");
+end
+
+end template
+
+rule "Job Offer Status - NONE"
+    agenda-group "job-offer-status" 
+    when
+        jobOffer: JobOffer(medal != MedalRank.NONE, datePosted.before(Timestamp.valueOf(LocalDate.now().minusDays(30).atStartOfDay())))
+    then
+        modify(jobOffer) {
+            setMedal(MedalRank.NONE)
+        }
+        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to NONE");
+end

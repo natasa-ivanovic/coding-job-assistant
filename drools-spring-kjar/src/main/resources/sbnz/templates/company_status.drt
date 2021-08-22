@@ -1,0 +1,50 @@
+template header
+companyMedal
+previousMedal
+totalReviews
+totalHired
+averageRating
+ratedPositiveDifference
+
+package sbnz.rules;
+
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.company.CompanyReview;
+import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.ReviewStatus;
+
+import java.time.LocalDate;
+import java.sql.Timestamp;
+
+template "Company Status Medal"
+
+rule "Company Status - @{companyMedal}"
+agenda-group "company-status"
+when
+    company: Company(medal == MedalRank.@{previousMedal}, companyId: id) and
+        accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
+                    sum: sum(rating),
+                    count: count(1);
+                    (sum/count) > @{averageRating}) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > @{ratedPositiveDifference});
+                    totalReviews: count(1);
+                    totalReviews >= @{totalReviews}) and
+        accumulate  (CompanyReview
+                        (date: date, date.after(Timestamp.valueOf(LocalDate.now().minusMonths(6).atStartOfDay())),
+                         company.id == companyId, hired == true,
+                         status == ReviewStatus.APPROVED,
+                         jobOffered == true, recommends == true, (ratedUseful - ratedNotUseful) > @{ratedPositiveDifference});
+                    totalHired: count(1);
+                    totalHired >= @{totalHired})
+    then
+        System.out.println("Company " + company.getName() + " status set to @{companyMedal}");
+        modify (company) {
+            setMedal(MedalRank.@{companyMedal})
+        }
+end
+
+end template

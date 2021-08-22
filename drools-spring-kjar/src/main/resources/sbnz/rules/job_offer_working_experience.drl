@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package sbnz.rules;
 import ftn.sbnz.model.user.User;
 import ftn.sbnz.model.user.WorkingExperience;
 import ftn.sbnz.model.job_position.JobPosition;
