@@ -6,10 +6,10 @@ import ftn.sbnz.model.enums.ReviewStatus;
 import java.time.LocalDate;
 import java.sql.Timestamp;
 
-rule "Company Status - GOLD"
+rule "Company Status - GOLD - row (2)"
 agenda-group "company-status"
-when
-    company: Company(medal == MedalRank.SILVER, companyId: id) and
+    when
+        company: Company(medal == MedalRank.SILVER, companyId: id) and
         accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
                     sum: sum(rating),
                     count: count(1);
@@ -35,10 +35,10 @@ when
         }
 end
 
-rule "Company Status - SILVER"
+rule "Company Status - SILVER - row (1)"
 agenda-group "company-status"
-when
-    company: Company(medal == MedalRank.BRONZE, companyId: id) and
+    when
+        company: Company(medal == MedalRank.BRONZE, companyId: id) and
         accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
                     sum: sum(rating),
                     count: count(1);
@@ -64,10 +64,10 @@ when
         }
 end
 
-rule "Company Status - BRONZE"
+rule "Company Status - BRONZE - row (0)"
 agenda-group "company-status"
-when
-    company: Company(medal == MedalRank.NONE, companyId: id) and
+    when
+        company: Company(medal == MedalRank.NONE, companyId: id) and
         accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
                     sum: sum(rating),
                     count: count(1);

@@ -5,21 +5,11 @@ import ftn.sbnz.model.user.JobSeekerRanking;
 import ftn.sbnz.model.enums.MedalRank;
 import java.time.LocalDate;
 import java.sql.Timestamp;
-rule "Job Offer Status - NONE"
-    agenda-group "job-offer-status" 
-    when
-        jobOffer: JobOffer(medal != MedalRank.NONE, datePosted.before(Timestamp.valueOf(LocalDate.now().minusDays(30).atStartOfDay())))
-    then
-        modify(jobOffer) {
-            setMedal(MedalRank.NONE)
-        }
-        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to NONE");
-end
 
-rule "Job Offer Status - GOLD"
+rule "Job Offer Status - GOLD - row (2)"
 agenda-group "job-offer-status"
-when
-    jobOffer: JobOffer(companyId: company.getId(), offerId: id,
+    when
+        jobOffer: JobOffer(companyId: company.getId(), offerId: id,
                             datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(21).atStartOfDay())),
                             medal == MedalRank.SILVER)
         and
@@ -33,10 +23,10 @@ when
         System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to GOLD");
 end
 
-rule "Job Offer Status - SILVER"
+rule "Job Offer Status - SILVER - row (1)"
 agenda-group "job-offer-status"
-when
-    jobOffer: JobOffer(companyId: company.getId(), offerId: id,
+    when
+        jobOffer: JobOffer(companyId: company.getId(), offerId: id,
                             datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(14).atStartOfDay())),
                             medal == MedalRank.BRONZE)
         and
@@ -50,10 +40,10 @@ when
         System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to SILVER");
 end
 
-rule "Job Offer Status - BRONZE"
+rule "Job Offer Status - BRONZE - row (0)"
 agenda-group "job-offer-status"
-when
-    jobOffer: JobOffer(companyId: company.getId(), offerId: id,
+    when
+        jobOffer: JobOffer(companyId: company.getId(), offerId: id,
                             datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(7).atStartOfDay())),
                             medal == MedalRank.NONE)
         and

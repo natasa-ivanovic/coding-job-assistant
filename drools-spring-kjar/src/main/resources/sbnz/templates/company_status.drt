@@ -1,4 +1,5 @@
 template header
+
 companyMedal
 previousMedal
 totalReviews
@@ -18,10 +19,11 @@ import java.sql.Timestamp;
 
 template "Company Status Medal"
 
-rule "Company Status - @{companyMedal}"
+rule "Company Status - @{companyMedal} - row (@{row.rowNumber})"
+
 agenda-group "company-status"
-when
-    company: Company(medal == MedalRank.@{previousMedal}, companyId: id) and
+    when
+        company: Company(medal == MedalRank.@{previousMedal}, companyId: id) and
         accumulate  (CompanyReview (companyId == company.id, rating: rating, status == ReviewStatus.APPROVED); 
                     sum: sum(rating),
                     count: count(1);

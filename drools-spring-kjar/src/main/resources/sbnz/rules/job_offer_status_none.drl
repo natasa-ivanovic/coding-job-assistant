@@ -1,0 +1,20 @@
+package sbnz.rules;
+
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.user.JobSeekerRanking;
+import ftn.sbnz.model.enums.MedalRank;
+
+import java.time.LocalDate;
+import java.sql.Timestamp;
+
+rule "Job Offer Status - NONE (reset)"
+    agenda-group "job-offer-status" 
+    when
+        jobOffer: JobOffer(medal != MedalRank.NONE, datePosted.before(Timestamp.valueOf(LocalDate.now().minusDays(30).atStartOfDay())))
+    then
+        modify(jobOffer) {
+            setMedal(MedalRank.NONE)
+        }
+        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to NONE");
+end
