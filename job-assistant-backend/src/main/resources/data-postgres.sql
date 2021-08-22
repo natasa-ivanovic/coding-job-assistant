@@ -22,6 +22,47 @@ insert into users (name, surname, username, password, enabled, last_password_res
 insert into user_authority (user_id, authority_id) values (3, 2);
 
 
+------------------------------ BENEFITS ----------------------------------
+-- 1 - Flexible hours
+insert into benefits (name, description, importance_level) values ('Flexible hours', 'description', 20);
+-- 2 - Remote work
+insert into benefits (name, description, importance_level) values ('Remote work', 'description', 20);
+-- 3 - Home office allowance
+insert into benefits (name, description, importance_level) values ('Home office allowance', 'description', 20);
+-- 4 - Private health insurance
+insert into benefits (name, description, importance_level) values ('Private health insurance', 'description', 20);
+-- 5 - Competitive salaries
+insert into benefits (name, description, importance_level) values ('Competitive salaries', 'description', 20);
+-- 6 - Modern technologies
+insert into benefits (name, description, importance_level) values ('Modern technologies', 'description', 20);
+-- 7 - Attractive projects
+insert into benefits (name, description, importance_level) values ('Attractive projects', 'description', 20);
+-- 8 - Popular brand
+insert into benefits (name, description, importance_level) values ('Popular brand', 'description', 20);
+-- 9 - Professional growth
+insert into benefits (name, description, importance_level) values ('Professional growth', 'description', 20);
+-- 10 - Pleasant working atmosphere
+insert into benefits (name, description, importance_level) values ('Pleasant working atmosphere', 'description', 20);
+-- 11 - Paid sick leave
+insert into benefits (name, description, importance_level) values ('Paid sick leave', 'description', 20);
+-- 12 - Paid vacation
+insert into benefits (name, description, importance_level) values ('Paid vacation', 'description', 20);
+-- 13 - Life work balance
+insert into benefits (name, description, importance_level) values ('Life work balance', 'description', 20);
+-- 14 - Paid training
+insert into benefits (name, description, importance_level) values ('Paid training', 'description', 20);
+-- 15 - Provided food
+insert into benefits (name, description, importance_level) values ('Provided food', 'description', 20);
+-- 16 - Provided parking
+insert into benefits (name, description, importance_level) values ('Provided parking', 'description', 20);
+-- 17 - Work abroad
+insert into benefits (name, description, importance_level) values ('Work abroad', 'description', 20);
+-- 18 - Foreign language courses
+insert into benefits (name, description, importance_level) values ('Foreign language courses', 'description', 20);
+-- 19 - Free fitness coupons
+insert into benefits (name, description, importance_level) values ('Free fitness coupons', 'description', 20);
+
+
 ------------------------------- CV ELEMENTS -------------------------------
 
 
@@ -1660,6 +1701,48 @@ insert into companies (name, medal) values ('Quantox Technology', 0);
 insert into companies (name, medal) values ('Execom', 0);
 -- 13 - MICROSOFT DEVELOPMENT CENTER SERBIA
 insert into companies (name, medal) values ('Microsoft Development Center Serbia', 0);
+
+------------------------------- COMPANY  -------------------------------------
+-- LEVI9
+-- flexible hours
+insert into companies_benefits (company_id, benefits_id) values (1, 1);
+-- remote work
+insert into companies_benefits (company_id, benefits_id) values (1, 2);
+-- home office allowance
+insert into companies_benefits (company_id, benefits_id) values (1, 3);
+-- private health insurance
+insert into companies_benefits (company_id, benefits_id) values (1, 4);
+-- modern technologies
+insert into companies_benefits (company_id, benefits_id) values (1, 6);
+-- proffesional growth
+insert into companies_benefits (company_id, benefits_id) values (1, 9);
+-- pleasant working atmosphere
+insert into companies_benefits (company_id, benefits_id) values (1, 10);
+-- paid sick leave
+insert into companies_benefits (company_id, benefits_id) values (1, 11);
+-- paid vacation
+insert into companies_benefits (company_id, benefits_id) values (1, 12);
+-- foreign languages courses
+insert into companies_benefits (company_id, benefits_id) values (1, 18);
+
+-- SYNECHRON
+-- flexible hours
+insert into companies_benefits (company_id, benefits_id) values (7, 1);
+-- remote work
+insert into companies_benefits (company_id, benefits_id) values (7, 2);
+-- competitive salary
+insert into companies_benefits (company_id, benefits_id) values (7, 5);
+-- modern technologies
+insert into companies_benefits (company_id, benefits_id) values (7, 6);
+-- attractive projects
+insert into companies_benefits (company_id, benefits_id) values (7, 7);
+-- paid sick leave
+insert into companies_benefits (company_id, benefits_id) values (7, 11);
+-- paid vacation
+insert into companies_benefits (company_id, benefits_id) values (7, 12);
+-- private health insurance
+insert into companies_benefits (company_id, benefits_id) values (7, 4);
+
 
 ------------------------------- IMPORTANCES -------------------------------
 -- 1 - SQL DATABASES, VERY GOOD

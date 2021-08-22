@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -13,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import ftn.sbnz.model.benefit.Benefit;
 import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.cv_element.CVElementProficiency;
 import ftn.sbnz.model.enums.EducationLevel;
@@ -57,7 +57,6 @@ public class JobSeeker extends User{
 	@OneToMany
 	private List<WorkingExperience> workingExperience = new ArrayList<>();
 	
-	
 	@OneToMany
 	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();
 	
@@ -72,4 +71,7 @@ public class JobSeeker extends User{
 	
 	@OneToMany
 	private List<InterviewSuggestionStatus> interviewSuggestions = new ArrayList<>();
+	
+	@OneToMany
+	private List<Benefit> benefits = new ArrayList<>();
 }
