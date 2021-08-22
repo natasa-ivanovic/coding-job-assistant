@@ -6,16 +6,16 @@ import ftn.sbnz.model.enums.MedalRank;
 import java.time.LocalDate;
 import java.sql.Timestamp;
 
-rule "Job Offer Status - GOLD - row (2)"
+rule "Job Offer Status - GOLD - row (0)"
 agenda-group "job-offer-status"
     when
         jobOffer: JobOffer(companyId: company.getId(), offerId: id,
                             datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(21).atStartOfDay())),
                             medal == MedalRank.SILVER)
         and
-        company: Company(id == companyId, medal.getValue() >= MedalRank.NONE.getValue())
+        company: Company(id == companyId, medal.getValue() >= MedalRank.GOLD.getValue())
         and
-        Number(intValue >= 2) from accumulate (JobSeekerRanking(jobOffer.getId() == offerId), count(1))
+        Number(intValue >= 3) from accumulate (JobSeekerRanking(jobOffer.getId() == offerId), count(1))
     then
         modify(jobOffer) {
             setMedal(MedalRank.GOLD)
@@ -23,24 +23,7 @@ agenda-group "job-offer-status"
         System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to GOLD");
 end
 
-rule "Job Offer Status - SILVER - row (1)"
-agenda-group "job-offer-status"
-    when
-        jobOffer: JobOffer(companyId: company.getId(), offerId: id,
-                            datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(14).atStartOfDay())),
-                            medal == MedalRank.BRONZE)
-        and
-        company: Company(id == companyId, medal.getValue() >= MedalRank.NONE.getValue())
-        and
-        Number(intValue >= 1) from accumulate (JobSeekerRanking(jobOffer.getId() == offerId), count(1))
-    then
-        modify(jobOffer) {
-            setMedal(MedalRank.SILVER)
-        }
-        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to SILVER");
-end
-
-rule "Job Offer Status - BRONZE - row (0)"
+rule "Job Offer Status - BRONZE - row (1)"
 agenda-group "job-offer-status"
     when
         jobOffer: JobOffer(companyId: company.getId(), offerId: id,
@@ -55,6 +38,23 @@ agenda-group "job-offer-status"
             setMedal(MedalRank.BRONZE)
         }
         System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to BRONZE");
+end
+
+rule "Job Offer Status - SILVER - row (2)"
+agenda-group "job-offer-status"
+    when
+        jobOffer: JobOffer(companyId: company.getId(), offerId: id,
+                            datePosted.after(Timestamp.valueOf(LocalDate.now().minusDays(14).atStartOfDay())),
+                            medal == MedalRank.BRONZE)
+        and
+        company: Company(id == companyId, medal.getValue() >= MedalRank.NONE.getValue())
+        and
+        Number(intValue >= 1) from accumulate (JobSeekerRanking(jobOffer.getId() == offerId), count(1))
+    then
+        modify(jobOffer) {
+            setMedal(MedalRank.SILVER)
+        }
+        System.out.println("Job Offer for position " + jobOffer.getPosition().getTitle() + " status set to SILVER");
 end
 
 

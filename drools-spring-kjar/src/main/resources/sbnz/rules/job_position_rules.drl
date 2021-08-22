@@ -13,11 +13,8 @@ import ftn.sbnz.model.enums.SkillProficiency;
 
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-import java.util.HashSet;
 import java.util.Collections;
-import java.util.Comparator;
 
 import java.lang.Integer;
 
@@ -40,7 +37,7 @@ rule "JobPositionSuggestion - phase 1"
         										collectList($cvElement)) 
         and
         $position: JobPosition ($p_progLanguages: cvElements,
-							    $u_progLanguages intersects $p_progLanguages) 
+							    !Collections.disjoint($u_progLanguages, $p_progLanguages)) 
         and
 		$progLang: CVElement(type == CVElementType.PROGRAMMING_LANGUAGE) from $p_progLanguages
     then

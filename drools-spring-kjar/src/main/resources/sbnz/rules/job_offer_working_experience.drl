@@ -13,7 +13,7 @@ lock-on-active
 when
     JobOfferSuggestion(jobSeeker.getId() == 2L, offerRatings: offerRatings, finished == false) and
 	jor: JobOfferRating(positionId: jobOffer.getPosition().getId(), positionName: jobOffer.getPosition().getTitle(), 
-				   positionId == 1L, SeniorityLevel.JUNIOR == jobOffer.getSeniority()) from offerRatings
+				   positionId == 1L, SeniorityLevel.MEDIOR == jobOffer.getSeniority()) from offerRatings
 then
 	int points = 20 * 5;
 	int newRating = jor.getRating() + points;
@@ -22,7 +22,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for " + positionName + ", seniority JUNIOR, for months " + 20 + " - " + points);
+	System.out.println("Phase 8 (template) - add points for " + positionName + ", seniority MEDIOR, for months " + 20 + " - " + points);
 end
 
 
