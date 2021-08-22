@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CompanyStatusConfigTemplateDTO {
+public class CompanyStatusConfigDTO {
+	private Long id;
+	
 	private MedalRank companyMedal;
-
-	private MedalRank previousMedal;
 
 	private Integer totalReviews;
 
@@ -21,9 +21,9 @@ public class CompanyStatusConfigTemplateDTO {
 	private Integer ratedPositiveDifference;
 	
 	
-	public CompanyStatusConfigTemplateDTO(CompanyStatusConfig obj) {
+	public CompanyStatusConfigDTO(CompanyStatusConfig obj) {
+		this.id = obj.getId();
 		this.companyMedal = obj.getCompanyMedal();
-		this.previousMedal = MedalRank.previousMedal(this.companyMedal);
 		this.totalReviews = obj.getTotalReviews();
 		this.totalHired = obj.getTotalHired();
 		this.averageRating = obj.getAverageRating();

@@ -10,6 +10,7 @@ import CompanyReviewListView from "../views/admin/CompanyReviewListView.vue";
 import CVElementListView from "../views/admin/CVElementListView.vue";
 import JobPositionAdminListView from "../views/admin/JobPositionListView.vue";
 import CompanyAdminListView from "../views/admin/CompanyListView.vue";
+import ConfigListView from "../views/admin/ConfigListView.vue";
 
 import HomeJobSeekerView from "../views/jobseeker/HomeJobSeekerView.vue";
 import AccountView from "../views/jobseeker/AccountView.vue";
@@ -83,6 +84,12 @@ const routes = [
         path: "/admin/companies",
         beforeEnter: guardRouteAdmin,
       },
+      {
+        component: ConfigListView,
+        name: "ConfigListView",
+        path: "/admin/config",
+        beforeEnter: guardRouteAdmin,
+      },      
       // jobseeker routes
       {
         component: HomeJobSeekerView,
