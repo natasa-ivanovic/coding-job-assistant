@@ -1,22 +1,39 @@
-<<template>
+<template>
   <v-container fluid>
     <v-row align="center" justify="center">
-      <v-col cols="8">
-        <v-card>
-          <v-card-title>
-            <v-col>Welcome to the application, jobseeker!</v-col>
-          </v-card-title>
-          <v-card-text>
-            <v-row class="ml-2 mr-2 mb-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum mauris commodo massa convallis, sed lacinia enim posuere. Ut sit amet nulla accumsan, convallis lacus in, mollis magna. Ut eget fringilla purus, ac rutrum sem. Donec maximus ipsum quis eros sagittis, vulputate porta ante interdum. Sed in vulputate neque, sit amet commodo est. Donec vel dignissim leo, vitae commodo turpis. Maecenas varius pretium odio commodo egestas. Cras vitae fermentum justo. Morbi molestie lectus eget ornare pellentesque. Sed pulvinar quis tellus non porta.
-            <br class="mt-2" />
-            Vivamus sit amet mauris leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas eget aliquet velit. Morbi nunc purus, placerat at nisl at, molestie pellentesque sem. Proin ante enim, congue nec mattis quis, cursus vel dolor. Etiam laoreet lobortis feugiat. Phasellus imperdiet venenatis tempus. Donec bibendum, erat vitae suscipit facilisis, ex ex interdum ante, blandit tincidunt odio erat eget felis. In sit amet erat mi. Pellentesque scelerisque nibh id est consectetur, vitae euismod diam elementum. Duis tempor nec nulla id efficitur. Quisque varius sem non risus scelerisque, sit amet lobortis ante dignissim. In blandit eros a eros interdum rhoncus. Sed in est eget leo dignissim pretium ac id odio. In consequat diam in magna commodo, id pulvinar mi tempus.
-            <br class="mt-2" />
-            Mauris posuere purus a purus iaculis consequat. Aliquam sed arcu quam. Nam purus lacus, feugiat ut velit sed, scelerisque malesuada neque. Nullam a massa quam. In sed rutrum nisl. Fusce rhoncus diam ac massa vulputate, vel volutpat dui euismod. Etiam pretium nulla non tristique congue. Nam interdum urna vel nulla molestie porttitor. Fusce tortor velit, porta at blandit nec, feugiat ut risus. Vestibulum eu mollis diam, vel lacinia leo. Pellentesque eget convallis sem. Praesent pretium malesuada elementum. Aenean mi orci, tincidunt vitae tristique et, placerat ac magna. Ut tincidunt, lorem non congue cursus, erat lectus sagittis dolor, nec luctus risus orci quis dui. Integer pretium tincidunt fermentum.
-            <br class="mt-2" />
-            Morbi eget risus quis purus viverra elementum sed ac ex. Maecenas dui diam, volutpat eu condimentum vitae, convallis vel ipsum. Aliquam mi velit, finibus eu pretium tristique, mattis id lacus. In a turpis quis nulla eleifend volutpat non gravida odio. Donec blandit velit at dui vulputate bibendum. Quisque eget finibus tellus. Donec facilisis non nunc faucibus scelerisque. Suspendisse ipsum erat, aliquam quis tempus vitae, pretium sit amet risus. Donec cursus, justo ut accumsan accumsan, ex lacus congue sem, vel iaculis nibh tortor sit amet purus.
-            </v-row>
-          </v-card-text>
+      <v-col cols="12">
+        <v-card elevation="0" class="blue-grey lighten-5">
+          <v-row class="mt-0 pt-0">
+            <v-col
+              style="flex: 1;"
+              sm="11"
+              md="6"
+              lg="3"
+              v-for="i in info"
+              :key="i.id"
+            >
+              <splash-screen-card v-bind:info="i" />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="offers.length" align="center" justify="center">
+      <v-col cols="12">
+        <v-card elevation="0" class="blue-grey lighten-5">
+          <v-card-title class="justify-center description" style="font-size:45px">Job offers that you're following</v-card-title>
+          <v-row class="mt-0 pt-0">
+            <v-col
+              style="flex: 1;"
+              sm="11"
+              md="6"
+              lg="3"
+              v-for="o in offers"
+              :key="o.id"
+            >
+              <job-offer-card v-bind:jobOffer="o" />
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
     </v-row>
@@ -24,10 +41,80 @@
 </template>
 
 <script>
+import SplashScreenCard from "@/components/splash-screen/SplashScreenCard.vue";
+import JobOfferCard from "@/components/job-offers/JobOfferCard.vue";
+const apiURL = "/api/job-offer/following"
+
 export default {
   name: "HomeJobSeekerView",
+  components: {
+    SplashScreenCard,
+    JobOfferCard
+  },
+  data() {
+    return {
+      loading: true,
+      info: [
+        {
+          id: 1,
+          title: "Fill in your resume",
+          subtitle: "Enter your skills and work experience",
+          description:
+            "First things first - enter your previous working experiences and fill in your resume! The more accurate you are about your knowledge, the better your matches will be!",
+          image: require("@/assets/resume1.jpg"),
+          step: 1,
+          link: "ResumeView"
+        },
+        {
+          id: 2,
+          title: "Find your dream job position",
+          subtitle: "Start out in an adequate field",
+          description:
+            "Starting out can be tough - but it doesn't have to be! Our system will match your technical skills and knowledge with the best positions so you start out your career right!",
+          image: require("@/assets/job-position.jpg"),
+          step: 2,
+          link: "JobPositionRequestView"
+        },
+        {
+          id: 3,
+          title: "Find your dream job offer",
+          subtitle: "Join a place where you belong",
+          description:
+            "We believe that there's a pair for everyone. That's why our system will find the most fitting job offers for the job positions you are best suited for, to make sure you feel at home!",
+          image: require("@/assets/job-offer.jpg"),
+          step: 3,
+          link: "JobOfferRequestView"
+        },
+        {
+          id: 4,
+          title: "Hone in your skills",
+          subtitle: "We are all constantly learning",
+          description:
+            "In case there's a job offer you aren't quite ready for yet, our system will offer you help. This way you can get all the required resources to improve your knowledge and get your dream job!",
+          image: require("@/assets/classroom.jpg"),
+          step: 4,
+          link: "ClassroomView"
+        },
+      ],
+      offers: []
+    };
+  },
+  mounted() {
+    this.getOffers();
+  },
+  methods: {
+    getOffers() {
+      this.axios
+        .get(apiURL)
+        .then((response) => {
+          this.offers = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

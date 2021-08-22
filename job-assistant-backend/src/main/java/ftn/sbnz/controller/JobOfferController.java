@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sbnz.dto.job_offer.JobOfferDTO;
+import ftn.sbnz.dto.user.JobSeekerDTO;
 import ftn.sbnz.model.user.JobSeeker;
 import ftn.sbnz.service.JobOfferService;
 
@@ -55,6 +56,22 @@ public class JobOfferController {
 	public ResponseEntity<List<JobOfferDTO>> getAll() {
 		List<JobOfferDTO> dtos = service.getAll();
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/leaderboard/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+	public ResponseEntity<List<JobSeekerDTO>> getLeaderboard(@PathVariable("id") String jobOfferId) throws Exception {
+		List<JobSeekerDTO> dto = service.getLeaderboard(Long.parseLong(jobOfferId));
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	@GetMapping("/following")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<List<JobOfferDTO>> getFollowingOffers() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		JobSeeker jobSeeker = (JobSeeker) auth.getPrincipal();
+		List<JobOfferDTO> dto = service.getFollowingOffers(jobSeeker.getId());
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 }

@@ -6,4 +6,6 @@ import ftn.sbnz.model.user.JobSeeker;
 
 public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
 
+	JobSeeker findOneById(Long jobSeekerId);
+
 }
