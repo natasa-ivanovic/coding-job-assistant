@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,16 +41,20 @@ public class WorkingExperience {
 	@NonNull
 	private SeniorityLevel seniority;
 		
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<CVElement> cvElements;
 		
 	@ManyToOne
 	private JobPosition position;
 	
-	public WorkingExperience(WorkingExperienceDTO el, List<CVElement> cvElements, JobPosition position) {
+	@ManyToOne
+	private JobSeeker user;
+	
+	public WorkingExperience(WorkingExperienceDTO el, List<CVElement> cvElements, JobPosition position, JobSeeker user) {
 		this.months = el.getMonths();
 		this.seniority = el.getSeniority();
 		this.cvElements = cvElements;
 		this.position = position;
+		this.user = user;
 	}
 }

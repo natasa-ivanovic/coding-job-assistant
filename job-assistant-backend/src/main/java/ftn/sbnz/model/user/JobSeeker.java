@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -54,9 +53,8 @@ public class JobSeeker extends User{
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<CVElementProficiency> proficiencies = new HashSet<>();
 
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	private List<WorkingExperience> workingExperience = new ArrayList<>();
-	
 	
 	@OneToMany
 	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();

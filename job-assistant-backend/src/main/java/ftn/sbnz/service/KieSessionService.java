@@ -1,8 +1,20 @@
 package ftn.sbnz.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.Invoker;
 import org.drools.core.ObjectFilter;
+import org.drools.template.ObjectDataCompiler;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
@@ -10,11 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ftn.sbnz.dto.user.WorkingExperienceTemplateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.user.WorkingExperience;
 
 @Service
 @Transactional
@@ -49,6 +63,32 @@ public class KieSessionService {
 		this.kieSession.getAgenda().getAgendaGroup(groupName).setFocus();
 	}
 
+	public void compileTemplateWorkingExperience(List<WorkingExperience> list) {
+		try {
+			List<WorkingExperienceTemplateDTO> objectList = list.stream()
+					.map(el -> new WorkingExperienceTemplateDTO(el)).collect(Collectors.toList());
+			InputStream template = new FileInputStream(
+					"../drools-spring-kjar/src/main/resources/sbnz/templates/job_offer_working_experience.drt");
+
+			ObjectDataCompiler converter = new ObjectDataCompiler();
+			String drl = converter.compile(objectList, template);
+
+			FileOutputStream drlFile = new FileOutputStream(new File(
+					"../drools-spring-kjar/src/main/resources/sbnz/integracija/job_offer_working_experience.drl"));
+			drlFile.write(drl.getBytes());
+			drlFile.close();
+
+			InvocationRequest request = new DefaultInvocationRequest();
+			request.setPomFile(new File("../drools-spring-kjar/pom.xml"));
+			request.setGoals(Collections.singletonList("install"));
+			Invoker invoker = new DefaultInvoker();
+			invoker.setMavenHome(new File(System.getenv("M2_HOME")));
+			invoker.execute(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Collection<Object> getObjectsFromSession(final Class factClass) {
 		ObjectFilter filter = new ObjectFilter() {
@@ -78,7 +118,7 @@ public class KieSessionService {
 			this.kieSession.delete(handle);
 		}
 	}
-	
+
 	public void removeCompanyById(Long companyId) {
 		ObjectFilter filter = new ObjectFilter() {
 			@Override

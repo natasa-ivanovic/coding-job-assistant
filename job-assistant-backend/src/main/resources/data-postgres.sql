@@ -1623,14 +1623,13 @@ insert into users_proficiencies (job_seeker_id, proficiencies_id) values (2, 420
 
 -- user with id 2 - 'Job Seeker'
 -- id = 1
-insert into working_experiences (months, seniority, position_id) values (20, 1, 1); -- Backend Junior Dev 20 months, Java
+insert into working_experiences (months, seniority, position_id, user_id) values (20, 1, 1, 2); -- Backend Junior Dev 20 months, Java
 -- prog lang - java
 insert into working_experiences_cv_elements (working_experience_id, cv_elements_id) values (1, 4);
 -- technology - spring boot
 insert into working_experiences_cv_elements (working_experience_id, cv_elements_id) values (1, 37);
 -- knowledge - REST
 insert into working_experiences_cv_elements (working_experience_id, cv_elements_id) values (1, 60);
-insert into users_working_experience (job_seeker_id, working_experience_id) values (2, 1);
 
 
 ------------------------------- COMPANIES -------------------------------

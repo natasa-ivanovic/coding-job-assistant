@@ -1,0 +1,28 @@
+package sbnz.integracija;
+import ftn.sbnz.model.user.User;
+import ftn.sbnz.model.user.WorkingExperience;
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+import ftn.sbnz.model.enums.SeniorityLevel;
+
+rule "Job offer for working experience 0"
+agenda-group "jos-p8"
+lock-on-active
+when
+    JobOfferSuggestion(jobSeeker.getId() == 2L, offerRatings: offerRatings, finished == false) and
+	jor: JobOfferRating(positionId: jobOffer.getPosition().getId(), positionName: jobOffer.getPosition().getTitle(), 
+				   positionId == 1L, SeniorityLevel.JUNIOR == jobOffer.getSeniority()) from offerRatings
+then
+	int points = 20 * 5;
+	int newRating = jor.getRating() + points;
+	String newDescription = jor.getDescription() + "User has working experience for this position and seniority - " + 20 + " months\n";
+	modify(jor) {
+		setRating(newRating),
+		setDescription(newDescription)
+	}
+	System.out.println("Phase 8 (template) - add points for " + positionName + ", seniority JUNIOR, for months " + 20 + " - " + points);
+end
+
+
