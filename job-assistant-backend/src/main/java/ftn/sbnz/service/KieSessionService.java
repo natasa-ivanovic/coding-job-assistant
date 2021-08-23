@@ -101,22 +101,14 @@ public class KieSessionService {
 	}
 
 	
-//	public void createTemplateBenefit(List<Benefit> list) {
-//		List<Object> objectList = list.stream().map(el -> new BenefitDTO(el))
-//				.collect(Collectors.toList());
-//		String templatePath = this.templateFolderPath + "job_offer_benefit.drt";
-//		String rulePath = this.ruleFolderPath + "benefits_rules.drl";
-//		try(BufferedReader br = new BufferedReader(new FileReader(templatePath))) {
-//			String line;
-//			while((line = br.readLine()) != null) {
-//				System.out.println(line);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		this.createTemplate(objectList, templatePath, rulePath);
-//		
-//	}
+	public void createTemplateBenefit(List<Benefit> list) {
+		List<Object> objectList = list.stream().map(el -> new BenefitDTO(el))
+				.collect(Collectors.toList());
+		String templatePath = this.templateFolderPath + "job_offer_benefit.drt";
+		String rulePath = this.ruleFolderPath + "benefits_rules.drl";
+		this.createTemplate(objectList, templatePath, rulePath);
+		
+	}
 	
 	private void createTemplate(List<Object> list, String templateFilePath, String ruleFilePath) {
 		try {
