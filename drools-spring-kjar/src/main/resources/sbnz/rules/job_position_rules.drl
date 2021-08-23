@@ -166,7 +166,6 @@ rule "JobPositionSuggestion - phase 4 - Junior"
 					$effectiveMonths < 18
 					)
     then
-		System.out.println("jEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.JUNIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;
@@ -190,7 +189,6 @@ rule "JobPositionSuggestion - phase 4 - Medior"
 					$effectiveMonths >= 18, $effectiveMonths < 36
 					)
     then
-		System.out.println("mEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.MEDIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;
@@ -214,7 +212,6 @@ rule "JobPositionSuggestion - phase 4 - Senior"
 					$effectiveMonths >= 36
 					)
     then
-		System.out.println("sEffective months for " + $jpr.getTitle() + " - " + $effectiveMonths);
 		SeniorityLevel $newLevel = SeniorityLevel.SENIOR;
 		int $seniorityPoints = (int) ($effectiveMonths * monthsExperienceCoefficient);
 		int $newRating = $jpr.getRating() + $seniorityPoints;

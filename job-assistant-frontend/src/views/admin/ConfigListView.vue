@@ -51,7 +51,7 @@
                 v-for="el in this.elements.jobOfferStatusList"
                 :key="el.id"
               >
-                <v-list-item-title class="titleFlex"
+                <v-list-item-title class="offerTitleFlex"
                   >Requirements for {{ toPrettyText(el.offerMedal) }} medal
                 </v-list-item-title>
                 <v-text-field
@@ -82,7 +82,7 @@
                 v-for="el in this.elements.benefitsList"
                 :key="el.id"
               >
-                <v-list-item-title class="titleFlex"
+                <v-list-item-title class="benefitNameFlex"
                   >{{ el.name }}
                 </v-list-item-title>
                 <v-text-field
@@ -93,9 +93,9 @@
                 />
                 <v-text-field
                   v-model="el.levelImportance"
-                  label="Level of importance"
+                  label="Importance"
                   :readonly="!editing"
-                  class="mr-4 elementFlex"
+                  class="mr-4 benefitImportanceFlex"
                 />
               </v-list-item>
             </v-list>
@@ -165,32 +165,6 @@ export default {
       editing: false,
       elementsSnapshot: {},
       loading: false,
-      benefitsList: [
-        {
-          id: 1,
-          name: "Neki benefit",
-          description: "Opisan opis",
-          levelImportance: 10,
-        },
-        {
-          id: 2,
-          name: "Neki 2. benefit",
-          description: "Opisan opis",
-          levelImportance: 10,
-        },
-        {
-          id: 3,
-          name: "Neki benefit 3",
-          description: "Opisan opiseeee",
-          levelImportance: 20,
-        },
-        {
-          id: 4,
-          name: "Neki 4. benefit",
-          description: "Opisan opisaaa",
-          levelImportance: 15,
-        },
-      ],
     };
   },
 
@@ -204,7 +178,6 @@ export default {
         .get(apiURL)
         .then((response) => {
           this.elements = response.data;
-          this.elements.benefitsList = this.benefitsList;
         })
         .catch((error) => {
           this.$root.snackbar.warning(error);
@@ -258,10 +231,19 @@ export default {
 .differenceFlex {
   flex: 1 1 20%;
 }
+.offerTitleFlex {
+  flex: 2 1 18%;
+}
 .elementFlex {
   flex: 1 1 auto;
 }
+.benefitNameFlex {
+  flex: 3 1 15%;
+}
 .benefitDescriptionFlex {
   flex: 3 1 50%;
+}
+.benefitImportanceFlex {
+  flex: 1 1 5%;
 }
 </style>
