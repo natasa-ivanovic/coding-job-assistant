@@ -1845,7 +1845,7 @@ insert into cv_element_importances (cv_element_proficiency_id, importance_level,
 ------------------------------- JOB OFFERS --------------------------------
 
 -- 1 - LEVI9 - BACKEND - MEDIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 1, 2, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 1, 2, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- SQL DATABASES, VERY GOOD
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (1, 1);
@@ -1877,7 +1877,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 2 - LEVI9 - FRONTEND - MEDIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 2, 2, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 2, 2, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- ES6 SPECIFICATION, EXCELLENT
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (2, 12);
@@ -1903,7 +1903,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 3 - LEVI 9 - FULLSTACK - SENIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 3, 3, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 3, 3, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- SQL DATABASES, EXCELLENT
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (3, 13);
@@ -1939,7 +1939,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 4 - LEVI9 - TESTER - JUNIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 22, 1, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (1, 22, 1, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- TESTING METODOLOGIES, BASIC
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (4, 25);
@@ -1971,7 +1971,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 5 - CONTINENTAL - DATABASE ADMINISTRATOR - MEDIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (2, 10, 2, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (2, 10, 2, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- SQL DATABASES, EXCELLENT
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (5, 13);
@@ -1995,7 +1995,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 6 - VEGA IT - ARTIFICIAL INTELLIGENCE SPECIALIST - MEDIOR - NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (6, 11, 2, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (6, 11, 2, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- NEURAL NETWORKS, VERY GOOD
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (6, 36);
@@ -2027,7 +2027,7 @@ insert into job_offers_cv_element_importances (job_offer_id, cv_element_importan
 -------------------------------------------------------------------------------------------------------
 
 -- 7 - VIVIFY - BACKEND, MEDIOR, NONE
-insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (7, 1, 2, 0, '2021-08-08 16:00:00.508-07');
+insert into job_offers (company_id, position_id, seniority, medal, date_posted) values (7, 1, 2, 0, '2021-08-22 16:00:00.508-07');
 -------------------- KNOWLEDGE --------------------
 -- SQL DATABASES, VERY GOOD
 insert into job_offers_cv_element_importances (job_offer_id, cv_element_importances_id) values (7, 1);

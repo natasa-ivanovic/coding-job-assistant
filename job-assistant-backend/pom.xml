@@ -71,43 +71,49 @@
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kie-ci</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
+		    <exclusions>
+		        <exclusion>
+		            <artifactId>tools</artifactId>
+		            <groupId>com.sun</groupId>
+		        </exclusion>
+		    </exclusions>  
 		</dependency>
 
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kie-internal</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kie-api</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kie-spring</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-compiler</artifactId>
-			<version>6.5.0.Final</version>
+			<version>7.58.0.Final</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.4.9</version>
+			<version>1.4.17</version>
 		</dependency>
 		
 		<dependency>

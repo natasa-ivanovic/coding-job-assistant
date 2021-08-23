@@ -86,6 +86,19 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
+        <router-link
+          :to="{ name: 'ConfigListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-template</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Template configuration</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list-item-group>
     </v-list>
     <!-- user nav -->

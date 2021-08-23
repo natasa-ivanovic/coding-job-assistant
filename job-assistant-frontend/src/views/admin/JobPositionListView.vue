@@ -47,14 +47,16 @@
                       <v-card-text>
                         <v-container>
                           <v-row>
-                            <v-col cols="6">
+                            <v-col>
                               <v-text-field
                                 v-model="editedItem.title"
                                 label="Job Position title"
                                 :rules="[rules.required]"
                               ></v-text-field>
                             </v-col>
-                            <v-col cols="6">
+                          </v-row>
+                          <v-row>
+                            <v-col>
                               <v-autocomplete
                                 v-model="editedItem.elementIds"
                                 :items="cvElements"

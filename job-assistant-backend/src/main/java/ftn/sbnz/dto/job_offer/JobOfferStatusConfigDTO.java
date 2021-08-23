@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class JobOfferStatusConfigTemplateDTO {
+public class JobOfferStatusConfigDTO {
+	private Long id;
+	
 	private MedalRank offerMedal;
-
-	private MedalRank previousMedal;
 
 	private MedalRank companyMedal;
 	
@@ -18,9 +18,9 @@ public class JobOfferStatusConfigTemplateDTO {
 
 	private Integer daysSincePosted;
 	
-	public JobOfferStatusConfigTemplateDTO(JobOfferStatusConfig obj) {
+	public JobOfferStatusConfigDTO(JobOfferStatusConfig obj) {
+		this.id = obj.getId();
 		this.offerMedal = obj.getOfferMedal();
-		this.previousMedal = MedalRank.previousMedal(this.offerMedal);
 		this.companyMedal = obj.getCompanyMedal();
 		this.totalFollowers = obj.getTotalFollowers();
 		this.daysSincePosted = obj.getDaysSincePosted();

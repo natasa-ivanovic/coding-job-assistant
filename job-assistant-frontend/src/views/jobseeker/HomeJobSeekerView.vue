@@ -60,7 +60,7 @@ export default {
           title: "Fill in your resume",
           subtitle: "Enter your skills and work experience",
           description:
-            "First things first - enter your previous working experiences and fill in your resume! The more accurate you are about your knowledge, the better your matches will be!",
+            "Great to see you! If you haven't already, please enter your previous working experiences and fill in your resume. The more accurate you are about your knowledge, the better your matches will be!",
           image: require("@/assets/resume1.jpg"),
           step: 1,
           link: "ResumeView"
@@ -70,7 +70,7 @@ export default {
           title: "Find your dream job position",
           subtitle: "Start out in an adequate field",
           description:
-            "Starting out can be tough - but it doesn't have to be! Our system will match your technical skills and knowledge with the best positions so you start out your career right!",
+            "Next, you should check out our job position matcher! Based on your resume, it will offer good starting paths if you're not sure what exactly you want to do professionally.",
           image: require("@/assets/job-position.jpg"),
           step: 2,
           link: "JobPositionRequestView"
@@ -80,7 +80,7 @@ export default {
           title: "Find your dream job offer",
           subtitle: "Join a place where you belong",
           description:
-            "We believe that there's a pair for everyone. That's why our system will find the most fitting job offers for the job positions you are best suited for, to make sure you feel at home!",
+            "With your positions assessed, check out what companies are currently hiring! Based on your proficiencies and job positions we matched you with, get a list of potential job offers that could suit you!",
           image: require("@/assets/job-offer.jpg"),
           step: 3,
           link: "JobOfferRequestView"
@@ -90,7 +90,7 @@ export default {
           title: "Hone in your skills",
           subtitle: "We are all constantly learning",
           description:
-            "In case there's a job offer you aren't quite ready for yet, our system will offer you help. This way you can get all the required resources to improve your knowledge and get your dream job!",
+            "When you feel stuck and aren't sure where to go with your knowledge, check out the classroom! There you will find help for job offers you evaluated your skills againts in the job offer tab.",
           image: require("@/assets/classroom.jpg"),
           step: 4,
           link: "ClassroomView"
