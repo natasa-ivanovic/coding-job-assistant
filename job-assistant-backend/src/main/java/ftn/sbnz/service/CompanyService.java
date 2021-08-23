@@ -75,6 +75,12 @@ public class CompanyService {
 		this.repository.deleteById(id);
 		this.kieSession.removeCompanyById(id);
 	}
+	
+	public CompanyDTO getOneCompany(Long id) {
+		Company company = getOne(id);
+		CompanyDTO dto = new CompanyDTO(company);
+		return dto;
+	}
 
 	public Company updateDBFromRule(Company companyDb) {
 		Collection<Object> companies = kieSession.getObjectsFromSession(Company.class);
@@ -91,4 +97,6 @@ public class CompanyService {
 		}
 		return null;
 	}
+
+	
 }

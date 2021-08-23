@@ -42,7 +42,7 @@
       </div>
 
       <v-card-actions>
-        <v-btn color="primary" block outlined>
+        <v-btn color="primary" block outlined @click="goToCompany()">
           Explore Company
         </v-btn>
       </v-card-actions>
@@ -60,6 +60,9 @@ export default {
     return {};
   },
   methods: {
+    goToCompany() {
+      this.$router.push({name: "CompanyDetailsView", params: {id: this.company.id}});
+    },
     getColor(color) {
       switch (color) {
         case "BRONZE":

@@ -31,43 +31,43 @@ insert into user_authority (user_id, authority_id) values (3, 2);
 
 ------------------------------ BENEFITS ----------------------------------
 -- 1 - Flexible hours
-insert into benefits (name, description, importance_level) values ('Flexible hours', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Flexible hours', 'description', 20);
 -- 2 - Remote work
-insert into benefits (name, description, importance_level) values ('Remote work', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Remote work', 'description', 20);
 -- 3 - Home office allowance
-insert into benefits (name, description, importance_level) values ('Home office allowance', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Home office allowance', 'description', 20);
 -- 4 - Private health insurance
-insert into benefits (name, description, importance_level) values ('Private health insurance', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Private health insurance', 'description', 20);
 -- 5 - Competitive salaries
-insert into benefits (name, description, importance_level) values ('Competitive salaries', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Competitive salaries', 'description', 20);
 -- 6 - Modern technologies
-insert into benefits (name, description, importance_level) values ('Modern technologies', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Modern technologies', 'description', 20);
 -- 7 - Attractive projects
-insert into benefits (name, description, importance_level) values ('Attractive projects', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Attractive projects', 'description', 20);
 -- 8 - Popular brand
-insert into benefits (name, description, importance_level) values ('Popular brand', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Popular brand', 'description', 20);
 -- 9 - Professional growth
-insert into benefits (name, description, importance_level) values ('Professional growth', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Professional growth', 'description', 20);
 -- 10 - Pleasant working atmosphere
-insert into benefits (name, description, importance_level) values ('Pleasant working atmosphere', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Pleasant working atmosphere', 'description', 20);
 -- 11 - Paid sick leave
-insert into benefits (name, description, importance_level) values ('Paid sick leave', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Paid sick leave', 'description', 20);
 -- 12 - Paid vacation
-insert into benefits (name, description, importance_level) values ('Paid vacation', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Paid vacation', 'description', 20);
 -- 13 - Life work balance
-insert into benefits (name, description, importance_level) values ('Life work balance', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Life work balance', 'description', 20);
 -- 14 - Paid training
-insert into benefits (name, description, importance_level) values ('Paid training', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Paid training', 'description', 20);
 -- 15 - Provided food
-insert into benefits (name, description, importance_level) values ('Provided food', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Provided food', 'description', 20);
 -- 16 - Provided parking
-insert into benefits (name, description, importance_level) values ('Provided parking', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Provided parking', 'description', 20);
 -- 17 - Work abroad
-insert into benefits (name, description, importance_level) values ('Work abroad', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Work abroad', 'description', 20);
 -- 18 - Foreign language courses
-insert into benefits (name, description, importance_level) values ('Foreign language courses', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Foreign language courses', 'description', 20);
 -- 19 - Free fitness coupons
-insert into benefits (name, description, importance_level) values ('Free fitness coupons', 'description', 20);
+insert into benefits (name, description, level_importance) values ('Free fitness coupons', 'description', 20);
 
 
 ------------------------------- CV ELEMENTS -------------------------------

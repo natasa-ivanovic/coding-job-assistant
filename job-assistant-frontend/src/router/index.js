@@ -22,6 +22,7 @@ import JobOfferListView from "../views/jobseeker/JobOfferListView.vue";
 import ClassroomView from "../views/classroom/ClassroomView.vue";
 import CompanyListView from "../views/jobseeker/CompanyListView.vue";
 import SplashScreen from "../views/SplashScreen.vue";
+import CompanyDetailsView from "../views/jobseeker/CompanyDetailsView.vue";
 
 Vue.use(VueRouter);
 
@@ -143,6 +144,13 @@ const routes = [
         component: CompanyListView,
         name: "CompanyListView",
         path: "/companies",
+        beforeEnter: guardRouteJobSeeker,
+      },
+      {
+        component: CompanyDetailsView,
+        name: "CompanyDetailsView",
+        path: "/company/:id",
+        props: true,
         beforeEnter: guardRouteJobSeeker,
       },
     ],

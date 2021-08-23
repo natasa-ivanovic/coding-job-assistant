@@ -31,7 +31,7 @@ public class Benefit {
 	@NonNull
 	private String description;
 	
-	@Column(name = "importance_level", unique = false, nullable = false)
-	private int importanceLevel;
+	@Column(name = "level_importance", unique = false, nullable = false)
+	private Integer levelImportance;
 
 }

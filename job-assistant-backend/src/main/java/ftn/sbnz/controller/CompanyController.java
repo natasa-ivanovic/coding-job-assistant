@@ -38,6 +38,13 @@ public class CompanyController {
 		List<CompanyDTO> dtos = service.getAll();
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
+	
+	@GetMapping("/details/{id}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<CompanyDTO> getOne(@PathVariable Long id) {
+		CompanyDTO dto = service.getOneCompany(id);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 
 	@PostMapping
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")

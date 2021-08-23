@@ -1,0 +1,370 @@
+// package sbnz.rules;
+// import ftn.sbnz.model.benefit.Benefit;
+// import ftn.sbnz.model.company.Company;
+// import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+// import ftn.sbnz.model.job_offer.JobOfferRating;
+// import ftn.sbnz.model.enums.CVElementType;
+// import java.util.Set;
+
+// rule "Benefits for job offers 18"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Free fitness coupons"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Free fitness coupons\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Free fitness coupons" + "\n");
+// end
+
+// rule "Benefits for job offers 17"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Foreign language courses"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Foreign language courses\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Foreign language courses" + "\n");
+// end
+
+// rule "Benefits for job offers 16"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Work abroad"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Work abroad\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Work abroad" + "\n");
+// end
+
+// rule "Benefits for job offers 15"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Provided parking"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Provided parking\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Provided parking" + "\n");
+// end
+
+// rule "Benefits for job offers 14"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Provided food"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Provided food\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Provided food" + "\n");
+// end
+
+// rule "Benefits for job offers 13"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Paid training"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Paid training\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Paid training" + "\n");
+// end
+
+// rule "Benefits for job offers 12"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Life work balance"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Life work balance\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Life work balance" + "\n");
+// end
+
+// rule "Benefits for job offers 11"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Paid vacation"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Paid vacation\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Paid vacation" + "\n");
+// end
+
+// rule "Benefits for job offers 10"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Paid sick leave"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Paid sick leave\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Paid sick leave" + "\n");
+// end
+
+// rule "Benefits for job offers 9"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Pleasant working atmosphere"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Pleasant working atmosphere\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Pleasant working atmosphere" + "\n");
+// end
+
+// rule "Benefits for job offers 8"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Professional growth"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Professional growth\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Professional growth" + "\n");
+// end
+
+// rule "Benefits for job offers 7"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Popular brand"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Popular brand\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Popular brand" + "\n");
+// end
+
+// rule "Benefits for job offers 6"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Attractive projects"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Attractive projects\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Attractive projects" + "\n");
+// end
+
+// rule "Benefits for job offers 5"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Modern technologies"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Modern technologies\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Modern technologies" + "\n");
+// end
+
+// rule "Benefits for job offers 4"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Competitive salaries"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Competitive salaries\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Competitive salaries" + "\n");
+// end
+
+// rule "Benefits for job offers 3"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Private health insurance"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Private health insurance\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Private health insurance" + "\n");
+// end
+
+// rule "Benefits for job offers 2"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Home office allowance"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Home office allowance\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Home office allowance" + "\n");
+// end
+
+// rule "Benefits for job offers 1"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Remote work"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Remote work\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Remote work" + "\n");
+// end
+
+// rule "Benefits for job offers 0"
+// agenda-group "jos-p9"
+// lock-on-active
+// when
+//     JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+// 	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+//     benefitNames: List() from accumulate(Benefit(benefitName: name) from offerBenefits, collectList(benefitName)) and
+//     benefitNames contains "Flexible hours"
+// then
+// 	int points = 20 * 2;
+// 	int newRating = jor.getRating() + points;
+// 	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit Flexible hours\n";
+// 	modify(jor) {
+// 		setRating(newRating),
+// 		setDescription(newDescription)
+// 	}
+// 	System.out.println("Phase 8 (template) - add points for benefit Flexible hours" + "\n");
+// end
+
+

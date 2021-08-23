@@ -10,6 +10,7 @@ import ftn.sbnz.model.interview.InterviewSuggestion;
 import ftn.sbnz.model.job_offer.JobOffer;
 import ftn.sbnz.model.job_position.JobPosition;
 import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.repository.benefit.BenefitRepository;
 import ftn.sbnz.repository.company.CompanyRepository;
 import ftn.sbnz.repository.company.CompanyReviewRepository;
 import ftn.sbnz.repository.company.CompanyStatusConfigRepository;
@@ -43,7 +44,11 @@ public class SessionInitializer {
 		
 		JobOfferStatusConfigRepository offerStatusRepo = context.getBean(JobOfferStatusConfigRepository.class);
 		session.createTemplateJobOfferStatus(offerStatusRepo.findAll());
+		
+//		BenefitRepository benefitRepo = context.getBean(BenefitRepository.class);
+//		session.createTemplateBenefit(benefitRepo.findAll());
 	
+		
 		session.recompileRules();
 	}
 	

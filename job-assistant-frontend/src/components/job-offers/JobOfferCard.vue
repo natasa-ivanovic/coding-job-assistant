@@ -57,7 +57,7 @@
       <v-card-actions>
         <v-dialog v-model="dialog" width="900px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="indigo accent-1" v-bind="attrs" v-on="on" width="49%">
+            <v-btn color="indigo accent-1" v-bind="attrs" v-on="on" :width="getWidth()">
               Details
             </v-btn>
           </template>
@@ -70,7 +70,7 @@
           />
         </v-dialog>
         <v-spacer />
-        <v-btn color="indigo accent-1" width="49%">
+        <v-btn v-if="!company" color="indigo accent-1" width="49%">
           Company
         </v-btn>
       </v-card-actions>
@@ -107,6 +107,7 @@ export default {
   },
   props: {
     jobOffer: Object,
+    company: Boolean
   },
   methods: {
     getColor(color) {
@@ -120,6 +121,11 @@ export default {
       }
       return "white";
     },
+    getWidth() {
+      if (this.company)
+        return "100%";
+      return "49%";
+    }
   },
 };
 </script>

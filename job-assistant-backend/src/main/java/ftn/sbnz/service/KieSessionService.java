@@ -1,8 +1,10 @@
 package ftn.sbnz.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -24,10 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ftn.sbnz.dto.benefit.BenefitDTO;
 import ftn.sbnz.dto.company.CompanyStatusConfigTemplateDTO;
 import ftn.sbnz.dto.job_offer.JobOfferStatusConfigTemplateDTO;
 import ftn.sbnz.dto.user.WorkingExperienceTemplateDTO;
 import ftn.sbnz.events.InvalidLoginEvent;
+import ftn.sbnz.model.benefit.Benefit;
 import ftn.sbnz.model.company.Company;
 import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.company.CompanyStatusConfig;
@@ -96,6 +100,24 @@ public class KieSessionService {
 		this.createTemplate(objectList, templatePath, rulePath);
 	}
 
+	
+//	public void createTemplateBenefit(List<Benefit> list) {
+//		List<Object> objectList = list.stream().map(el -> new BenefitDTO(el))
+//				.collect(Collectors.toList());
+//		String templatePath = this.templateFolderPath + "job_offer_benefit.drt";
+//		String rulePath = this.ruleFolderPath + "benefits_rules.drl";
+//		try(BufferedReader br = new BufferedReader(new FileReader(templatePath))) {
+//			String line;
+//			while((line = br.readLine()) != null) {
+//				System.out.println(line);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		this.createTemplate(objectList, templatePath, rulePath);
+//		
+//	}
+	
 	private void createTemplate(List<Object> list, String templateFilePath, String ruleFilePath) {
 		try {
 			InputStream templateFile = new FileInputStream(templateFilePath);
@@ -222,4 +244,6 @@ public class KieSessionService {
 			this.kieSession.delete(handle);
 		}
 	}
+
+	
 }
