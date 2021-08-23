@@ -45,10 +45,9 @@ public class SessionInitializer {
 		JobOfferStatusConfigRepository offerStatusRepo = context.getBean(JobOfferStatusConfigRepository.class);
 		session.createTemplateJobOfferStatus(offerStatusRepo.findAll());
 		
-//		BenefitRepository benefitRepo = context.getBean(BenefitRepository.class);
-//		session.createTemplateBenefit(benefitRepo.findAll());
+		BenefitRepository benefitRepo = context.getBean(BenefitRepository.class);
+		session.createTemplateBenefit(benefitRepo.findAll());
 	
-		
 		session.recompileRules();
 	}
 	
