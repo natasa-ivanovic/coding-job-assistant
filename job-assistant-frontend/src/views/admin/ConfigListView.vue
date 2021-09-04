@@ -214,6 +214,7 @@ export default {
         .then(() => {
           this.$root.snackbar.success("Successfully edited configuration!");
           this.loading = false;
+          this.editing = false;
         })
         .catch((error) => {
           this.$root.snackbar.error(error.response.data.message);

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row justify="center">
-      <v-col cols="10">
+      <v-col cols="9">
         <v-card>
           <v-card-title class="description ml-3" style="font-size:40px">
             <v-col>

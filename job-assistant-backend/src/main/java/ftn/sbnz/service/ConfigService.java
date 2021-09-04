@@ -78,11 +78,8 @@ public class ConfigService {
 	public void updateRules() {
 		this.kieService.createTemplateCompanyStatus(this.companyStatusRepo.findAll());
 		this.kieService.createTemplateJobOfferStatus(this.offerStatusRepo.findAll());
-		// do the same for benefits
+		this.kieService.createTemplateBenefit(this.benefitRepo.findAll());
 		this.kieService.recompileRules();
-//		this.kieService.setAgendaFocus("job-offer-status");
-//		this.kieService.setAgendaFocus("company-status");
-//		this.kieService.fireAllRules();
 	}
 
 }

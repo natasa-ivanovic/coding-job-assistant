@@ -63,18 +63,19 @@ public class JobOfferService {
 		jsr.setJobOffer(jo);
 		jsr.setJobSeeker(js);
 		jsr.setRanking(jor.getRating());
-		js.getOfferRankings().add(jsr);
-		jo.getRankings().add(jsr);
-		JobSeekerRanking jobSeekerRankingCreated = jobSeekerRankingRepository.save(jsr);
-		jobSeekerRepository.save(js);
-		repository.save(jo);
-		kieSession.insert(jobSeekerRankingCreated);
+		jsr = jobSeekerRankingRepository.save(jsr);
+		System.out.println("jobseekerRanking created with id " + jsr.getId());
+//		js.getOfferRankings().add(jsr);
+//		jo.getRankings().add(jsr);
+//		jobSeekerRepository.save(js);
+//		repository.save(jo);
+		kieSession.insert(jsr);
 		kieSession.setAgendaFocus("job-offer-status");
 		kieSession.fireAllRules();
 		updateDBFromRule(jo);
 		System.out.println(
 				"Successfully followed job offer: " + jo.getPosition().getTitle() + " in " + jo.getCompany().getName());
-		return jobSeekerRankingCreated.getId();
+		return jsr.getId();
 	}
 
 	public void unfollow(Long jobOfferRatingId, Long userId) throws Exception {

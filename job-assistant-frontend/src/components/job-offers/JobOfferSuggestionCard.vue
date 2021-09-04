@@ -115,7 +115,7 @@ export default {
       else if (category == "IMPROVEMENT_NEEDED")
         return "You have some of the required skills for this job, but you are lacking in profficiency.";
       else if (category == "LOW_COMPETITION")
-        return "This job doesn't have a lot of followers, so your chances of getting this job are increased.";
+        return "This job doesn't have a lot of followers, so you have a better chance of getting this job.";
       else if (category == "BEST_MATCH")
         return "You have a high chance of getting this job based on the level of your skills.";
     },

@@ -24,7 +24,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Flexible hours" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Flexible hours");
 end
 
 rule "Benefits for job offers 1"
@@ -44,7 +44,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Remote work" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Remote work");
 end
 
 rule "Benefits for job offers 2"
@@ -64,7 +64,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Home office allowance" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Home office allowance");
 end
 
 rule "Benefits for job offers 3"
@@ -84,7 +84,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Private health insurance" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Private health insurance");
 end
 
 rule "Benefits for job offers 4"
@@ -104,7 +104,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Competitive salaries" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Competitive salaries");
 end
 
 rule "Benefits for job offers 5"
@@ -124,7 +124,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Modern technologies" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Modern technologies");
 end
 
 rule "Benefits for job offers 6"
@@ -144,7 +144,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Attractive projects" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Attractive projects");
 end
 
 rule "Benefits for job offers 7"
@@ -164,7 +164,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Popular brand" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Popular brand");
 end
 
 rule "Benefits for job offers 8"
@@ -184,7 +184,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Professional growth" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Professional growth");
 end
 
 rule "Benefits for job offers 9"
@@ -204,7 +204,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Pleasant working atmosphere" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Pleasant working atmosphere");
 end
 
 rule "Benefits for job offers 10"
@@ -224,7 +224,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Paid sick leave" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Paid sick leave");
 end
 
 rule "Benefits for job offers 11"
@@ -244,7 +244,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Paid vacation" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Paid vacation");
 end
 
 rule "Benefits for job offers 12"
@@ -264,7 +264,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Life work balance" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Life work balance");
 end
 
 rule "Benefits for job offers 13"
@@ -284,7 +284,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Paid training" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Paid training");
 end
 
 rule "Benefits for job offers 14"
@@ -304,7 +304,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Provided food" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Provided food");
 end
 
 rule "Benefits for job offers 15"
@@ -324,7 +324,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Provided parking" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Provided parking");
 end
 
 rule "Benefits for job offers 16"
@@ -344,7 +344,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Work abroad" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Work abroad");
 end
 
 rule "Benefits for job offers 17"
@@ -364,7 +364,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Foreign language courses" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Foreign language courses");
 end
 
 rule "Benefits for job offers 18"
@@ -384,7 +384,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit Free fitness coupons" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit Free fitness coupons");
 end
 
 

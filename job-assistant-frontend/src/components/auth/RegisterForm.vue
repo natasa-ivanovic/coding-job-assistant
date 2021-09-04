@@ -8,7 +8,7 @@
           class="description pt-15 justify-center"
           style="font-size: 50px"
         >
-          <b>Welcome to POSO!</b>
+          <b>Welcome to IT Career Adviser!</b>
         </v-card-title>
         <v-row
           align="center"

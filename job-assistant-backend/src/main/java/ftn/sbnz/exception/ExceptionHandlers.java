@@ -20,7 +20,7 @@ public class ExceptionHandlers {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest request) {
 		ErrorMessage message = new ErrorMessage(ex.getMessage());
-		ex.printStackTrace();
+//		ex.printStackTrace();
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
 

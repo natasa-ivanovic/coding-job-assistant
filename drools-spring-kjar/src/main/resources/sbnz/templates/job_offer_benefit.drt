@@ -36,7 +36,7 @@ then
 		setRating(newRating),
 		setDescription(newDescription)
 	}
-	System.out.println("Phase 8 (template) - add points for benefit @{name}" + "\n");
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit @{name}");
 end
 
 end template

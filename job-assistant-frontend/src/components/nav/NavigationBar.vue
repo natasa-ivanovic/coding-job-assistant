@@ -174,7 +174,7 @@
             </v-list-item>
           </router-link>
 
-          <router-link
+          <!-- <router-link
             :to="{ name: 'JobPositionListView' }"
             v-slot="{ navigate }"
           >
@@ -186,7 +186,7 @@
                 <v-list-item-title>View all positions</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          </router-link>
+          </router-link> -->
         </v-list-group>
 
         <v-list-group prepend-icon="mdi-briefcase">

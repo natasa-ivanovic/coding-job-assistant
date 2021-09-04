@@ -32,7 +32,7 @@
         <div class="grey--text ms-4">{{ getRatingText() }}</div>
       </v-row>
 
-      <div class="mt-6 ml-3 mr-3">
+      <div class="mt-6">
         <v-row
           v-for="description in formatDescription(jobPosition.description)"
           :key="description.name"
@@ -64,7 +64,7 @@
       </v-chip-group>
     </v-card-text>
 
-    <v-card-actions>
+    <!-- <v-card-actions>
       <v-btn class="ml-2" color="black lighten-2" outlined @click="view">
         View details
       </v-btn>
@@ -72,7 +72,7 @@
       <v-btn class="mr-2" color="black lighten-2" outlined @click="view">
         View offers
       </v-btn>
-    </v-card-actions>
+    </v-card-actions> -->
   </v-card>
 </template>
 
@@ -97,28 +97,35 @@ export default {
     view: () => {
       console.log(view);
     },
-    getIcon: function(val) {
+    getIcon: function (val) {
       if (val == this.userProf) return this.iconUser;
       else return this.iconJob;
     },
-    formatDescription: function(desc) {
+    formatDescription: function (desc) {
       const list = [];
+      const shownElements = 5;
       desc.split("\n").forEach((el) => {
         if (el.length == 0) return;
-        const name = el.split(" (")[0];
+        let name = el.split(" (")[0];
+        name = name.replace("Programming language", "Prog. language")
         const value = el.split(" (")[1].replace(")", "");
         list.push({ name, value });
       });
-      if (list.length > 5) return list.splice(0, 5);
-      else return list;
+      if (list.length > shownElements) return list.splice(0, shownElements);
+      else {
+        for (let i = list.length; i != shownElements; i++) {
+          list.push({ name: "", value: "" });
+        }
+        return list;
+      }
     },
-    getRating: function() {
+    getRating: function () {
       if (this.maxRating != 0) {
         const percentage = (this.jobPosition.rating * 100) / this.maxRating;
         return percentage / 20;
       } else return 0;
     },
-    getRatingText: function() {
+    getRatingText: function () {
       const rating = this.getRating();
       if (rating >= 4.0) {
         return "Excellent match!";

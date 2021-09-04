@@ -1,17 +1,19 @@
 <template>
   <v-row class="flexbox" v-if="data">
-      <v-col class="rating-name">
-    {{ data.name }}
-      </v-col>
-      <v-col class="rating-value">
-    <v-rating dense size="12" readonly :value="getValue()">
-      <template v-slot:item="props">
-        <v-icon small>
-          {{ props.isFilled ? 'mdi-check-circle' : 'mdi-check-circle-outline' }}
-        </v-icon>
-      </template>
-    </v-rating>
-      </v-col>
+    <v-col class="rating-name pl-0 pb-0">
+      {{ data.name }}
+    </v-col>
+    <v-col class="rating-value pl-0 pr-0 pb-0">
+      <v-rating dense size="12" readonly :value="getValue()">
+        <template v-slot:item="props">
+          <v-icon small :color="data.value == '' ? 'white' : 'rgba(0, 0, 0, 0.54)'">
+            {{
+              props.isFilled ? "mdi-check-circle" : "mdi-check-circle-outline"
+            }}
+          </v-icon>
+        </template>
+      </v-rating>
+    </v-col>
   </v-row>
 </template>
 
@@ -49,7 +51,7 @@ export default {
 
 <style scoped>
 .flexbox {
-    flex: 1;
+  flex: 1;
 }
 
 .rating-name {

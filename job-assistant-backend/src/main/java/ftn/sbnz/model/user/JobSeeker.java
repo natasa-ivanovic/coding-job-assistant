@@ -63,7 +63,7 @@ public class JobSeeker extends User{
 	@OneToMany
 	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "jobSeeker")
 	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
 	
 	@OneToMany
