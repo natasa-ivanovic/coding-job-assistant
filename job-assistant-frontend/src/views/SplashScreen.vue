@@ -32,7 +32,7 @@
       <v-card-title
         class="description mt-3 justify-center"
         style="font-size:60px"
-        >POSO</v-card-title
+        >IT Career Adviser</v-card-title
       >
       <v-card-title
         class="description mt-0 mb-0 pb-0 justify-center "

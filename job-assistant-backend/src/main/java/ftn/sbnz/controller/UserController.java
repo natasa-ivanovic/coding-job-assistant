@@ -76,7 +76,6 @@ public class UserController {
 	public ResponseEntity<UserExperienceDTO> updateMyExperience(@AuthenticationPrincipal User user,  @RequestBody UserExperienceDTO dto){
 		Long userId = user.getId();
 		userService.updateWorkingExperience(userId, dto);
-		userService.compileTemplate();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

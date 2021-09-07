@@ -271,11 +271,4 @@ public class UserService {
 			this.workingExperienceRepository.deleteById(el);
 		}
 	}
-
-	@Async
-	public void compileTemplate() {
-		List<WorkingExperience> newList = this.workingExperienceRepository.findAll();
-		this.kieSession.createTemplateWorkingExperience(newList);
-		this.kieSession.recompileRules();
-	}
 }

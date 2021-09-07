@@ -76,14 +76,6 @@ public class KieSessionService {
 		this.kieSession.getAgenda().getAgendaGroup(groupName).setFocus();
 	}
 
-	public void createTemplateWorkingExperience(List<WorkingExperience> list) {
-		List<Object> objectList = list.stream().map(el -> new WorkingExperienceTemplateDTO(el))
-				.collect(Collectors.toList());
-		String templatePath = this.templateFolderPath + "job_offer_working_experience.drt";
-		String rulePath = this.ruleFolderPath + "job_offer_working_experience.drl";
-		this.createTemplate(objectList, templatePath, rulePath);
-	}
-
 	public void createTemplateCompanyStatus(List<CompanyStatusConfig> list) {
 		List<Object> objectList = list.stream().map(el -> new CompanyStatusConfigTemplateDTO(el))
 				.collect(Collectors.toList());

@@ -19,7 +19,6 @@ import ftn.sbnz.repository.job_offer.JobOfferRepository;
 import ftn.sbnz.repository.job_offer.JobOfferStatusConfigRepository;
 import ftn.sbnz.repository.job_position.JobPositionRepository;
 import ftn.sbnz.repository.user.JobSeekerRepository;
-import ftn.sbnz.repository.user.WorkingExperienceRepository;
 import ftn.sbnz.service.KieSessionService;
 
 public class SessionInitializer {
@@ -36,9 +35,6 @@ public class SessionInitializer {
 	}
 
 	private static void compileTemplates(ApplicationContext context, KieSessionService session) {
-		WorkingExperienceRepository repo = context.getBean(WorkingExperienceRepository.class);
-		session.createTemplateWorkingExperience(repo.findAll());
-		
 		CompanyStatusConfigRepository compStatusRepo = context.getBean(CompanyStatusConfigRepository.class);
 		session.createTemplateCompanyStatus(compStatusRepo.findAll());
 		
