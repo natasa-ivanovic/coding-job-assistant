@@ -1,0 +1,54 @@
+package sbnz.rules;
+
+import ftn.sbnz.model.interview.InterviewSuggestion;
+import ftn.sbnz.model.interview.InterviewSuggestionStatus;
+import ftn.sbnz.model.interview.InterviewSuggestionGroup;
+import ftn.sbnz.model.enums.SkillProficiency;
+
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.CVElementType;
+
+
+query getInterviewSuggestionForCVElement(
+            SkillProficiency iUserProficiency, 
+            SkillProficiency iJobProficiency, 
+            String iSubject,
+            CVElementType iCv,
+            InterviewSuggestion $is)
+    $is := InterviewSuggestion(cvElementProficiency.getCvElement().getType() == iCv, 
+                             subject == iSubject, 
+                             cvElementProficiency.getProficiency.getValue() > iUserProficiency.getValue(),
+                             cvElementProficiency.getProficiency.getValue() <= iJobProficiency.getValue())
+end
+
+
+salience 100
+rule "Interview suggestion for cv element"
+	agenda-group "interview-suggestion"
+	lock-on-active
+	when
+        $isg: InterviewSuggestionGroup($jobOfferDifference: jobOfferDifference, 
+                                        $cvElementType: jobOfferDifference.cvElementType, 
+                                        $userProficiency: jobOfferDifference.userProficiency, 
+                                        $jobOfferProficiency: jobOfferDifference.jobOfferProficiency,
+                                        $subject: jobOfferDifference.subject,
+                                        $userProficiency < $jobOfferProficiency)
+        and
+        getInterviewSuggestionForCVElement($userProficiency, $jobOfferProficiency, $subject, $cvElementType, $is;)
+    then
+    modify($isg) {
+        getInterviewSuggestions().add($is)
+    }
+    System.out.println("Interview suggestion phase: " + $subject);
+end
+
+
+salience 5
+rule "Remove interview suggestion status"
+	agenda-group "interview-suggestion"
+	lock-on-active
+	when
+        $iss: InterviewSuggestionStatus()
+    then
+        delete($iss);
+end

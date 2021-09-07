@@ -2,11 +2,13 @@ package ftn.sbnz.service;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sbnz.dto.job_position.JobPositionSuggestionDTO;
 import ftn.sbnz.model.job_position.JobPositionRating;
@@ -16,6 +18,7 @@ import ftn.sbnz.repository.job_position.JobPositionRatingRepository;
 import ftn.sbnz.repository.job_position.JobPositionSuggestionRepository;
 
 @Service
+@Transactional
 public class JobPositionSuggestionService {
 
 	private JobPositionSuggestionRepository repository;
@@ -35,6 +38,7 @@ public class JobPositionSuggestionService {
 		this.userService = userService;
 	}
 
+	 
 	public JobPositionSuggestionDTO create(JobSeeker jobSeeker) {
 		JobSeeker dbJobSeeker = (JobSeeker) userService.findByUsername(jobSeeker.getUsername());
 		Calendar rightNow = Calendar.getInstance();
@@ -46,7 +50,11 @@ public class JobPositionSuggestionService {
 		kieSession.setAgendaFocus("jps-p2");
 		kieSession.setAgendaFocus("jps-p1");
 		kieSession.fireAllRules();
-
+		
+		suggestion.setFinished(true);
+		
+		suggestion.getPositionRatings().sort(Comparator.reverseOrder());
+		
 		for (JobPositionRating rating : suggestion.getPositionRatings()) {
 			this.ratingRepository.save(rating);
 		}
@@ -66,6 +74,15 @@ public class JobPositionSuggestionService {
 					.sorted((item1, item2) -> Long.compare(item2.getDate().getTime(), item1.getDate().getTime()))
 					.collect(Collectors.toList());
 			return list.get(0);
+		}
+	}
+
+	public boolean hasLastSuggestion(JobSeeker jobSeeker) {
+		List<JobPositionSuggestionDTO> list = this.repository.findAllByJobSeeker(jobSeeker);
+		if (list.size() == 0) {
+			return false;
+		} else {
+			return false;
 		}
 	}
 

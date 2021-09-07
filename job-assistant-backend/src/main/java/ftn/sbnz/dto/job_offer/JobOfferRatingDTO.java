@@ -17,27 +17,19 @@ public class JobOfferRatingDTO {
 	private String description;
 	private String category;
 	private Long jobOfferId;
-	private float offerRating;
+	private JobOfferDTO jobOffer;
 	private boolean following;
-	private String ranking;
 	
-	public JobOfferRatingDTO(JobOfferRating jobOfferRating, JobSeeker js, String ranking) {
+	public JobOfferRatingDTO(JobOfferRating jobOfferRating, JobSeeker js, boolean following) {
 		this.id = jobOfferRating.getId();
 		this.jobOfferId = jobOfferRating.getJobOffer().getId();
+		this.jobOffer = new JobOfferDTO(jobOfferRating.getJobOffer());
 		this.position = jobOfferRating.getJobOffer().getPosition().getTitle();
 		this.company = jobOfferRating.getJobOffer().getCompany().getName();
 		this.description = jobOfferRating.getDescription();
 		this.rating = jobOfferRating.getRating();
 		this.category = jobOfferRating.getCategory().name();
-		this.offerRating = jobOfferRating.getJobOffer().getAverageRating();
-		this.ranking = ranking;
-		this.following = false;
-		for (JobSeekerRanking jsr : jobOfferRating.getJobOffer().getRankings()) {
-			if (jsr.getJobSeeker().getId() == js.getId()) {
-				this.following = true;
-				break;
-			}
-		}
+		this.following = following;
 	}
 
 }

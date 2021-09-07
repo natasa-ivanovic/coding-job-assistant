@@ -17,9 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.company.CompanyReview;
 import ftn.sbnz.model.enums.MedalRank;
 import ftn.sbnz.model.enums.ReviewStatus;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.repository.company.CompanyRepository;
 import ftn.sbnz.util.SessionUtil;
 
@@ -45,8 +45,8 @@ public class CompanyStatusRulesTests {
 		assertEquals("Levi9", company.getName());
 		assertEquals(MedalRank.NONE, company.getMedal());
 		
-		List<JobOfferReview> reviews = createReviews(2, company);
-		for (JobOfferReview r: reviews) {
+		List<CompanyReview> reviews = createReviews(2, company);
+		for (CompanyReview r: reviews) {
 			session.insert(r);
 		}
 
@@ -78,8 +78,8 @@ public class CompanyStatusRulesTests {
 		assertEquals("Levi9", company.getName());
 		assertEquals(MedalRank.NONE, company.getMedal());
 		
-		List<JobOfferReview> reviews = createReviews(3, company);
-		for (JobOfferReview r: reviews) {
+		List<CompanyReview> reviews = createReviews(3, company);
+		for (CompanyReview r: reviews) {
 			session.insert(r);
 		}
 
@@ -111,8 +111,8 @@ public class CompanyStatusRulesTests {
 		assertEquals("Levi9", company.getName());
 		assertEquals(MedalRank.NONE, company.getMedal());
 		
-		List<JobOfferReview> reviews = createReviews(5, company);
-		for (JobOfferReview r: reviews) {
+		List<CompanyReview> reviews = createReviews(5, company);
+		for (CompanyReview r: reviews) {
 			session.insert(r);
 		}
 
@@ -145,8 +145,8 @@ public class CompanyStatusRulesTests {
 		assertEquals("Levi9", company.getName());
 		assertEquals(MedalRank.NONE, company.getMedal());
 		
-		List<JobOfferReview> reviews = createBadReviews(5, company);
-		for (JobOfferReview r: reviews) {
+		List<CompanyReview> reviews = createBadReviews(5, company);
+		for (CompanyReview r: reviews) {
 			session.insert(r);
 		}
 
@@ -162,10 +162,10 @@ public class CompanyStatusRulesTests {
 		session.dispose();
 	}
 	
-	private List<JobOfferReview> createReviews(int numberOfReviews, Company company) {
-		List<JobOfferReview> list = new ArrayList<>();
+	private List<CompanyReview> createReviews(int numberOfReviews, Company company) {
+		List<CompanyReview> list = new ArrayList<>();
 		for (long i = 0; i != numberOfReviews; i++) {
-			JobOfferReview review = new JobOfferReview();
+			CompanyReview review = new CompanyReview();
 			review.setCompany(company);
 			Calendar rightNow = Calendar.getInstance();
 			review.setDate(new Timestamp(rightNow.getTimeInMillis()));
@@ -182,10 +182,10 @@ public class CompanyStatusRulesTests {
 		return list;
 	}
 
-	private List<JobOfferReview> createBadReviews(int numberOfReviews, Company company) {
-		List<JobOfferReview> list = new ArrayList<>();
+	private List<CompanyReview> createBadReviews(int numberOfReviews, Company company) {
+		List<CompanyReview> list = new ArrayList<>();
 		for (long i = 0; i != numberOfReviews; i++) {
-			JobOfferReview review = new JobOfferReview();
+			CompanyReview review = new CompanyReview();
 			review.setCompany(company);
 			Calendar rightNow = Calendar.getInstance();
 			review.setDate(new Timestamp(rightNow.getTimeInMillis()));

@@ -6,4 +6,6 @@ import ftn.sbnz.model.job_offer.JobOfferDifference;
 
 public interface JobOfferDifferenceRepository extends JpaRepository<JobOfferDifference, Long> {
 
+	JobOfferDifference getOneById(Long jobOfferDifferenceId);
+
 }

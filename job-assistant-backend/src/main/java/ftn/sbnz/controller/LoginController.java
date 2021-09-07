@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ftn.sbnz.dto.UserDTO;
-import ftn.sbnz.dto.UserTokenStateDTO;
+import ftn.sbnz.dto.user.UserDTO;
+import ftn.sbnz.dto.user.UserTokenStateDTO;
 import ftn.sbnz.exception.UserException;
 import ftn.sbnz.security.auth.JwtAuthenticationRequest;
 import ftn.sbnz.service.UserService;

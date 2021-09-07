@@ -1,12 +1,12 @@
-                                          package ftn.sbnz.model.job_offer;
+package ftn.sbnz.model.job_offer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JobOfferRating {
+public class JobOfferRating implements Comparable<JobOfferRating>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -45,10 +45,14 @@ public class JobOfferRating {
 	@ManyToOne
 	private JobOffer jobOffer;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<InterviewSuggestion> interviewSuggestions;
+	@ManyToMany
+	private Set<InterviewSuggestion> interviewSuggestions = new HashSet<>();
 
 	@OneToMany
 	private List<JobOfferStatistic> statistic = new ArrayList<>();
-	
+
+	@Override
+	public int compareTo(JobOfferRating o) {
+		return this.getRating() - o.getRating();
+	}
 }

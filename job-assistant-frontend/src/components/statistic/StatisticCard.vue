@@ -5,10 +5,17 @@
         <v-card-title style="font-size:30px;" class="description">
           Proficiency Evaluation
         </v-card-title>
+        <v-row class="ml-5 mr-5">
+          <v-progress-linear
+            indeterminate
+            color="teal"
+            :active="show"
+          ></v-progress-linear>
+        </v-row>
         <div>
           <v-tabs v-model="tab" centered slider-color="blue" class="mb-5">
             <v-tab v-if="programming">Programming languages</v-tab>
-            <v-tab v-if="technology">Technology</v-tab>
+            <v-tab v-if="technology">Technologies</v-tab>
             <v-tab v-if="knowledge">Knowledge</v-tab>
             <v-tab v-if="softSkill">Soft skills</v-tab>
             <v-tab v-if="language">Languages</v-tab>
@@ -82,15 +89,13 @@ export default {
     date: null,
     jobOffer: Object,
     tab: 0,
+    show: false,
   }),
   props: {
     id: Number,
-    // private Long id;
-    // private String subject;
-    // private SkillProficiency userProficiency;
-    // private SkillProficiency jobOfferProficiency;
   },
   mounted() {
+    this.show = true;
     this.axios
       .get(apiURL + this.id)
       .then((response) => {
@@ -100,9 +105,12 @@ export default {
         this.softSkill = response.data.softSkillDifferences;
         this.language = response.data.languageDifferences;
         this.date = response.data.date;
+        this.show = false;
       })
       .catch((error) => {
-        alert(error);
+        this.show = false;
+        // TODO proveriti jel ovo okej
+        this.$root.snackbar.error(error);
       });
   },
   methods: {},

@@ -1,0 +1,529 @@
+package sbnz.rules;
+
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.JobSeekerRanking;
+import ftn.sbnz.model.user.WorkingExperience;
+
+import ftn.sbnz.model.company.Company;
+
+import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
+import ftn.sbnz.model.cv_element.CVElementImportance;
+
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.JobOfferCategory;
+import ftn.sbnz.model.enums.MedalRank;
+import ftn.sbnz.model.enums.CVElementType;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import java.lang.StringBuilder;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Math;
+
+
+rule "JobOfferSuggestion - phase 1 - offer selecting"
+	agenda-group "jos-p1"
+	lock-on-active
+	when 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($offerRatings: offerRatings, $user: jobSeeker) 
+		and
+		forall(JobOfferRating(rating == 0) from $offerRatings) 
+		and
+		$offer: JobOffer() 
+		and
+		$jobPositionSuggestions: 
+					List(size > 0) from collect (JobPositionSuggestion(jobSeeker.getId() == $user.getId())) 
+		and
+		$latestJobPositionSuggestions: 
+					JobPositionSuggestion() from $jobPositionSuggestions.get($jobPositionSuggestions.size() - 1)
+		and
+		Number(intValue >= 1) from accumulate (JobPositionRating($jobPosition: jobPosition, jobPosition.getTitle == $offer.getPosition().getTitle())
+		 											   from $latestJobPositionSuggestions.getPositionRatings(),
+													   count($jobPosition)
+		 										)
+	then
+		JobOfferRating $jor = new JobOfferRating();
+		$jor.setRating(0);
+		$jor.setCategory(JobOfferCategory.NONE);
+		$jor.setDescription("");
+		$jor.setJobOffer($offer);
+		modify($jobOfferSuggestion) {
+			getOfferRatings().add($jor)
+		}
+		insert($jor);
+		System.out.println("Phase 1 - Added job offer from company: " + $offer.getCompany().getName() + " for position " + $offer.getPosition().getTitle());
+end
+
+
+rule "JobOfferSuggestion - phase 2 - mandatory programming languages  (exist)"
+	agenda-group "jos-p2"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(rating == 0, $progImportances: jobOffer.getCvElementImportances()) 
+		and 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userProgrammingLang: 
+					List() from accumulate(
+                            CVElementProficiency(
+                                $progLang: cvElement.getName(), 
+                                cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE
+                            ) 
+					   	   from $user.getProficiencies(),
+					       collectList($progLang)) 
+		and
+		$offerProgImportance: 
+					CVElementImportance(
+                        optional == false, 
+                        $userProgrammingLang contains cvElementProficiency.getCvElement().getName()
+                    )
+					from $progImportances 
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerProgImportance.getCvElementProficiency().getCvElement().getName()
+                    ) 
+					from $user.getProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerProgImportance.getCvElementProficiency().getProficiency());
+		int $points = $offerProgImportance.getImportanceLevel() * $difference;
+		String $newDescription = "Programming language - " + $userProficiency.getCvElement().getName() + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($points),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (mandatory exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);	
+end
+
+
+rule "JobOfferSuggestion - phase 2 - mandatory programming languages (not exist)"
+	agenda-group "jos-p2"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getCvElementImportances()) 
+		and 
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userProgrammingLang: 
+					List() from accumulate(CVElementProficiency(
+                                $progLang: cvElement.getName(), 
+                                cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE
+                            ) 
+						   from $user.getProficiencies(),
+						   collectList($progLang)) 
+		and
+		$offerProgImportance: 
+					CVElementImportance(
+                        optional == false, 
+                        $userProgrammingLang not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.PROGRAMMING_LANGUAGE
+                    )
+					from $progImportances
+	then
+		int $points = $offerProgImportance.getImportanceLevel() * $offerProgImportance.getCvElementProficiency().getProficiency().getValue() * (-1);
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $language = $offerProgImportance.getCvElementProficiency().getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Missing user proficiency for mandatory programming language - " + $language + " - negative points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (mandatory not exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);	
+end
+
+
+rule "JobOfferSuggestion - phase 2 - optional programming languages"
+	agenda-group "jos-p2"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $progImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+					and
+		$userProgrammingLang: 
+					List() from accumulate(CVElementProficiency(
+                                $progLang: cvElement.getName(), 
+                                cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE)
+						   from $user.getProficiencies(),
+						   collectList($progLang)) 
+		and
+		$offerProgImportance: 
+					CVElementImportance(
+                        optional == true, 
+                        $userProgrammingLang contains cvElementProficiency.getCvElement().getName())
+					from $progImportances
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerProgImportance.getCvElementProficiency().getCvElement().getName()
+                    ) 
+					from $user.getProficiencies()
+	then 
+		int $points = $offerProgImportance.getImportanceLevel() * $userProficiency.getProficiency().getValue();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $language = $offerProgImportance.getCvElementProficiency().getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "User proficiency for optional programming language - " + $language + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 2 (optional) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 3 - technology (exist)"
+	agenda-group "jos-p3"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $techImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userTech: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $technology : cvElement.getName(),
+                            cvElement.getType() == CVElementType.TECHNOLOGY) 
+					from $user.getProficiencies(),
+				   	collectList($technology)) 
+		and
+		$offerTechImportance: 
+					CVElementImportance($userTech contains cvElementProficiency.getCvElement().getName())
+					from $techImportances 
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerTechImportance.getCvElementProficiency().getCvElement().getName()) 
+					from $user.getProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerTechImportance.getCvElementProficiency().getProficiency());
+		int $points =  $difference * $offerTechImportance.getImportanceLevel();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $technology = $userProficiency.getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Technology - " + $technology + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		
+		System.out.println("Phase 3 (technology exists) - JobOfferSuggestion with points " + $points + " for technology " + $technology + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 3 - technology (not exist)"
+	agenda-group "jos-p3"
+	lock-on-active
+	when 
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $techImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userTech: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $technology : cvElement.getName(),
+                            cvElement.getType() == CVElementType.TECHNOLOGY) 
+					from $user.getProficiencies(),
+				   	collectList($technology)) 
+		and
+		$offerTechImportance: 
+					CVElementImportance(
+                        $userTech not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.TECHNOLOGY)
+					from $techImportances
+	then
+		int $points = $offerTechImportance.getImportanceLevel() * $offerTechImportance.getCvElementProficiency().getProficiency().getValue() * (-1);
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $technology = $offerTechImportance.getCvElementProficiency().getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Missing user proficiency for technology - " + $technology + " - negative points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 3 (technology not exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 4 - knowledge (exist)"
+	agenda-group "jos-p4"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $knowledgeImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userKnowledge: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $knowledge : cvElement.getName(),
+                            cvElement.getType() == CVElementType.KNOWLEDGE
+                    ) 
+					from $user.getProficiencies(),
+				   	collectList($knowledge)) 
+		and
+		$offerKnowledgeImportance: 
+					CVElementImportance(
+                        $userKnowledge contains cvElementProficiency.getCvElement().getName())
+					from $knowledgeImportances 
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerKnowledgeImportance.getCvElementProficiency().getCvElement().getName()) 
+					from $user.getProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerKnowledgeImportance.getCvElementProficiency().getProficiency());
+		int $points =  $difference * $offerKnowledgeImportance.getImportanceLevel();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $knowledge = $userProficiency.getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Knowledge - " + $knowledge + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		
+		System.out.println("Phase 4 (knowledge exists) - JobOfferSuggestion with points " + $points + " for knowledge " + $knowledge + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 4 - knowledge (not exist)"
+	agenda-group "jos-p4"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $knowledgeImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userKnowledge: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $knowledge : cvElement.getName(),
+                            cvElement.getType() == CVElementType.KNOWLEDGE) 
+					from $user.getProficiencies(),
+				   	collectList($knowledge)) 
+		and
+		$offerKnowledgeImportance: 
+					CVElementImportance(
+                        $userKnowledge not contains cvElementProficiency.getCvElement().getName(),
+						cvElementProficiency.cvElement.type == CVElementType.KNOWLEDGE
+                    )
+					from $knowledgeImportances
+	then
+		int $points = $offerKnowledgeImportance.getImportanceLevel() * $offerKnowledgeImportance.getCvElementProficiency().getProficiency().getValue() * (-1);
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $knowledge = $offerKnowledgeImportance.getCvElementProficiency().getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Missing user proficiency for knowledge - " + $knowledge + " - negative points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 4 (knowledge not exists) - JobOfferSuggestion with points " + $points + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 5 - language"
+	agenda-group "jos-p5"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $languageImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userLanguage: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $language : cvElement.getName(),
+                            cvElement.getType() == CVElementType.LANGUAGE) 
+					from $user.getProficiencies(),
+				   	collectList($language)) 
+		and
+		$offerLanguageImportance: 
+					CVElementImportance(
+                        $userLanguage contains cvElementProficiency.getCvElement().getName())
+					from $languageImportances 
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerLanguageImportance.getCvElementProficiency().getCvElement().getName()) 
+					from $user.getProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerLanguageImportance.getCvElementProficiency().getProficiency());
+		int $points =  $difference * $offerLanguageImportance.getImportanceLevel();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $language = $userProficiency.getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Language - " + $language + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 5 (languages) - JobOfferSuggestion with points " + $points + " for language " + $language + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+rule "JobOfferSuggestion - phase 6 - soft skills"
+	agenda-group "jos-p6"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, $skillImportances: jobOffer.getCvElementImportances()) 
+		and
+		$jobOfferSuggestion: 
+					JobOfferSuggestion($user: jobSeeker, offerRatings contains $jobOfferRating) 
+		and
+		$userSkills: 
+					List() from accumulate(
+                        CVElementProficiency(
+                            $skill : cvElement.getName(),
+                            cvElement.getType() == CVElementType.SOFT_SKILL) 
+					from $user.getProficiencies(),
+				   	collectList($skill)) 
+		and
+		$offerSkillImportance: 
+					CVElementImportance($userSkills contains cvElementProficiency.getCvElement().getName())
+					from $skillImportances 
+		and
+		$userProficiency: 
+					CVElementProficiency(
+                        cvElement.getName() == $offerSkillImportance.getCvElementProficiency().getCvElement().getName()) 
+					from $user.getProficiencies()
+	then
+		int $difference = $userProficiency.getProficiency().skillDifference($offerSkillImportance.getCvElementProficiency().getProficiency());
+		int $points =  $difference * $offerSkillImportance.getImportanceLevel();
+		int $newRating = $jobOfferRating.getRating() + $points;
+		String $skill = $userProficiency.getCvElement().getName();
+		String $newDescription = $jobOfferRating.getDescription() + "Skill - " + $skill + " - points: " + $points + "\n";
+		modify($jobOfferRating) {
+			setRating($newRating),
+			setDescription($newDescription)
+		}
+		String $jobPositionName = $jobOfferRating.getJobOffer().getPosition().getTitle();
+		String $companyName = $jobOfferRating.getJobOffer().getCompany().getName();
+		System.out.println("Phase 6 (soft skills) - JobOfferSuggestion with points " + $points + " for skill " + $skill + " for position " + $jobPositionName  + " in company " + $companyName);
+end
+
+
+salience 50
+rule "JobOfferSuggestion - phase 7 - classify IMPROVEMENT NEEDED"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating: 
+					JobOfferRating(category == JobOfferCategory.NONE, rating <= 0) 
+	then
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.IMPROVEMENT_NEEDED)
+		}
+		System.out.println("Phase 7 - IMPROVEMENT NEEDED for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 30
+rule "JobOfferSuggestion - phase 7 - classify LOW COMPETITION"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE)
+		and
+		accumulate (JobSeekerRanking(), $followers: count(1))
+		and
+		accumulate (JobOffer(), $allOffers: count(1))
+		and
+		accumulate(JobSeekerRanking(jobOffer.getId() == $jobOfferRating.getJobOffer().getId()), $offerFollowers: count(1))
+		and
+		eval($offerFollowers <= ($followers/$allOffers))
+	then
+		int $newRating = $jobOfferRating.getRating() + Math.abs($jobOfferRating.getJobOffer().getRankings().size() - 5);
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.LOW_COMPETITION),
+			setRating($newRating)
+		}
+		System.out.println("Phase 7 - LOW COMPETITION for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 10
+rule "JobOfferSuggestion - phase 7 - classify HOT COMPANY"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE, $companyId: jobOffer.getCompany().getId())
+		and
+        $company: Company(id == $companyId, medal.getValue() >= 1, $medal: medal.getValue())
+	then
+		int $newRating = $jobOfferRating.getRating() + $medal * 5;
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.HOT_COMPANY),
+			setRating($newRating)
+		}
+		System.out.println("Phase 7 - HOT COMPANY for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+salience 0
+rule "JobOfferSuggestion - phase 7 - classify BEST MATCH"
+	agenda-group "jos-p7"
+	lock-on-active
+	when
+		$jobOfferRating:
+					JobOfferRating(category == JobOfferCategory.NONE)
+	then
+		modify($jobOfferRating) {
+			setCategory(JobOfferCategory.BEST_MATCH)
+		}
+		System.out.println("Phase 7 - BEST MATCH for job offer " + $jobOfferRating.getJobOffer().getPosition().getTitle() + " in company " + $jobOfferRating.getJobOffer().getCompany().getName());
+end
+
+
+

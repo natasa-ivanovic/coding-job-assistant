@@ -39,7 +39,11 @@ public class JobPositionSuggestion {
 	@OneToMany
 	private List<JobPositionRating> positionRatings = new ArrayList<>();
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@NonNull
 	private JobSeeker jobSeeker;
+	
+	@Column(name = "finished")
+	private boolean finished;
+	
 }

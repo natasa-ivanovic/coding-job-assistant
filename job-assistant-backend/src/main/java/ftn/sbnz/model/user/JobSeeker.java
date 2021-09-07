@@ -12,17 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import ftn.sbnz.model.benefit.Benefit;
+import ftn.sbnz.model.company.CompanyReview;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
 import ftn.sbnz.model.enums.EducationLevel;
 import ftn.sbnz.model.interview.InterviewSuggestionStatus;
-import ftn.sbnz.model.job_offer.JobOfferReview;
 import ftn.sbnz.model.job_offer.JobOfferStatistic;
 import ftn.sbnz.model.job_offer.JobOfferSuggestion;
 import ftn.sbnz.model.job_position.JobPositionSuggestion;
-import ftn.sbnz.model.knowledge.KnowledgeProficiency;
-import ftn.sbnz.model.language.LanguageProficiency;
-import ftn.sbnz.model.programming_language.ProgrammingProficiency;
-import ftn.sbnz.model.soft_skill.SoftSkillProficiency;
-import ftn.sbnz.model.technology.TechnologyProficiency;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,26 +48,14 @@ public class JobSeeker extends User{
 	@Column(name = "continuous_learning")
 	private boolean continuousLearning;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<TechnologyProficiency> technologyProficiencies = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<SoftSkillProficiency> softSkillProficiencies = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<ProgrammingProficiency> programmingProficiencies = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<LanguageProficiency> languageProficiencies = new HashSet<>();
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<KnowledgeProficiency> knowledgeProficiencies = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<WorkingExperience> workingExperience = new HashSet<>();
-	
 	@OneToMany(mappedBy = "poster")
-	private Set<JobOfferReview> reviews = new HashSet<>();
+	private List<CompanyReview> reviews = new ArrayList<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<CVElementProficiency> proficiencies = new HashSet<>();
+
+	@OneToMany(mappedBy = "user")
+	private List<WorkingExperience> workingExperience = new ArrayList<>();
 	
 	@OneToMany
 	private List<JobOfferSuggestion> offerSuggestions = new ArrayList<>();
@@ -78,7 +63,7 @@ public class JobSeeker extends User{
 	@OneToMany
 	private List<JobPositionSuggestion> positionSuggestions = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "jobSeeker")
 	private List<JobSeekerRanking> offerRankings = new ArrayList<>();
 	
 	@OneToMany
@@ -86,4 +71,7 @@ public class JobSeeker extends User{
 	
 	@OneToMany
 	private List<InterviewSuggestionStatus> interviewSuggestions = new ArrayList<>();
+	
+	@OneToMany
+	private List<Benefit> benefits = new ArrayList<>();
 }

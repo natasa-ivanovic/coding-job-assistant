@@ -41,4 +41,7 @@ public class JobOfferSuggestion {
 	@ManyToOne
 	@NonNull
 	private JobSeeker jobSeeker;
+
+	@Column(name = "finished")
+	private boolean finished;
 }

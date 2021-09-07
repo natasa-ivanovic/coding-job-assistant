@@ -1,5 +1,10 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="400">
+  <v-card
+    elevation="8"
+    :loading="loading"
+    class="mx-auto my-12"
+    max-width="400"
+  >
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -8,10 +13,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      height="150"
-      src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg"
-    ></v-img>
+    <v-img src="@/assets/job-position.jpg" height="210"></v-img>
 
     <v-card-title>{{ jobPosition.title }}</v-card-title>
     <v-card-subtitle>{{ jobPosition.subtitle }}</v-card-subtitle>
@@ -30,7 +32,7 @@
         <div class="grey--text ms-4">{{ getRatingText() }}</div>
       </v-row>
 
-      <div class="mt-6 ml-3 mr-3">
+      <div class="mt-6">
         <v-row
           v-for="description in formatDescription(jobPosition.description)"
           :key="description.name"
@@ -47,7 +49,7 @@
     <v-card-text>
       <v-chip-group
         v-model="jobPosition.seniority"
-        active-class="blue accent-4 white--text"
+        active-class="indigo accent-1 black--text"
         column
       >
         <v-chip class="custom-chip chip-disabled" value="JUNIOR" label
@@ -62,7 +64,7 @@
       </v-chip-group>
     </v-card-text>
 
-    <v-card-actions>
+    <!-- <v-card-actions>
       <v-btn class="ml-2" color="black lighten-2" outlined @click="view">
         View details
       </v-btn>
@@ -70,7 +72,7 @@
       <v-btn class="mr-2" color="black lighten-2" outlined @click="view">
         View offers
       </v-btn>
-    </v-card-actions>
+    </v-card-actions> -->
   </v-card>
 </template>
 
@@ -101,30 +103,36 @@ export default {
     },
     formatDescription: function (desc) {
       const list = [];
+      const shownElements = 5;
       desc.split("\n").forEach((el) => {
         if (el.length == 0) return;
-        const name = el.split(" (")[0];
+        let name = el.split(" (")[0];
+        name = name.replace("Programming language", "Prog. language")
         const value = el.split(" (")[1].replace(")", "");
         list.push({ name, value });
       });
-      if (list.length > 5) return list.splice(0, 5);
-      else return list;
+      if (list.length > shownElements) return list.splice(0, shownElements);
+      else {
+        for (let i = list.length; i != shownElements; i++) {
+          list.push({ name: "", value: "" });
+        }
+        return list;
+      }
     },
     getRating: function () {
       if (this.maxRating != 0) {
-        const percentage = (this.jobPosition.rating * 100) / this.maxRating
+        const percentage = (this.jobPosition.rating * 100) / this.maxRating;
         return percentage / 20;
-      }
-      else return 0;
+      } else return 0;
     },
     getRatingText: function () {
       const rating = this.getRating();
       if (rating >= 4.0) {
-        return "Excellent match!"
+        return "Excellent match!";
       } else if (rating >= 2) {
-        return "Decent match!"
+        return "Decent match!";
       } else {
-        return "Potentially useful!"
+        return "Potentially useful!";
       }
     },
   },

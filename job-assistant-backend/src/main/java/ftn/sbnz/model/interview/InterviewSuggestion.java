@@ -1,14 +1,17 @@
 package ftn.sbnz.model.interview;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ftn.sbnz.model.enums.CVElement;
-import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,12 +24,6 @@ public class InterviewSuggestion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "proficiency")
-	private SkillProficiency proficiency;
-	
-	@Column(name = "cv_element")
-	private CVElement cvElement;
-	
 	@Column(name = "subject")
 	private String subject;
 	
@@ -36,7 +33,10 @@ public class InterviewSuggestion {
 	@Column(name = "description", unique = false, nullable = false)
 	private String description;
 	
-//	@ManyToMany
-//	private List<InterviewSuggestionStatus> statuses = new ArrayList<>();
-
+	@OneToMany
+	private List<InterviewSuggestionStatus> statuses;
+	
+	@ManyToOne
+	private CVElementProficiency cvElementProficiency;
+	
 }

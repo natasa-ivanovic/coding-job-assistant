@@ -1,0 +1,431 @@
+package sbnz.rules;
+
+import ftn.sbnz.model.job_position.JobPosition;
+import ftn.sbnz.model.job_position.JobPositionSuggestion;
+import ftn.sbnz.model.job_position.JobPositionRating;
+
+import ftn.sbnz.model.job_offer.JobOffer;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+import ftn.sbnz.model.job_offer.JobOfferDifference;
+import ftn.sbnz.model.job_offer.JobOfferStatistic;
+
+import ftn.sbnz.model.user.JobSeeker;
+import ftn.sbnz.model.user.WorkingExperience;
+
+import ftn.sbnz.model.cv_element.CVElement;
+import ftn.sbnz.model.cv_element.CVElementProficiency;
+import ftn.sbnz.model.cv_element.CVElementImportance;
+
+import ftn.sbnz.model.enums.SeniorityLevel;
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.JobOfferCategory;
+import ftn.sbnz.model.enums.MedalRank;
+
+import ftn.sbnz.model.enums.SkillProficiency;
+import ftn.sbnz.model.enums.CVElementType;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
+
+
+rule "JobSeeker statistic for offer - programming language exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userProgProficiency: CVElementProficiency() from $jobSeeker.getProficiencies()
+        and
+        $jobProgProficiencies: List() from accumulate (
+                CVElementImportance(
+                    $proficiency: cvElementProficiency,
+                    cvElementProficiency.getCvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE) 
+                from $jobOffer.getCvElementImportances(),
+                collectList($proficiency)
+            )
+        and
+        $jobProgProficiency: 
+                CVElementProficiency(
+                    cvElement.getName() == $userProgProficiency.getCvElement().getName()
+                )
+                from $jobProgProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $language = $userProgProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = $userProgProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
+        $jod.setSubject($language);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.PROGRAMMING_LANGUAGE);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - programing language not exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userProgProficiencies: List() from accumulate (
+                CVElementProficiency(
+                    $language: cvElement,
+                    cvElement.getType() == CVElementType.PROGRAMMING_LANGUAGE
+                ) 
+                from $jobSeeker.getProficiencies(),
+                collectList($language.getName()))
+        and
+        $jpImportance: 
+                CVElementImportance(
+                    $userProgProficiencies not contains cvElementProficiency.getCvElement().getName(),
+                    cvElementProficiency.getCvElement().getType() == CVElementType.PROGRAMMING_LANGUAGE, 
+                    $jobProgProficiency: cvElementProficiency) 
+                from  $jobOffer.getCvElementImportances()
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $language = $jobProgProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = SkillProficiency.NONE;
+        SkillProficiency $jobProficiency = $jobProgProficiency.getProficiency();
+        $jod.setSubject($language);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.PROGRAMMING_LANGUAGE);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY NOT EXISTS] Programming statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - technology exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userTechProficiency: CVElementProficiency() from $jobSeeker.getProficiencies()
+        and
+        $jobTechProficiencies: List() from accumulate (
+                CVElementImportance(
+                    $proficiency: cvElementProficiency,
+                    cvElementProficiency.getCvElement().getType() == CVElementType.TECHNOLOGY) 
+                from $jobOffer.getCvElementImportances(),
+                collectList($proficiency))
+        and
+        $jobTechProficiency: 
+                CVElementProficiency(
+                    cvElement.getName() == $userTechProficiency.getCvElement().getName()
+                )
+                from $jobTechProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $technology = $userTechProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = $userTechProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
+        $jod.setSubject($technology);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.TECHNOLOGY);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - technology not exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userTechProficiencies: List() from accumulate (
+                CVElementProficiency(
+                    $technology: cvElement,
+                    cvElement.getType() == CVElementType.TECHNOLOGY) 
+                from $jobSeeker.getProficiencies(),
+                collectList($technology.getName()))
+        and
+        $jpImportance: 
+            CVElementImportance(
+                $userTechProficiencies not contains cvElementProficiency.getCvElement().getName(), 
+                cvElementProficiency.getCvElement().getType() == CVElementType.TECHNOLOGY,
+                $jobTechProficiency: cvElementProficiency) 
+            from  $jobOffer.getCvElementImportances()
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $technology = $jobTechProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = SkillProficiency.NONE;
+        SkillProficiency $jobProficiency = $jobTechProficiency.getProficiency();
+        $jod.setSubject($technology);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.TECHNOLOGY);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY NOT EXISTS] Technology statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $technology + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $technology + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - knowledge exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userKnowledgeProficiency: CVElementProficiency() from $jobSeeker.getProficiencies()
+        and
+        $jobKnowledgeProficiencies: List() from accumulate (
+                CVElementImportance(
+                    $proficiency: cvElementProficiency,
+                    cvElementProficiency.getCvElement.getType() == CVElementType.KNOWLEDGE) 
+                from $jobOffer.getCvElementImportances(),
+                collectList($proficiency))
+        and
+        $jobKnowledgeProficiency: 
+                CVElementProficiency(
+                    cvElement.getName() == $userKnowledgeProficiency.getCvElement().getName()
+                )
+                from $jobKnowledgeProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $knowledge = $userKnowledgeProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = $userKnowledgeProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
+        $jod.setSubject($knowledge);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setStatistic($jos);
+        $jod.setCvElementType(CVElementType.KNOWLEDGE);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - knowledge not exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userKnowledgeProficiencies: List() from accumulate (
+                CVElementProficiency(
+                    $knowledge: cvElement,
+                    cvElement.getType() == CVElementType.KNOWLEDGE) 
+                from $jobSeeker.getProficiencies(),
+                collectList($knowledge.getName()))
+        and
+        $jpImportance: 
+                CVElementImportance(
+                    $userKnowledgeProficiencies not contains cvElementProficiency.getCvElement().getName(),
+                    cvElementProficiency.getCvElement().getType() == CVElementType.KNOWLEDGE, 
+                    $jobKnowledgeProficiency: cvElementProficiency
+                ) 
+                from  $jobOffer.getCvElementImportances()
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $knowledge = $jobKnowledgeProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = SkillProficiency.NONE;
+        SkillProficiency $jobProficiency = $jobKnowledgeProficiency.getProficiency();
+        $jod.setSubject($knowledge);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.KNOWLEDGE);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY NOT EXISTS] Knowledge statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $knowledge + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $knowledge + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - soft skill exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userSkillProficiency: CVElementProficiency() from $jobSeeker.getProficiencies()
+        and
+        $jobSkillProficiencies: List() from accumulate (
+                CVElementImportance(
+                    $proficiency: cvElementProficiency,
+                    cvElementProficiency.getCvElement().getType() == CVElementType.SOFT_SKILL) 
+                from $jobOffer.getCvElementImportances(),
+                collectList($proficiency))
+        and
+        $jobSkillProficiency: 
+                CVElementProficiency(
+                    cvElement.getName() == $userSkillProficiency.getCvElement().getName()
+                )
+                from $jobSkillProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $skill = $userSkillProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = $userSkillProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
+        $jod.setSubject($skill);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.SOFT_SKILL);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - soft skill not exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userSkillProficiencies: List() from accumulate (
+                CVElementProficiency(
+                    $skill: cvElement,
+                    cvElement.getType() == CVElementType.SOFT_SKILL) 
+                from $jobSeeker.getProficiencies(),
+                collectList($skill.getName()))
+        and
+        $jpImportance: 
+            CVElementImportance(
+                $userSkillProficiencies not contains cvElementProficiency.getCvElement().getName(),
+                cvElementProficiency.getCvElement().getType() == CVElementType.SOFT_SKILL, 
+                $jobSkillProficiency: cvElementProficiency) 
+            from  $jobOffer.getCvElementImportances()
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $skill = $jobSkillProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = SkillProficiency.NONE;
+        SkillProficiency $jobProficiency = $jobSkillProficiency.getProficiency();
+        $jod.setSubject($skill);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.SOFT_SKILL);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY NOT EXISTS] Soft skill statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $skill + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $skill + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - language exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userLanguageProficiency: CVElementProficiency() from $jobSeeker.getProficiencies()
+        and
+        $jobLanguageProficiencies: List() from accumulate (
+                CVElementImportance(
+                    $proficiency: cvElementProficiency,
+                    cvElementProficiency.getCvElement().getType() == CVElementType.LANGUAGE) 
+                from $jobOffer.getCvElementImportances(),
+                collectList($proficiency))
+        and
+        $jobLanguageProficiency: 
+                CVElementProficiency(
+                    cvElement.getName() == $userLanguageProficiency.getCvElement().getName()
+                )
+                from $jobLanguageProficiencies              
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $language = $userLanguageProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = $userLanguageProficiency.getProficiency();
+        SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
+        $jod.setSubject($language);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.LANGUAGE);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+        System.out.println("---");
+end
+
+
+rule "JobSeeker statistic for offer - language not exists"
+    agenda-group "job-seeker-statistic"
+    lock-on-active
+    when 
+        $jos: JobOfferStatistic($jobSeeker: jobSeeker, $jobOffer: jobOffer)
+        and
+        $userLanguageProficiencies: List() from accumulate (
+                CVElementProficiency(
+                    $language: cvElement,
+                    cvElement.getType() == CVElementType.LANGUAGE) 
+                from $jobSeeker.getProficiencies(),
+                collectList($language.getName()))
+        and
+        $jpImportance: 
+                CVElementImportance(
+                    $userLanguageProficiencies not contains cvElementProficiency.getCvElement().getName(),
+                    cvElementProficiency.getCvElement().getType() == CVElementType.LANGUAGE,
+                    $jobLanguageProficiency: cvElementProficiency
+                ) 
+                from  $jobOffer.getCvElementImportances()
+    then
+        JobOfferDifference $jod = new JobOfferDifference();
+        String $language = $jobLanguageProficiency.getCvElement().getName();
+        SkillProficiency $userProficiency = SkillProficiency.NONE;
+        SkillProficiency $jobProficiency = $jobLanguageProficiency.getProficiency();
+        $jod.setSubject($language);
+        $jod.setUserProficiency($userProficiency);
+        $jod.setJobOfferProficiency($jobProficiency);
+        $jod.setCvElementType(CVElementType.LANGUAGE);
+        $jod.setStatistic($jos);
+        modify($jos) {
+            getDifferences().add($jod);
+        }
+        System.out.println("[PROFICIENCY NOT EXISTS] Language statistic for job offer: " + $jobOffer.getPosition().getTitle() + " in company " + $jobOffer.getCompany().getName());
+        System.out.println("Job offer requirement for " + $language + ": " + $jobProficiency);
+        System.out.println("User proficiency for " + $language + ": " + $userProficiency);
+        System.out.println("---");
+end

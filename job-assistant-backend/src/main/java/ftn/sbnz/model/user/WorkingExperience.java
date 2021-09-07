@@ -1,10 +1,10 @@
 package ftn.sbnz.model.user;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,11 +12,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ftn.sbnz.dto.user.WorkingExperienceDTO;
+import ftn.sbnz.model.cv_element.CVElement;
 import ftn.sbnz.model.enums.SeniorityLevel;
 import ftn.sbnz.model.job_position.JobPosition;
-import ftn.sbnz.model.knowledge.Knowledge;
-import ftn.sbnz.model.programming_language.ProgrammingLanguage;
-import ftn.sbnz.model.technology.Technology;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -30,6 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class WorkingExperience {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,16 +41,20 @@ public class WorkingExperience {
 	@NonNull
 	private SeniorityLevel seniority;
 		
-	@ManyToMany
-	private Set<Technology> technologies = new HashSet<>();
-	
-	@ManyToMany
-	private Set<ProgrammingLanguage> progLanguages = new HashSet<>();
-	
-	@ManyToMany
-	private Set<Knowledge> knowledge = new HashSet<>();
-	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<CVElement> cvElements;
+		
 	@ManyToOne
 	private JobPosition position;
 	
+	@ManyToOne
+	private JobSeeker user;
+	
+	public WorkingExperience(WorkingExperienceDTO el, List<CVElement> cvElements, JobPosition position, JobSeeker user) {
+		this.months = el.getMonths();
+		this.seniority = el.getSeniority();
+		this.cvElements = cvElements;
+		this.position = position;
+		this.user = user;
+	}
 }

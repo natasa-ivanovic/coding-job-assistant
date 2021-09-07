@@ -1,0 +1,42 @@
+template header
+
+id
+name
+description
+levelImportance
+
+package sbnz.rules;
+
+import ftn.sbnz.model.benefit.Benefit;
+import ftn.sbnz.model.company.Company;
+import ftn.sbnz.model.job_offer.JobOfferSuggestion;
+import ftn.sbnz.model.job_offer.JobOfferRating;
+import ftn.sbnz.model.enums.CVElementType;
+
+import java.util.Set;
+import java.lang.String;
+
+template "Job offer - benefits"
+
+rule "Benefits for job offers @{row.rowNumber}"
+
+agenda-group "jos-p9"
+lock-on-active
+when
+    JobOfferSuggestion(jobOfferRatings: offerRatings, finished == false) and
+	jor: JobOfferRating(offerBenefits: jobOffer.getCompany().getBenefits()) from jobOfferRatings and
+	accumulate(Benefit(benefitName: name) from offerBenefits; 
+				benefitNames: collectList(benefitName);
+				benefitNames contains "@{name}")
+then
+	int points = @{levelImportance} * 2;
+	int newRating = jor.getRating() + points;
+	String newDescription = jor.getDescription() + "Added points - " + points + " for benefit @{name}\n";
+	modify(jor) {
+		setRating(newRating),
+		setDescription(newDescription)
+	}
+	System.out.println("Phase 8 (template) - add " + points + " points for benefit @{name}");
+end
+
+end template

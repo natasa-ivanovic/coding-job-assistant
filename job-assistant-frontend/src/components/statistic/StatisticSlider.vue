@@ -25,7 +25,9 @@
       </v-range-slider>
     </v-col>
     <v-col cols="1">
-      <v-btn :disabled="disableBtn" @click="improveSkill()" class="primary">Improve</v-btn>
+      <v-btn :disabled="disableBtn" @click="improveSkill()" class="primary"
+        >Improve</v-btn
+      >
     </v-col>
   </v-row>
 </template>
@@ -44,7 +46,7 @@ export default {
       "EXCELLENT",
       "EXPERT",
     ],
-    disableBtn: false
+    disableBtn: false,
   }),
   props: {
     difference: Object,
@@ -53,12 +55,12 @@ export default {
     this.improveSkillDisabled();
   },
   methods: {
-    getIcon: function(val) {
+    getIcon: function (val) {
       if (val == this.getValue(this.difference.userProficiency))
         return "mdi-account";
       else return "mdi-flag-checkered";
     },
-    getValue: function(proficiency) {
+    getValue: function (proficiency) {
       if (proficiency == "NONE") return 0;
       else if (proficiency == "BASIC") return 1;
       else if (proficiency == "GOOD") return 2;
@@ -66,25 +68,26 @@ export default {
       else if (proficiency == "EXCELLENT") return 4;
       else if (proficiency == "EXPERT") return 5;
     },
-    improveSkillDisabled: function() {
+    improveSkillDisabled: function () {
       let user = this.getValue(this.difference.userProficiency);
       let job = this.getValue(this.difference.jobOfferProficiency);
-      if (user < job)
-        this.disableBtn = false;
-      else
-        this.disableBtn = true;
+      if (user < job) this.disableBtn = false;
+      else this.disableBtn = true;
     },
-    improveSkill: function() {
-      this.axios.post(apiURL + this.difference.id)
-      .then((response) => {
-        this.disableBtn = true;
-        console.log(response);
-        alert("Your materials are ready! Check out the classroom!");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      })
-    }
+    improveSkill: function () {
+      this.axios
+        .post(apiURL + this.difference.id)
+        .then((response) => {
+          this.disableBtn = true;
+          console.log(response);
+          this.$root.snackbar.success(
+            "Your materials are ready! Check out the classroom!"
+          );
+        })
+        .catch((error) => {
+          this.$root.snackbar.error(error.response.data);
+        });
+    },
   },
 };
 </script>

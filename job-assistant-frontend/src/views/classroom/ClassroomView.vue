@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row justify="center" class="mt-5">
-      <v-col cols="8">
+      <v-col cols="10">
         <classroom-table></classroom-table>
       </v-col>
     </v-row>

@@ -1,0 +1,69 @@
+package sbnz.rules;
+
+import ftn.sbnz.events.StudiedTodayEvent;
+import ftn.sbnz.model.user.JobSeeker;
+
+import java.util.List;
+
+salience 100
+rule "StudiedTodayEvent added - already studied today"
+    agenda-group "studied-today"
+    when
+        $jobSeeker: JobSeeker($id: id)
+        and
+        $event: StudiedTodayEvent(jobSeekerId == $id)
+        and
+        $previousEvents: List() from collect (StudiedTodayEvent(jobSeekerId == $id, date before $event.getDate()))
+        and
+        not (forall (StudiedTodayEvent(endDate before $event.getDate()) from $previousEvents))
+    then
+        delete($event);
+        System.out.println("User already studied today - event removed");
+        System.out.println("Previous events size: " + $previousEvents.size());
+        System.out.println("Date: " + $event.getDate());
+        System.out.println("-----");
+end
+
+
+rule "StudiedTodayEvent added - 5 days in a row (3min for testing purposes)"
+    agenda-group "studied-today"
+    when
+        $event: StudiedTodayEvent($jobSeekerId: jobSeekerId) 
+        and
+        Number(intValue >= 5) from accumulate (StudiedTodayEvent(jobSeekerId == $jobSeekerId) 
+                                              over window:time( 1m ), 
+                                              count(1))
+        and
+        $user: JobSeeker(id == $jobSeekerId, continuousLearning == false)
+    then
+        modify($user) {
+            setContinuousLearning(true)
+        }
+        System.out.println("THIS USER IS VERY HARD WORKING!");
+end
+
+
+rule "No continuous learning"
+    when
+        $event: StudiedTodayEvent($jobSeekerId: jobSeekerId) 
+        and
+        Number(intValue < 5) from accumulate (StudiedTodayEvent(jobSeekerId == $jobSeekerId) 
+                                              over window:time( 3m ), 
+                                              count(1))
+        and
+        $user: JobSeeker(id == $jobSeekerId, continuousLearning == true)
+    then
+        modify($user) {
+            setContinuousLearning(false)
+        }
+        System.out.println("Lazy user stopped learning process!");
+end
+
+
+
+
+
+
+
+
+

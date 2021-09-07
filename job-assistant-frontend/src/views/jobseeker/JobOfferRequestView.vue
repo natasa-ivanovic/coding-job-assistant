@@ -3,8 +3,8 @@
     <v-row align="center" justify="center">
       <v-col cols="8">
         <v-card class="mt-5">
-          <v-card-title>
-            <v-col class="description" style="font-size:40px">
+          <v-card-title class="description ml-3" style="font-size:40px">
+            <v-col>
               Job offers
             </v-col>
             <v-col>
@@ -17,14 +17,21 @@
               ></v-text-field>
             </v-col>
           </v-card-title>
+          <v-row class="ml-9 mr-9">
+            <v-progress-linear
+              indeterminate
+              color="indigo accent-1"
+              :active="show"
+            ></v-progress-linear>
+          </v-row>
           <v-card-text v-if="lastDate">
             <v-row>
               <v-alert
                 icon="mdi-calendar"
                 outlined
-                color="#546E7A"
+                color="black"
                 dense
-                class="ml-6 mr-6"
+                class="ml-5 mr-5"
                 style="width: 100%;"
               >
                 Here are your suggestions from date:
@@ -32,15 +39,19 @@
               </v-alert>
             </v-row>
           </v-card-text>
-          <v-row class="ml-5">
-            <v-btn color="primary" class="mx-2" @click="requestSuggestions()"
+          <v-row class="ml-7">
+            <v-btn
+              color="indigo accent-1"
+              class="mx-2"
+              @click="requestSuggestions()"
+              :disabled="show"
               >Request recommendations</v-btn
             >
           </v-row>
           <v-card-text>
             <v-row v-if="alert">
               <v-col cols="12">
-                <v-alert type="info" class="ml-3 mr-3">
+                <v-alert type="info" color="indigo accent-3" class="ml-2 mr-3">
                   No job offer recommendations in recent memory! Please request
                   a new set of recommendations.
                 </v-alert>
@@ -55,7 +66,7 @@
                 v-for="jo in jobOffers"
                 :key="jo.id"
               >
-                <job-offer-card v-bind:jobOffer="jo" />
+                <job-offer-suggestion-card v-bind:jobOfferRating="jo" />
               </v-col>
             </v-row>
           </v-card-text>
@@ -66,13 +77,13 @@
 </template>
 
 <script>
-import JobOfferCard from "../../components/job-offers/JobOfferCard.vue";
+import JobOfferSuggestionCard from "../../components/job-offers/JobOfferSuggestionCard.vue";
 
 const apiURL = "/api/job-offer-suggestion";
 
 export default {
   components: {
-    JobOfferCard,
+    JobOfferSuggestionCard,
   },
   name: "JobOfferRequestView",
   data() {
@@ -81,12 +92,11 @@ export default {
       jobOffers: [],
       alert: false,
       lastDate: null,
-      // private Long id;
-      // private Timestamp date;
-      // private List<JobOfferRatingDTO> offerRatings;
+      show: false,
     };
   },
   mounted() {
+    this.show = true;
     this.axios
       .get(apiURL)
       .then((response) => {
@@ -94,23 +104,28 @@ export default {
         console.log(response.data);
         this.jobOffers = response.data.offerRatings;
         this.lastDate = response.data.date;
+        this.show = false;
       })
       .catch((error) => {
+        this.show = false;
         this.alert = true;
         console.log(error);
       });
   },
   methods: {
     requestSuggestions() {
+      this.show = true;
       this.axios
         .get(apiURL + "/request")
         .then((response) => {
           this.alert = false;
           this.jobOffers = response.data.offerRatings;
           this.lastDate = response.data.date;
+          this.show = false;
         })
         .catch((error) => {
-          alert(error);
+          this.show = false;
+          this.$root.snackbar.error(error.response.data.message);
         });
     },
   },
