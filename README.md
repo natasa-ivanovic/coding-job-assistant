@@ -1,1 +1,1 @@
-# coding-job-assistant
+# IT Career Adviser
