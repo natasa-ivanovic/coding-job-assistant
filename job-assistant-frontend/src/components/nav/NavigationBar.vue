@@ -24,7 +24,7 @@
     <!-- admin nav -->
     <v-list v-if="user.role === 'ADMIN'" nav dense>
       <v-list-item-group v-model="selectedItem" color="primary">
-        <router-link :to="{ name: 'HomeAdminView' }" v-slot="{ navigate }">
+        <!-- <router-link :to="{ name: 'HomeAdminView' }" v-slot="{ navigate }">
           <v-list-item @click="navigate">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
@@ -33,7 +33,7 @@
               <v-list-item-title>Home</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </router-link>
+        </router-link> -->
         <router-link
           :to="{ name: 'CompanyReviewListView' }"
           v-slot="{ navigate }"
@@ -47,13 +47,14 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
+        <v-divider></v-divider>
         <router-link
           :to="{ name: 'CVElementListView' }"
           v-slot="{ navigate }"
         >
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-message-draw</v-icon>
+              <v-icon>mdi-application-edit</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>CV Elements</v-list-item-title>
@@ -66,10 +67,23 @@
         >
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-message-draw</v-icon>
+              <v-icon>mdi-school</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Job Positions</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <router-link
+          :to="{ name: 'JobPositionAdminListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-briefcase</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Job Offers</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -79,7 +93,7 @@
         >
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-message-draw</v-icon>
+              <v-icon>mdi-office-building</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Companies</v-list-item-title>
@@ -87,12 +101,26 @@
           </v-list-item>
         </router-link>
         <router-link
+          :to="{ name: 'CompanyAdminListView' }"
+          v-slot="{ navigate }"
+        >
+          <v-list-item @click="navigate">
+            <v-list-item-icon>
+              <v-icon>mdi-book-open-variant</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Interview materials</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <v-divider></v-divider>
+        <router-link
           :to="{ name: 'ConfigListView' }"
           v-slot="{ navigate }"
         >
           <v-list-item @click="navigate">
             <v-list-item-icon>
-              <v-icon>mdi-template</v-icon>
+              <v-icon>mdi-cog</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Template configuration</v-list-item-title>

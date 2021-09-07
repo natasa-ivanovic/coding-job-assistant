@@ -296,7 +296,9 @@ export default {
       if (!this.valid) {
         return;
       }
-      const maxItemId = this.experiences.reduce((cur, max) =>  cur.id > max.id ? cur : max).id;
+      let maxItemId = 1
+      if (this.experiences.length != 0)
+        maxItemId = this.experiences.reduce((cur, max) =>  cur.id > max.id ? cur : max).id;
       const itemToAdd = Object.assign({}, newItem);
       itemToAdd.id = maxItemId + 1;
       // reset newItem
