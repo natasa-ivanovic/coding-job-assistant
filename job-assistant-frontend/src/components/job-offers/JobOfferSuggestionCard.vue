@@ -19,8 +19,7 @@
       jobOfferRating.company
     }}</v-card-subtitle>
     <div class="mt-2 ml-4 mr-4" style="text-align: justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
-      mi non dolor congue congue. Donec vestibulum nisi lectus.
+      {{ jobOfferRating.jobOffer.description }}
     </div>
     <v-divider class="mx-4 mt-4 mb-4"></v-divider>
     <v-card-text>
@@ -45,6 +44,7 @@
           <v-btn color="#1A237E" text v-bind="attrs" v-on="on"> Details </v-btn>
         </template>
         <job-offer-details-card
+          v-bind:jobOffer="jobOfferRating.jobOffer"
           v-bind:programmingImportances="
             jobOfferRating.jobOffer.programmingImportances
           "
@@ -96,7 +96,7 @@ export default {
     loading: false,
     position: "",
     dialog: false,
-    dialogLeaderboard: false
+    dialogLeaderboard: false,
   }),
   components: {
     JobOfferDetailsCard,

@@ -32,8 +32,7 @@
       </v-card-subtitle>
 
       <div class="mt-2 ml-4 mr-4" style="text-align: justify">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-        rutrum mi non dolor congue congue. Donec vestibulum nisi lectus.
+        {{ jobOffer.description }}
       </div>
 
       <v-card-text>

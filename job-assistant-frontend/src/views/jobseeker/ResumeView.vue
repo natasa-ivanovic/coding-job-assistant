@@ -22,6 +22,16 @@
             </v-row>
           </v-card-text>
         </v-card>
+        <v-card class="mt-4">
+          <v-card-title>
+            <v-col>Important benefits</v-col>
+          </v-card-title>
+          <!-- <v-card-text>
+            <v-row> 
+              <experience-form />
+            </v-row>
+          </v-card-text> -->
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

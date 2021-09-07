@@ -31,7 +31,7 @@ rule "StudiedTodayEvent added - 5 days in a row (3min for testing purposes)"
         $event: StudiedTodayEvent($jobSeekerId: jobSeekerId) 
         and
         Number(intValue >= 5) from accumulate (StudiedTodayEvent(jobSeekerId == $jobSeekerId) 
-                                              over window:time( 3m ), 
+                                              over window:time( 1m ), 
                                               count(1))
         and
         $user: JobSeeker(id == $jobSeekerId, continuousLearning == false)
