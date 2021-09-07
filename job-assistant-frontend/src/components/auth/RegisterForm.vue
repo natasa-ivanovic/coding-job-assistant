@@ -78,7 +78,7 @@
                 <v-text-field
                   v-model="confirmPassword"
                   :rules="[rules.passwordMatch]"
-                  label="Password"
+                  label="Confirm Password"
                   prepend-icon="mdi-lock"
                   style="font-size: 18px"
                   :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"

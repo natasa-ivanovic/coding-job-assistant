@@ -24,6 +24,7 @@ public class JobOfferDTO {
 	private String companyId;
 	private String positionName;
 	private String positionId;
+	private String description;
 	private List<CVElementImportanceDTO> programmingImportances;
 	private List<CVElementImportanceDTO> technologyImportances;
 	private List<CVElementImportanceDTO> knowledgeImportances;
@@ -40,7 +41,7 @@ public class JobOfferDTO {
 		this.companyId = jo.getCompany().getId().toString();
 		this.positionName = jo.getPosition().getTitle();
 		this.positionId = jo.getPosition().getId().toString();
-		
+		this.description = jo.getDescription();
 		this.programmingImportances = jo.getCvElementImportances().stream()
 				.filter(el -> el.getCvElementProficiency().getCvElement().getType().equals(CVElementType.PROGRAMMING_LANGUAGE))
 				.map(el -> new CVElementImportanceDTO(el)).collect(Collectors.toList());

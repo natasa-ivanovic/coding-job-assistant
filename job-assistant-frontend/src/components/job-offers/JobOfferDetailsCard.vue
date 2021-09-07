@@ -10,10 +10,9 @@
         ></v-img>
       </v-flex>
     </v-layout>
-    <v-card-title style="font-size: 30px">Job Offer Details</v-card-title>
+    <v-card-title style="font-size: 30px">{{jobOffer.positionName}}, {{jobOffer.companyName}}</v-card-title>
     <div class="mt-2 ml-6 mr-6 mb-4" style="text-align: justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus rutrum
-      mi non dolor congue congue. Donec vestibulum nisi lectus. Donec vestibulum nisi lectus.
+      {{ jobOffer.description }}
     </div>
     <div>
       <v-tabs v-model="tab" centered slider-color="blue" class="mb-5">
@@ -76,6 +75,7 @@ export default {
     knowledgeImportances: Array,
     softSkillImportances: Array,
     languageImportances: Array,
+    jobOffer: Object,
     // importance ima ovo
     // private String cvElementName;
     // private CVElementType cvElementType;

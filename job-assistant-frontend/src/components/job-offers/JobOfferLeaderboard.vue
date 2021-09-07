@@ -35,7 +35,7 @@
           size="30"
           >mdi-arrow-right-bold</v-icon
         >
-        <p v-else>{{ item.rowNumber }}</p>
+        <p v-else class="mt-1 mb-0 pb-0">{{ item.rowNumber }}</p>
       </template>
 
       <template v-slot:[`item.rowNumber`]="{ item }">
@@ -45,7 +45,7 @@
           size="30"
           >mdi-medal</v-icon
         >
-        <p v-else>{{ item.rowNumber }}</p>
+        <p v-else></p>
       </template>
 
       <template v-slot:[`item.continuousLearning`]="{ item }">

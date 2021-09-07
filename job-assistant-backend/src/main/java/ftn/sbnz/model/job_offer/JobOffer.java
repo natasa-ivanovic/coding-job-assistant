@@ -50,6 +50,9 @@ public class JobOffer {
 	@NonNull
 	private Date datePosted;
 	
+	@Column(name = "description", unique = false, nullable = false)
+	private String description;
+	
 	@ManyToOne
 	private Company company;
 	
